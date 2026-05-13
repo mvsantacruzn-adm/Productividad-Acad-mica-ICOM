@@ -43,6 +43,7 @@ function inicializar() {
     
     generarListado(profesores);
     generarModales(profesoresConDatos);
+    poblarSelectorProfesores();
 }
 
 function generarResumen(nombre) {
@@ -79,6 +80,94 @@ function generarListado(profesores) {
             <div class="profesor-arrow">${p.tieneDatos ? '→' : ''}</div>
         </div>
     `).join('');
+}
+
+function poblarSelectorProfesores() {
+    const select = document.getElementById('profesor-select');
+    const profesoresOrdenados = Object.keys(datosBase).sort();
+    
+    profesoresOrdenados.forEach(nombre => {
+        const option = document.createElement('option');
+        option.value = nombre;
+        option.textContent = nombre;
+        select.appendChild(option);
+    });
+}
+
+function generarFichaCNA() {
+    const select = document.getElementById('profesor-select');
+    const nombreProfesor = select.value;
+    const preview = document.getElementById('ficha-cna-preview');
+    
+    if (!nombreProfesor) {
+        preview.innerHTML = '<p style="color: #999; text-align: center; padding: 40px;">Selecciona un profesor para generar la ficha</p>';
+        return;
+    }
+    
+    if (nombreProfesor === 'Todos los profesores') {
+        preview.innerHTML = '<p style="color: #999; text-align: center; padding: 40px;">Función de ficha para todos los profesores en desarrollo</p>';
+        return;
+    }
+    
+    const base = datosBase[nombreProfesor];
+    const produccion = datosProduccion[nombreProfesor];
+    
+    if (!base || !produccion) {
+        preview.innerHTML = '<p style="color: #999; text-align: center; padding: 40px;">No se encontraron datos para este profesor</p>';
+        return;
+    }
+    
+    // Mostrar información básica de la ficha
+    preview.innerHTML = `
+        <div style="background: #f8f9fa; padding: 20px; border-radius: 6px; margin-bottom: 20px;">
+            <h3 style="font-size: 16px; color: #333; margin-bottom: 15px;">Ficha Académica CNA</h3>
+            
+            <div style="background: white; padding: 15px; border-radius: 6px; margin-bottom: 15px;">
+                <p><strong>Profesor:</strong> ${base.nombre}</p>
+                <p><strong>Vínculo:</strong> ${base.vinculo}</p>
+                <p><strong>Título Profesional:</strong> ${base.titulo}</p>
+                <p><strong>Grado Académico:</strong> ${base.grado}</p>
+                <p><strong>Líneas de Investigación:</strong> ${base.lineas}</p>
+            </div>
+            
+            <div style="background: white; padding: 15px; border-radius: 6px;">
+                <h4 style="font-size: 14px; color: #667eea; margin-bottom: 10px;">Resumen de Producción Académica</h4>
+                <ul style="list-style: none; padding-left: 0;">
+                    ${generarResumenProduccion(produccion)}
+                </ul>
+            </div>
+        </div>
+        
+        <div style="color: #999; font-size: 13px; text-align: center; padding: 20px; border-top: 1px solid #e0e0e0;">
+            <p>Previsualización de ficha CNA - Construcción completa en desarrollo</p>
+        </div>
+    `;
+}
+
+function generarResumenProduccion(produccion) {
+    const secciones = produccion?.secciones || {};
+    const items = [];
+    
+    const mapeoSecciones = {
+        'publicaciones_indexadas': 'Publicaciones Indexadas',
+        'publicaciones_no_indexadas': 'Publicaciones No Indexadas',
+        'libros': 'Libros',
+        'capitulos': 'Capítulos de Libro',
+        'proyectos': 'Proyectos de Investigación',
+        'tesis_doctorado_guia': 'Tesis Doctorado (Guía)',
+        'tesis_doctorado_coguia': 'Tesis Doctorado (Co-guía)',
+        'tesis_magister_guia': 'Tesis Magister (Guía)',
+        'tesis_magister_coguia': 'Tesis Magister (Co-guía)'
+    };
+    
+    for (const [clave, titulo] of Object.entries(mapeoSecciones)) {
+        const seccion = secciones[clave];
+        if (seccion && seccion.filas && seccion.filas.length > 0) {
+            items.push(`<li style="padding: 5px 0;"><strong>${titulo}:</strong> ${seccion.filas.length} registro(s)</li>`);
+        }
+    }
+    
+    return items.length > 0 ? items.join('') : '<li style="color: #999;">Sin información de producción académica</li>';
 }
 
 function generarModales(profesores) {

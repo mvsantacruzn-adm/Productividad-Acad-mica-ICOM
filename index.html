@@ -11,6 +11,7 @@
         <div class="sidebar">
             <div class="logo">📊 Productividad<br>UANDES</div>
             <div class="menu-item active" onclick="cambiarPagina('profesores')">👥 Profesores</div>
+            <div class="menu-item" onclick="cambiarPagina('reporteria')">📋 Reportería</div>
         </div>
         
         <div class="main-content">
@@ -20,6 +21,38 @@
                     <p>14 profesores - Economía, Finanzas y Business Administration</p>
                 </div>
                 <div id="profesor-list" class="profesor-list"></div>
+            </div>
+
+            <div id="page-reporteria" class="page">
+                <div class="header">
+                    <h1>Reportería</h1>
+                    <p>Generación de reportes académicos</p>
+                </div>
+                
+                <div class="reporteria-container">
+                    <div class="reporteria-section">
+                        <div class="reporteria-title">📄 Ficha Académica CNA</div>
+                        
+                        <div class="reporteria-form">
+                            <div class="form-group">
+                                <label for="profesor-select">Seleccionar profesor:</label>
+                                <select id="profesor-select">
+                                    <option value="">-- Todos los profesores --</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button class="btn-primary" onclick="generarFichaCNA()">Generar Ficha CNA</button>
+                            </div>
+                        </div>
+                        
+                        <div class="reporteria-preview">
+                            <div id="ficha-cna-preview" class="ficha-preview-content">
+                                <p style="color: #999; text-align: center; padding: 40px;">Selecciona un profesor y genera la ficha para visualizar</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
