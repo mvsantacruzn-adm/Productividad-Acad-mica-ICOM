@@ -29,13 +29,16 @@
                     <p>Generación de reportes académicos</p>
                 </div>
                 
-                <div class="reporteria-container">
-                    <div class="reporteria-section">
-                        <div class="reporteria-title">📄 Ficha Académica CNA</div>
+                <div class="reporteria-grid">
+                    <div class="reporteria-card">
+                        <div class="card-header">
+                            <h2 class="card-title">📄 Ficha Académica CNA</h2>
+                            <p class="card-subtitle">Selecciona un profesor para visualizar su ficha académica</p>
+                        </div>
                         
-                        <div class="reporteria-form">
+                        <div class="card-body">
                             <div class="form-group">
-                                <label for="profesor-select">Seleccionar profesor:</label>
+                                <label for="profesor-select">Profesor:</label>
                                 <select id="profesor-select">
                                     <option value="">-- Todos los profesores --</option>
                                 </select>
@@ -46,9 +49,11 @@
                             </div>
                         </div>
                         
-                        <div class="reporteria-preview">
-                            <div id="ficha-cna-preview" class="ficha-preview-content">
-                                <p style="color: #999; text-align: center; padding: 40px;">Selecciona un profesor y genera la ficha para visualizar</p>
+                        <div class="card-preview">
+                            <div id="ficha-cna-preview" class="preview-content">
+                                <div class="preview-placeholder">
+                                    <p>Selecciona un profesor y haz clic en "Generar Ficha CNA"</p>
+                                </div>
                             </div>
                         </div>
                     </div>

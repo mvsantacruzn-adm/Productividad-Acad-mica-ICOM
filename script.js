@@ -86,6 +86,12 @@ function poblarSelectorProfesores() {
     const select = document.getElementById('profesor-select');
     const profesoresOrdenados = Object.keys(datosBase).sort();
     
+    // Limpiar opciones existentes (excepto la primera "Todos")
+    while (select.options.length > 1) {
+        select.remove(1);
+    }
+    
+    // Agregar profesores
     profesoresOrdenados.forEach(nombre => {
         const option = document.createElement('option');
         option.value = nombre;
@@ -100,12 +106,11 @@ function generarFichaCNA() {
     const preview = document.getElementById('ficha-cna-preview');
     
     if (!nombreProfesor) {
-        preview.innerHTML = '<p style="color: #999; text-align: center; padding: 40px;">Selecciona un profesor para generar la ficha</p>';
-        return;
-    }
-    
-    if (nombreProfesor === 'Todos los profesores') {
-        preview.innerHTML = '<p style="color: #999; text-align: center; padding: 40px;">Función de ficha para todos los profesores en desarrollo</p>';
+        preview.innerHTML = `
+            <div class="preview-placeholder">
+                <p>Selecciona un profesor para visualizar su ficha</p>
+            </div>
+        `;
         return;
     }
     
@@ -113,33 +118,53 @@ function generarFichaCNA() {
     const produccion = datosProduccion[nombreProfesor];
     
     if (!base || !produccion) {
-        preview.innerHTML = '<p style="color: #999; text-align: center; padding: 40px;">No se encontraron datos para este profesor</p>';
+        preview.innerHTML = `
+            <div class="preview-placeholder">
+                <p>No se encontraron datos para este profesor</p>
+            </div>
+        `;
         return;
     }
     
     // Mostrar información básica de la ficha
     preview.innerHTML = `
-        <div style="background: #f8f9fa; padding: 20px; border-radius: 6px; margin-bottom: 20px;">
-            <h3 style="font-size: 16px; color: #333; margin-bottom: 15px;">Ficha Académica CNA</h3>
+        <div style="background: white; padding: 20px; border-radius: 8px;">
+            <h3 style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #e5e5e5;">Ficha Académica CNA</h3>
             
-            <div style="background: white; padding: 15px; border-radius: 6px; margin-bottom: 15px;">
-                <p><strong>Profesor:</strong> ${base.nombre}</p>
-                <p><strong>Vínculo:</strong> ${base.vinculo}</p>
-                <p><strong>Título Profesional:</strong> ${base.titulo}</p>
-                <p><strong>Grado Académico:</strong> ${base.grado}</p>
-                <p><strong>Líneas de Investigación:</strong> ${base.lineas}</p>
+            <div style="margin-bottom: 20px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                    <div style="background: #f8f9fa; padding: 12px; border-radius: 6px; border-left: 3px solid #667eea;">
+                        <div style="font-size: 11px; color: #999; text-transform: uppercase; font-weight: 600; margin-bottom: 4px;">Profesor</div>
+                        <div style="font-size: 14px; color: #333;">${base.nombre}</div>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 12px; border-radius: 6px; border-left: 3px solid #667eea;">
+                        <div style="font-size: 11px; color: #999; text-transform: uppercase; font-weight: 600; margin-bottom: 4px;">Vínculo</div>
+                        <div style="font-size: 14px; color: #333;">${base.vinculo}</div>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 12px; border-radius: 6px; border-left: 3px solid #667eea;">
+                        <div style="font-size: 11px; color: #999; text-transform: uppercase; font-weight: 600; margin-bottom: 4px;">Título Profesional</div>
+                        <div style="font-size: 14px; color: #333;">${base.titulo}</div>
+                    </div>
+                </div>
             </div>
             
-            <div style="background: white; padding: 15px; border-radius: 6px;">
-                <h4 style="font-size: 14px; color: #667eea; margin-bottom: 10px;">Resumen de Producción Académica</h4>
-                <ul style="list-style: none; padding-left: 0;">
+            <div style="margin-bottom: 20px;">
+                <div style="background: #f8f9fa; padding: 12px; border-radius: 6px; border-left: 3px solid #667eea; margin-bottom: 15px;">
+                    <div style="font-size: 11px; color: #999; text-transform: uppercase; font-weight: 600; margin-bottom: 4px;">Grado Académico</div>
+                    <div style="font-size: 14px; color: #333;">${base.grado}</div>
+                </div>
+                <div style="background: #f8f9fa; padding: 12px; border-radius: 6px; border-left: 3px solid #667eea;">
+                    <div style="font-size: 11px; color: #999; text-transform: uppercase; font-weight: 600; margin-bottom: 4px;">Líneas de Investigación</div>
+                    <div style="font-size: 14px; color: #333; line-height: 1.5;">${base.lineas}</div>
+                </div>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 6px; border-top: 2px solid #667eea;">
+                <h4 style="font-size: 13px; font-weight: 600; color: #667eea; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Resumen de Producción Académica</h4>
+                <ul style="list-style: none; padding: 0; margin: 0;">
                     ${generarResumenProduccion(produccion)}
                 </ul>
             </div>
-        </div>
-        
-        <div style="color: #999; font-size: 13px; text-align: center; padding: 20px; border-top: 1px solid #e0e0e0;">
-            <p>Previsualización de ficha CNA - Construcción completa en desarrollo</p>
         </div>
     `;
 }
@@ -163,11 +188,11 @@ function generarResumenProduccion(produccion) {
     for (const [clave, titulo] of Object.entries(mapeoSecciones)) {
         const seccion = secciones[clave];
         if (seccion && seccion.filas && seccion.filas.length > 0) {
-            items.push(`<li style="padding: 5px 0;"><strong>${titulo}:</strong> ${seccion.filas.length} registro(s)</li>`);
+            items.push(`<li style="padding: 8px 0; color: #333; font-size: 13px;"><strong>${titulo}:</strong> ${seccion.filas.length} registro(s)</li>`);
         }
     }
     
-    return items.length > 0 ? items.join('') : '<li style="color: #999;">Sin información de producción académica</li>';
+    return items.length > 0 ? items.join('') : '<li style="color: #999; font-size: 13px;">Sin información de producción académica</li>';
 }
 
 function generarModales(profesores) {
