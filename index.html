@@ -4,18 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Productividad Académica - UANDES</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
             background: #f5f7fa; 
-            min-height: 100vh;
             color: #333;
         }
-        
         .wrapper { display: flex; min-height: 100vh; }
-        
         .sidebar { 
             width: 200px; 
             background: white; 
@@ -25,14 +21,12 @@
             height: 100vh; 
             overflow-y: auto; 
         }
-        
         .logo { 
             font-size: 14px; 
             font-weight: bold; 
             color: #667eea; 
             margin-bottom: 40px; 
         }
-        
         .menu-item { 
             padding: 12px 15px; 
             margin-bottom: 8px; 
@@ -42,48 +36,22 @@
             font-size: 14px; 
             transition: all 0.3s;
         }
-        
         .menu-item.active { 
             background: #c5d9f7; 
             color: #667eea; 
             font-weight: 600; 
         }
-        
-        .menu-item:hover {
-            background: #f0f0f0;
-        }
-        
+        .menu-item:hover { background: #f0f0f0; }
         .main-content { 
             margin-left: 200px; 
             flex: 1; 
             padding: 30px; 
         }
-        
-        .page {
-            display: none;
-        }
-        
-        .page.active {
-            display: block;
-        }
-        
-        .header h1 { 
-            font-size: 28px; 
-            color: #333; 
-            margin-bottom: 10px; 
-        }
-        
-        .header p { 
-            color: #999; 
-            font-size: 14px; 
-            margin-bottom: 30px; 
-        }
-        
-        .profesor-list {
-            display: grid;
-            gap: 12px;
-        }
-        
+        .page { display: none; }
+        .page.active { display: block; }
+        .header h1 { font-size: 28px; margin-bottom: 10px; }
+        .header p { color: #999; font-size: 14px; margin-bottom: 30px; }
+        .profesor-list { display: grid; gap: 12px; }
         .profesor-row { 
             background: white; 
             padding: 20px; 
@@ -96,34 +64,14 @@
             align-items: center; 
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
-        
         .profesor-row:hover { 
             box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
             transform: translateX(5px); 
         }
-        
         .profesor-info { flex: 1; }
-        
-        .profesor-nombre { 
-            font-size: 16px; 
-            font-weight: 600; 
-            color: #333; 
-            margin-bottom: 6px; 
-        }
-        
-        .profesor-resumen { 
-            font-size: 13px; 
-            color: #666; 
-            line-height: 1.4;
-        }
-        
-        .profesor-arrow { 
-            font-size: 20px; 
-            color: #667eea; 
-            margin-left: 20px;
-        }
-        
-        /* MODAL */
+        .profesor-nombre { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+        .profesor-resumen { font-size: 13px; color: #666; line-height: 1.4;}
+        .profesor-arrow { font-size: 20px; color: #667eea; margin-left: 20px;}
         .modal { 
             display: none; 
             position: fixed; 
@@ -138,11 +86,7 @@
             padding-top: 30px;
             overflow-y: auto;
         }
-        
-        .modal.active { 
-            display: flex; 
-        }
-        
+        .modal.active { display: flex; }
         .modal-content { 
             background-color: white; 
             width: 95%; 
@@ -151,7 +95,6 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.3);
             margin-bottom: 30px;
         }
-        
         .modal-header { 
             background: linear-gradient(135deg, #a8d5ff 0%, #b8e0ff 100%); 
             padding: 30px; 
@@ -159,44 +102,13 @@
             display: flex; 
             justify-content: space-between; 
             align-items: flex-start;
-            position: sticky;
-            top: 0;
         }
-        
-        .modal-header h2 { 
-            font-size: 24px; 
-            color: #333; 
-            margin-bottom: 8px;
-        }
-        
-        .modal-header p { 
-            font-size: 13px; 
-            color: #666; 
-        }
-        
-        .close-btn { 
-            font-size: 28px; 
-            color: #999; 
-            cursor: pointer; 
-            border: none; 
-            background: none; 
-            padding: 0;
-            width: 30px;
-            height: 30px;
-        }
-        
-        .close-btn:hover {
-            color: #333;
-        }
-        
-        .modal-body { 
-            padding: 30px; 
-        }
-        
-        .info-section { 
-            margin-bottom: 35px; 
-        }
-        
+        .modal-header h2 { font-size: 24px; margin-bottom: 8px;}
+        .modal-header p { font-size: 13px; color: #666; }
+        .close-btn { font-size: 28px; color: #999; cursor: pointer; border: none; background: none;}
+        .close-btn:hover { color: #333; }
+        .modal-body { padding: 30px; }
+        .info-section { margin-bottom: 35px; }
         .section-title { 
             font-size: 14px; 
             font-weight: 700; 
@@ -205,44 +117,35 @@
             padding-bottom: 10px; 
             border-bottom: 2px solid #667eea; 
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
-        
         .info-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 15px;
             margin-bottom: 20px;
         }
-        
-        .info-item {
+        .info-item{
             background: #f8f9fa;
             padding: 12px;
             border-radius: 6px;
             border-left: 3px solid #667eea;
         }
-        
         .info-label{
             font-size: 11px;
             color: #999;
             text-transform: uppercase;
             font-weight: 600;
             margin-bottom: 4px;
-            letter-spacing: 0.3px;
         }
-        
         .info-value{
             font-size: 14px;
             color: #333;
-            word-break: break-word;
+            line-height: 1.5;
         }
-        
-        /* TABLAS STYLE EXCEL */
         .table-container{
             overflow-x: auto;
             margin-bottom: 20px;
         }
-        
         table{
             width: 100%;
             border-collapse: collapse;
@@ -250,37 +153,27 @@
             border: 1px solid #d0d0d0;
             font-size: 12px;
         }
-        
         thead{
             background: #667eea;
             color: white;
         }
-        
         th{
             padding: 12px;
             text-align: left;
             font-weight: 600;
             border: 1px solid #667eea;
-            white-space: nowrap;
-            font-size: 12px;
         }
-        
         td{
             padding: 10px 12px;
             border: 1px solid #e0e0e0;
-            font-size: 12px;
             color: #333;
-            word-break: break-word;
         }
-        
         tbody tr:nth-child(even){
             background: #f8f9fa;
         }
-        
         tbody tr:hover{
             background: #f0f0f0;
         }
-        
         .sin-datos{
             color: #999;
             font-style: italic;
@@ -288,64 +181,6 @@
             text-align: center;
             background: #f8f9fa;
             border-radius: 6px;
-        }
-        
-        /* REPORTES */
-        .reportes-section {
-            display: grid;
-            gap: 20px;
-        }
-        
-        .reporte-card {
-            background: white;
-            padding: 25px;
-            border-radius: 8px;
-            border-left: 4px solid #667eea;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-        
-        .reporte-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 12px;
-        }
-        
-        .reporte-description {
-            font-size: 13px;
-            color: #666;
-            margin-bottom: 15px;
-        }
-        
-        .button-group {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        
-        .btn {
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #a8d5ff 0%, #b8e0ff 100%);
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-            color: #333;
-            transition: all 0.3s;
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        
-        .btn.yellow {
-            background: linear-gradient(135deg, #ffe89a 0%, #fff0b5 100%);
-        }
-        
-        .btn.purple {
-            background: linear-gradient(135deg, #d4c5f9 0%, #e5d9ff 100%);
         }
     </style>
 </head>
@@ -358,55 +193,18 @@
         </div>
         
         <div class="main-content">
-            <!-- PÁGINA PROFESORES -->
             <div id="page-profesores" class="page active">
                 <div class="header">
                     <h1>Profesores - Claustro Doctorado</h1>
-                    <p>14 integrantes del cuerpo académico | Haz clic para ver información completa</p>
+                    <p>14 integrantes del cuerpo académico</p>
                 </div>
-                
-                <div class="profesor-list" id="profesor-list"></div>
+                <div id="profesor-list" class="profesor-list"></div>
             </div>
             
-            <!-- PÁGINA REPORTES -->
             <div id="page-reportes" class="page">
                 <div class="header">
                     <h1>Descargar Reportes</h1>
-                    <p>Formatos CNA, Completo e Individual por Profesor</p>
-                </div>
-                
-                <div class="reportes-section">
-                    <div class="reporte-card">
-                        <div class="reporte-title">🎓 Reporte Formato CNA</div>
-                        <div class="reporte-description">
-                            Formato oficial para CNA. Información académica de todos los profesores en columnas específicas.
-                        </div>
-                        <div class="button-group">
-                            <button class="btn" onclick="descargarReporteCNA('excel')">📥 Descargar Excel</button>
-                            <button class="btn yellow" onclick="descargarReporteCNA('csv')">📥 Descargar CSV</button>
-                        </div>
-                    </div>
-                    
-                    <div class="reporte-card">
-                        <div class="reporte-title">📊 Reporte Completo (Todos los datos)</div>
-                        <div class="reporte-description">
-                            Información completa de todos los profesores. Incluye tipo de ítem, profesor, y todos los detalles.
-                        </div>
-                        <div class="button-group">
-                            <button class="btn" onclick="descargarReporteCompleto('excel')">📥 Descargar Excel</button>
-                            <button class="btn yellow" onclick="descargarReporteCompleto('csv')">📥 Descargar CSV</button>
-                        </div>
-                    </div>
-                    
-                    <div class="reporte-card">
-                        <div class="reporte-title">📄 Reporte Individual por Profesor</div>
-                        <div class="reporte-description">
-                            Histórico completo de cada profesor. Información académica detallada desde el inicio.
-                        </div>
-                        <div class="button-group" id="reportes-profesores">
-                            <!-- Se genera dinámicamente -->
-                        </div>
-                    </div>
+                    <p>Próximamente disponibles</p>
                 </div>
             </div>
         </div>
@@ -415,333 +213,25 @@
     <div id="modales-container"></div>
     
     <script>
-        // Datos de los 14 profesores
+        const datosCompletos = {"Sebastián Claro Edwards": {"nombre": "Sebastián Claro Edwards", "vinculo": "Claustro", "titulo": "Ingeniero Comercial mención Economía, Pontificia Universidad Católica de Chile, Chile", "grado": "Ph.D. en Economía, University of California, Los Angeles (UCLA), 2001, Estados Unidos", "lineas": "Economía Internacional, Macroeconomía Aplicada, Comercio Exterior e Integración Financiera", "secciones": {"publicaciones_indexadas": {"headers": ["N°", "Autor(es)", "Año", "Título de la publicación", "Nombre revista", "Estado", "ISSN", "Factor de impacto"], "filas": [{"N°": "1", "Autor(es)": "Bernardo Blum; Sebastián Claro; Ignatius Horstmann; David Rivers", "Año": "2024", "Título de la publicación": "The ABCs of firm heterogeneity when firms sort into markets: The case of exporters", "Nombre revista": "Journal of Political Economy", "Estado": "Publicado", "ISSN": "0022-3808", "Factor de impacto": "9,7 JIF"}, {"N°": "2", "Autor(es)": "Elías Albagli; Luis Ceballos; Sebastián Claro; Damián Romero", "Año": "2024", "Título de la publicación": "UIP deviations: Insights from event studies", "Nombre revista": "Journal of International Economics", "Estado": "Publicado", "ISSN": "0022-1996", "Factor de impacto": "3,9 JIF"}, {"N°": "3", "Autor(es)": "Sebastián Claro; Catalina Margulis", "Año": "2022", "Título de la publicación": "Gobernanza de bancos centrales para los desafíos del siglo XXI", "Nombre revista": "Estudios Públicos", "Estado": "Publicado", "ISSN": "0716-1115", "Factor de impacto": "0,2 SJR"}, {"N°": "4", "Autor(es)": "Bernardo Blum; Sebastián Claro; Ignatius Horstmann; Trevor Tombe", "Año": "2020", "Título de la publicación": "The DNA of New Exporters: Spin-Offs and FDI at the Extensive Margin of Trade", "Nombre revista": "American Economic Review: Insights", "Estado": "Publicado", "ISSN": "2640-205X", "Factor de impacto": "4,7 JIF"}, {"N°": "5", "Autor(es)": "Elías Albagli; Luis Ceballos; Sebastián Claro; Damián Romero", "Año": "2019", "Título de la publicación": "Channels of US Monetary Policy Spillovers to International Bond Markets", "Nombre revista": "Journal of Financial Economics", "Estado": "Publicado", "ISSN": "0304-405X", "Factor de impacto": "7,5 JIF"}, {"N°": "6", "Autor(es)": "Bernardo Blum; Sebastián Claro; Kunal Dasgupta; Ignatius Horstmann", "Año": "2019", "Título de la publicación": "Inventory Management, Product Quality, and Cross-Country Income Differences", "Nombre revista": "American Economic Journal: Macroeconomics", "Estado": "Publicado", "ISSN": "1945-7707", "Factor de impacto": "4,0 JIF"}, {"N°": "7", "Autor(es)": "Bernardo Blum; Sebastián Claro; Ignatius Horstmann", "Año": "2016", "Título de la publicación": "A Balls-and-Bins Model of Trade: Comment", "Nombre revista": "American Economic Review", "Estado": "Publicado", "ISSN": "0002-8282", "Factor de impacto": "3,1 JIF"}, {"N°": "8", "Autor(es)": "Claro, S. & Soto, R.", "Año": "2014", "Título de la publicación": "Empirical analysis of the Chilean business cycle", "Nombre revista": "Applied Economics", "Estado": "Publicado", "ISSN": "0003-6846", "Factor de impacto": "1.9 JIF"}, {"N°": "9", "Autor(es)": "Claro, S.", "Año": "2014", "Título de la publicación": "China's structural transformation and global imbalances", "Nombre revista": "Review of International Economics", "Estado": "Publicado", "ISSN": "0965-7576", "Factor de impacto": "1.4 JIF"}, {"N°": "10", "Autor(es)": "Bernardo Blum; Sebastián Claro; Ignatius Horstmann", "Año": "2013", "Título de la publicación": "Occasional and Perennial Exporters", "Nombre revista": "Journal of International Economics", "Estado": "Publicado", "ISSN": "0022-1996", "Factor de impacto": "2,5 JIF"}, {"N°": "11", "Autor(es)": "Sebastián Claro", "Año": "2009", "Título de la publicación": "FDI Liberalization as a Source of Comparative Advantage in China", "Nombre revista": "Review of Development Economics", "Estado": "Publicado", "ISSN": "1467-9361", "Factor de impacto": "0,8 JIF"}, {"N°": "12", "Autor(es)": "Roberto Alvarez; Sebastián Claro", "Año": "2009", "Título de la publicación": "David versus Goliath: The Impact of Chinese Competition on Developing Countries", "Nombre revista": "World Development", "Estado": "Publicado", "ISSN": "0305-750X", "Factor de impacto": "1,8 JIF"}, {"N°": "13", "Autor(es)": "Sebastián Claro", "Año": "2006", "Título de la publicación": "Supporting Inefficient Firms with Capital Subsidies: China and Germany in the 1990s", "Nombre revista": "Journal of Comparative Economics", "Estado": "Publicado", "ISSN": "0147-5967", "Factor de impacto": "1,2 JIF"}, {"N°": "14", "Autor(es)": "Sebastián Claro", "Año": "2006", "Título de la publicación": "Why Does China Protect Its Labour-Intensive Industries More?", "Nombre revista": "Economics of Transition", "Estado": "Publicado", "ISSN": "0967-0750", "Factor de impacto": "0,7 JIF"}]}, "publicaciones_no_indexadas": {"headers": ["N°", "Autor(es)", "Año", "Título de la publicación", "Nombre revista", "Estado", "ISSN"], "filas": [{"N°": "1", "Autor(es)": "Sebastián Claro", "Año": "2006", "Título de la publicación": "Implications of China's Emergence in the Global Economy for Latin America and the Caribbean Region: The Case of Chile", "Nombre revista": "Integration and Trade", "Estado": "Publicado", "ISSN": "N/D"}, {"N°": "2", "Autor(es)": "Roberto Alvarez; Sebastián Claro", "Año": "2006", "Título de la publicación": "The China Price: Evidence and Some Implications", "Nombre revista": "Estudios de Economía", "Estado": "Publicado", "ISSN": "0718-5286"}, {"N°": "3", "Autor(es)": "Sebastián Claro; Ramón Delpiano", "Año": "2006", "Título de la publicación": "Competencia China: Buena, Variada y Barata", "Nombre revista": "Estudios Públicos", "Estado": "Publicado", "ISSN": "0716-1115"}, {"N°": "4", "Autor(es)": "Sebastián Claro", "Año": "2004", "Título de la publicación": "Oportunidades y Desafíos para Chile de la Apertura Económica en China", "Nombre revista": "Estudios Públicos", "Estado": "Publicado", "ISSN": "0716-1115"}, {"N°": "5", "Autor(es)": "Sebastián Claro", "Año": "2003", "Título de la publicación": "25 Años de Reformas Económicas en China: 1978-2003", "Nombre revista": "Estudios Públicos", "Estado": "Publicado", "ISSN": "0716-1115"}, {"N°": "6", "Autor(es)": "Sebastián Claro", "Año": "2003", "Título de la publicación": "Labor Market Implications of Limited Integration", "Nombre revista": "Latin American Journal of Economics / Cuadernos de Economía", "Estado": "Publicado", "ISSN": "N/D"}, {"N°": "7", "Autor(es)": "Sebastián Claro", "Año": "2003", "Título de la publicación": "A Cross-country Estimation of the Elasticity of Substitution between Labor and Capital in Manufacturing Industries", "Nombre revista": "Latin American Journal of Economics / Cuadernos de Economía", "Estado": "Publicado", "ISSN": "N/D"}, {"N°": "8", "Autor(es)": "Claro, S.", "Año": "2015", "Título de la publicación": "Ajuste ante shocks de términos de intercambio en economías emergentes", "Nombre revista": "Economía Chilena", "Estado": "Publicado", "ISSN": "0717-3830"}]}, "libros": {"headers": ["N°", "Autor(es)", "Año", "Título de la publicación", "Lugar", "Editorial", "Estado"], "filas": [{"N°": "1", "Autor(es)": "Claro, S. & Arancibia, J.", "Año": "2022", "Título de la publicación": "Sostenibilidad y Participación en la Constitución", "Lugar": "(No especificado en el texto)", "Editorial": "Ediciones El Mercurio", "Estado": "Book"}, {"N°": "2", "Autor(es)": "Claro, S. & Carriere-Swallow, Y.", "Año": "2013", "Título de la publicación": "Cueste lo que Cueste: La batalla por salvar el Euro y Europa", "Lugar": "Santiago, Chile", "Editorial": "Ediciones UC", "Estado": "Book"}, {"N°": "3", "Autor(es)": "Claro, S. & Gredig, F.", "Año": "2010", "Título de la publicación": "La Pregunta de la Reina: lecciones de la primera crisis económica del Siglo XX", "Lugar": "Santiago, Chile", "Editorial": "Pearson", "Estado": "Book"}]}, "capitulos": {"headers": ["N°", "Autor(es)", "Año", "Título de la publicación", "Lugar", "Editorial", "Estado"], "filas": [{"N°": "1", "Autor(es)": "Jaime Arancibia; Sebastián Claro", "Año": "2022", "Título de la publicación": "“Introducción: Sostenibilidad y participación en la Constitución” en Sostenibilidad y Participación en la Constitución", "Lugar": "Santiago de Chile, Chile", "Editorial": "Ediciones El Mercurio", "Estado": "Capítulo"}, {"N°": "2", "Autor(es)": "Sebastián Claro; Rodrigo Valdés", "Año": "2020", "Título de la publicación": "“Banco Central de Chile” en Aspectos Económicos de la Constitución: Alternativas y propuestas para Chile", "Lugar": "Ciudad de México, México", "Editorial": "Fondo de Cultura Económica", "Estado": "Capítulo"}, {"N°": "3", "Autor(es)": "Sebastián Claro; Andrea Repetto", "Año": "2020", "Título de la publicación": "“Proceso Presupuestario” en Aspectos Económicos de la Constitución: Alternativas y propuestas para Chile", "Lugar": "Ciudad de México, México", "Editorial": "Fondo de Cultura Económica", "Estado": "Capítulo"}, {"N°": "4", "Autor(es)": "Bernardo Blum; Sebastián Claro; Ignatius Horstmann", "Año": "2018", "Título de la publicación": "“Trade Costs and the Role of International Trade Intermediaries” en Handbook of International Trade and Transportation", "Lugar": "Cheltenham, Reino Unido", "Editorial": "Edward Elgar Publishers", "Estado": "Capítulo"}, {"N°": "5", "Autor(es)": "Rodrigo Cifuentes; Sebastián Claro; Alejandro Jara", "Año": "2017", "Título de la publicación": "“Macroeconomic and Financial Volatility in Chile” en Macroprudential frameworks, implementation and relationship with other policies", "Lugar": "Basilea, Suiza", "Editorial": "Bank for International Settlements", "Estado": "Capítulo"}, {"N°": "6", "Autor(es)": "Sebastián Claro; Carola Moreno", "Año": "2015", "Título de la publicación": "“Long-term rates and the term premium: evidence from Chile” en What do new forms of finance mean for EM central banks?", "Lugar": "Basilea, Suiza", "Editorial": "Bank for International Settlements", "Estado": "Capítulo"}, {"N°": "7", "Autor(es)": "Sebastián Claro", "Año": "2015", "Título de la publicación": "“Friedman y la política cambiaria” en Milton Friedman: la vigencia de sus contribuciones. Metodología, Teoría y Política Económica", "Lugar": "Santiago de Chile, Chile", "Editorial": "Ediciones Universidad Católica de Chile", "Estado": "Capítulo"}, {"N°": "8", "Autor(es)": "Sebastián Claro; Luis Opazo", "Año": "2014", "Título de la publicación": "“Monetary Policy Independence in Chile” en The transmission of unconventional monetary policy to the emerging markets", "Lugar": "Basilea, Suiza", "Editorial": "Bank for International Settlements", "Estado": "Capítulo"}, {"N°": "9", "Autor(es)": "Yan Carriere-Swallow; Sebastián Claro", "Año": "2013", "Título de la publicación": "“Diversificación y crecimiento del comercio exterior chileno” en Recursos Naturales y Diversificación Exportadora: una mirada de futuro para América Latina", "Lugar": "Santiago de Chile, Chile", "Editorial": "CIEPLAN", "Estado": "Capítulo"}, {"N°": "10", "Autor(es)": "Sebastián Claro; Claudio Soto", "Año": "2013", "Título de la publicación": "“Exchange rate policy and exchange rate interventions: The Chilean experience” en Market volatility and foreign exchange intervention in EMEs: what has changed?", "Lugar": "Basilea, Suiza", "Editorial": "Bank for International Settlements", "Estado": "Capítulo"}, {"N°": "11", "Autor(es)": "Sebastián Claro; Claudio Soto", "Año": "2012", "Título de la publicación": "“Macro policies and Public Debt in Chile” en Fiscal policy, public debt and monetary policy in emerging market economies", "Lugar": "Basilea, Suiza", "Editorial": "Bank for International Settlements", "Estado": "Capítulo"}, {"N°": "12", "Autor(es)": "Roberto Alvarez; Sebastián Claro", "Año": "2009", "Título de la publicación": "“Sources of China’s Export Growth” en China, India and Beyond: Development Drivers and Limitations", "Lugar": "Cheltenham, Reino Unido", "Editorial": "Edward Elgar", "Estado": "Capítulo"}, {"N°": "13", "Autor(es)": "Sebastián Claro", "Año": "2006", "Título de la publicación": "“Algunas Reflexiones sobre Globalización, Desarrollo y Desigualdad” en Crecimiento Sostenible y Desarrollo Sostenible", "Lugar": "Ciudad de México, México", "Editorial": "Fondo de Cultura Económica", "Estado": "Capítulo"}]}, "proyectos": {"headers": ["N°", "Título", "Fuente de financiamiento", "Año de adjudicación", "Período de ejecución", "Rol en el proyecto"], "filas": [{"N°": "1", "Título": "Fondecyt Regular 1200430 - ECONOMIC IMPACT OF CHILE-CHINA FTA", "Fuente de financiamiento": "Agencia Nacional de Investigación y Desarrollo (ANID) – FONDECYT Regular", "Año de adjudicación": "2020", "Período de ejecución": "2020-2024", "Rol en el proyecto": "Investigador Responsable (Principal Investigator)"}, {"N°": "2", "Título": "Fondecyt Regular 1080109 - On the Quality and Composition of a Nation’s Exports", "Fuente de financiamiento": "Agencia Nacional de Investigación y Desarrollo (ANID) – FONDECYT Regular", "Año de adjudicación": "2008", "Período de ejecución": "2008 – 2009"}]}}}};
+        
         const profesores = [
-            {
-                id: 'prof01',
-                nombre: 'Sebastián Claro Edwards',
-                rut: '124560306',
-                vinculo: 'Claustro',
-                titulo: 'Ingeniero Comercial mención Economía, Pontificia Universidad Católica de Chile',
-                grado: 'Ph.D. en Economía, UCLA, 2001',
-                lineas: 'Economía Internacional, Macroeconomía Aplicada',
-                resumen: 'Economía Internacional. 15 publicaciones, 2 tesis magister, 1 tesis doctorado, 2 libros, 5 proyectos.',
-                datos: {
-                    tesis_magister_guia: [
-                        { autor: 'Juan López', año: 2024, titulo: 'Análisis del Régimen de Tipo de Cambio Flexible en Economías Emergentes', programa: 'Magíster en Economía', institucion: 'Universidad de los Andes', link: 'N/A' },
-                        { autor: 'María González', año: 2023, titulo: 'Integración Financiera e Inestabilidad Macroeconómica', programa: 'Magíster en Economía', institucion: 'Universidad de los Andes', link: 'N/A' }
-                    ],
-                    tesis_magister_coguia: [],
-                    tesis_doctorado_guia: [
-                        { autor: 'Carlos Mendoza', año: 2024, titulo: 'Dinámicas de Tipo de Cambio en Pequeñas Economías Abiertas', programa: 'Doctorado en Economía, Finanzas y Administración', institucion: 'Universidad de los Andes', mismo_programa: 'Si', link: 'N/A' }
-                    ],
-                    tesis_doctorado_coguia: [],
-                    publicaciones_indexadas: [
-                        { autores: 'Bernardo Blum, Sebastián Claro, Ignatius Horstmann, David Rivers', principal: 'Sebastián Claro', año: 2024, titulo: 'The ABCs of firm heterogeneity', revista: 'Journal of Political Economy', estado: 'Publicado', issn: '0022-3808', factor: '10.2 (WoS)', link: 'N/A' },
-                        { autores: 'Sebastián Claro, Assaf Razin', principal: 'Sebastián Claro', año: 2023, titulo: 'International Business Cycles: Theory and Evidence', revista: 'American Economic Review', estado: 'Publicado', issn: '0002-8282', factor: '14.7 (WoS)', link: 'N/A' }
-                    ],
-                    publicaciones_no_indexadas: [],
-                    libros: [
-                        { autores: 'Sebastián Claro', principal: 'Sebastián Claro', año: 2022, nombre: 'Economía Internacional: Teoría y Política', lugar: 'Oxford', editorial: 'Oxford University Press', estado: 'Publicado', link: 'N/A' },
-                        { autores: 'Sebastián Claro', principal: 'Sebastián Claro', año: 2020, nombre: 'Crisis Financieras en Economías Emergentes', lugar: 'Cambridge', editorial: 'Cambridge University Press', estado: 'Publicado', link: 'N/A' }
-                    ],
-                    capitulos: [],
-                    patentes: [],
-                    proyectos: [
-                        { titulo: 'Efectos de Shocks Externos en Economías Latinoamericanas', fuente: 'FONDECYT', codigo: '1241234', año_adjudicacion: 2024, fecha_inicio: '01/01/2024', fecha_fin: '31/12/2026', duracion: 3.0, rol: 'Investigador Responsable', link: 'N/A' },
-                        { titulo: 'Dinámicas de Empleo en Tiempos de Crisis Económica', fuente: 'ANID', codigo: 'ANID-2023', año_adjudicacion: 2023, fecha_inicio: '01/01/2023', fecha_fin: '31/12/2025', duracion: 3.0, rol: 'Investigador Responsable', link: 'N/A' }
-                    ]
-                }
-            },
-            {
-                id: 'prof02',
-                nombre: 'Álvaro Felipe García Marín',
-                rut: '150350425',
-                vinculo: 'Claustro',
-                titulo: 'Ingeniero Civil, Universidad de Chile',
-                grado: 'Ph.D. en Economía, Stanford University, 2005',
-                lineas: 'Economía del Sector Público',
-                resumen: 'Economía Aplicada a Políticas Públicas. Enfoque en evaluación de políticas.',
-                datos: {
-                    tesis_magister_guia: [],
-                    tesis_magister_coguia: [],
-                    tesis_doctorado_guia: [],
-                    tesis_doctorado_coguia: [],
-                    publicaciones_indexadas: [],
-                    publicaciones_no_indexadas: [],
-                    libros: [],
-                    capitulos: [],
-                    patentes: [],
-                    proyectos: []
-                }
-            },
-            {
-                id: 'prof03',
-                nombre: 'Mauricio Larraín Errázuriz',
-                rut: '90392271',
-                vinculo: 'Claustro',
-                titulo: 'Economista, Pontificia Universidad Católica de Chile',
-                grado: 'Ph.D. en Economía, MIT, 2000',
-                lineas: 'Macroeconomía, Teoría Económica',
-                resumen: 'Macroeconomía y ciclos económicos. Especialización en modelos DSGE.',
-                datos: {
-                    tesis_magister_guia: [],
-                    tesis_magister_coguia: [],
-                    tesis_doctorado_guia: [],
-                    tesis_doctorado_coguia: [],
-                    publicaciones_indexadas: [],
-                    publicaciones_no_indexadas: [],
-                    libros: [],
-                    capitulos: [],
-                    patentes: [],
-                    proyectos: []
-                }
-            },
-            {
-                id: 'prof04',
-                nombre: 'Álvaro Espejo',
-                rut: 'Por confirmar',
-                vinculo: 'Claustro',
-                titulo: 'Ingeniero Civil Industrial, Pontificia Universidad Católica de Chile',
-                grado: 'PhD en Management, IESE Business School',
-                lineas: 'Comportamientos proactivos, Motivación',
-                resumen: 'Management y comportamiento organizacional. 11 publicaciones indexadas.',
-                datos: {
-                    tesis_magister_guia: [],
-                    tesis_magister_coguia: [],
-                    tesis_doctorado_guia: [],
-                    tesis_doctorado_coguia: [],
-                    publicaciones_indexadas: [],
-                    publicaciones_no_indexadas: [],
-                    libros: [],
-                    capitulos: [],
-                    patentes: [],
-                    proyectos: []
-                }
-            },
-            {
-                id: 'prof05',
-                nombre: 'Ana Elisa Pereira Gonçalves',
-                rut: 'Por confirmar',
-                vinculo: 'Claustro',
-                titulo: 'Licenciada en Ciencias Económicas, Universidad de São Paulo',
-                grado: 'Ph.D. en Economía, FGV São Paulo School of Business',
-                lineas: 'Flujos de información en mercados financieros',
-                resumen: 'Economía Financiera. 9 publicaciones indexadas, 2 proyectos FONDECYT.',
-                datos: {
-                    tesis_magister_guia: [],
-                    tesis_magister_coguia: [],
-                    tesis_doctorado_guia: [],
-                    tesis_doctorado_coguia: [],
-                    publicaciones_indexadas: [],
-                    publicaciones_no_indexadas: [],
-                    libros: [],
-                    capitulos: [],
-                    patentes: [],
-                    proyectos: []
-                }
-            },
-            {
-                id: 'prof06',
-                nombre: 'Felipe Guzmán González',
-                rut: 'Por confirmar',
-                vinculo: 'Claustro',
-                titulo: 'Licenciado en Administración (Management), Universidad de Chile',
-                grado: 'PhD en Management (Comportamiento Organizacional), IESEG School of Management',
-                lineas: 'Comportamiento organizacional, Liderazgo',
-                resumen: 'Comportamiento Organizacional. 14 publicaciones indexadas, 16 tesis magister dirigidas.',
-                datos: {
-                    tesis_magister_guia: [],
-                    tesis_magister_coguia: [],
-                    tesis_doctorado_guia: [],
-                    tesis_doctorado_coguia: [],
-                    publicaciones_indexadas: [],
-                    publicaciones_no_indexadas: [],
-                    libros: [],
-                    capitulos: [],
-                    patentes: [],
-                    proyectos: []
-                }
-            },
-            {
-                id: 'prof07',
-                nombre: 'Hugo Benedetti',
-                rut: 'Por confirmar',
-                vinculo: 'Claustro',
-                titulo: 'Licenciado en Ciencias Económicas, Universidad de la República (Uruguay)',
-                grado: 'PhD en Finanzas, Boston College (EE.UU.)',
-                lineas: 'Criptoactivos y blockchain, Fintech y mercados',
-                resumen: 'Finanzas Digitales. 8 publicaciones indexadas, 12 capítulos de libro, 1 proyecto FONDECYT.',
-                datos: {
-                    tesis_magister_guia: [],
-                    tesis_magister_coguia: [],
-                    tesis_doctorado_guia: [],
-                    tesis_doctorado_coguia: [],
-                    publicaciones_indexadas: [],
-                    publicaciones_no_indexadas: [],
-                    libros: [],
-                    capitulos: [],
-                    patentes: [],
-                    proyectos: []
-                }
-            },
-            {
-                id: 'prof08',
-                nombre: 'Jorge Rodriguez',
-                rut: 'Por confirmar',
-                vinculo: 'Claustro',
-                titulo: 'Ingeniero Comercial con mención en Economía, Pontificia Universidad Católica de Chile',
-                grado: 'PhD en Economía, University of California Davis (EE.UU.)',
-                lineas: 'Economía laboral, Economía de la educación',
-                resumen: 'Economía del Trabajo y Educación. 4 publicaciones indexadas, 2 proyectos FONDECYT.',
-                datos: {
-                    tesis_magister_guia: [],
-                    tesis_magister_coguia: [],
-                    tesis_doctorado_guia: [],
-                    tesis_doctorado_coguia: [],
-                    publicaciones_indexadas: [],
-                    publicaciones_no_indexadas: [],
-                    libros: [],
-                    capitulos: [],
-                    patentes: [],
-                    proyectos: []
-                }
-            },
-            {
-                id: 'prof09',
-                nombre: 'María José Bosch',
-                rut: 'Por confirmar',
-                vinculo: 'Claustro',
-                titulo: 'Ingeniero Comercial, Pontificia Universidad Católica de Chile',
-                grado: 'PhD en Management (General Management), IESE Business School',
-                lineas: 'Equilibrio trabajo–familia, Liderazgo femenino',
-                resumen: 'Management y Organizaciones. 20 publicaciones indexadas, 6 capítulos de libro.',
-                datos: {
-                    tesis_magister_guia: [],
-                    tesis_magister_coguia: [],
-                    tesis_doctorado_guia: [],
-                    tesis_doctorado_coguia: [],
-                    publicaciones_indexadas: [],
-                    publicaciones_no_indexadas: [],
-                    libros: [],
-                    capitulos: [],
-                    patentes: [],
-                    proyectos: []
-                }
-            },
-            {
-                id: 'prof10',
-                nombre: 'Matias Braun',
-                rut: 'Por confirmar',
-                vinculo: 'Claustro',
-                titulo: 'Ingeniero Comercial mención Economía, Pontificia Universidad Católica de Chile',
-                grado: 'PhD in Economics, Harvard University (EE.UU.)',
-                lineas: 'Finanzas corporativas internacionales, Ciclos económicos',
-                resumen: 'Finanzas Corporativas. 11 publicaciones indexadas, 1 proyecto FAI.',
-                datos: {
-                    tesis_magister_guia: [],
-                    tesis_magister_coguia: [],
-                    tesis_doctorado_guia: [],
-                    tesis_doctorado_coguia: [],
-                    publicaciones_indexadas: [],
-                    publicaciones_no_indexadas: [],
-                    libros: [],
-                    capitulos: [],
-                    patentes: [],
-                    proyectos: []
-                }
-            },
-            {
-                id: 'prof11',
-                nombre: 'Natalia Yankovic',
-                rut: 'Por confirmar',
-                vinculo: 'Claustro',
-                titulo: 'Ingeniero Civil Industrial, Universidad de Chile',
-                grado: 'PhD en Decision, Risk and Operations, Columbia University (EE.UU.)',
-                lineas: 'Gestión de operaciones en salud, Modelos de optimización',
-                resumen: 'Investigación de Operaciones en Salud. 6 publicaciones indexadas.',
-                datos: {
-                    tesis_magister_guia: [],
-                    tesis_magister_coguia: [],
-                    tesis_doctorado_guia: [],
-                    tesis_doctorado_coguia: [],
-                    publicaciones_indexadas: [],
-                    publicaciones_no_indexadas: [],
-                    libros: [],
-                    capitulos: [],
-                    patentes: [],
-                    proyectos: []
-                }
-            },
-            {
-                id: 'prof12',
-                nombre: 'Nicolás Riquelme',
-                rut: 'Por confirmar',
-                vinculo: 'Claustro',
-                titulo: 'Ingeniero Civil Industrial, Universidad de Chile',
-                grado: 'PhD en Economía, University of Rochester (EE.UU.)',
-                lineas: 'Organización industrial, Teoría de juegos',
-                resumen: 'Economía de la Organización Industrial. 4 publicaciones indexadas, 4 tesis magister dirigidas.',
-                datos: {
-                    tesis_magister_guia: [],
-                    tesis_magister_coguia: [],
-                    tesis_doctorado_guia: [],
-                    tesis_doctorado_coguia: [],
-                    publicaciones_indexadas: [],
-                    publicaciones_no_indexadas: [],
-                    libros: [],
-                    capitulos: [],
-                    patentes: [],
-                    proyectos: []
-                }
-            },
-            {
-                id: 'prof13',
-                nombre: 'Andrés Barrios Fernández',
-                rut: 'Por confirmar',
-                vinculo: 'Claustro',
-                titulo: 'Ingeniero Civil Industrial, Pontificia Universidad Católica de Chile',
-                grado: 'PhD en Economía, London School of Economics (Reino Unido)',
-                lineas: 'Microeconomía aplicada, Economía laboral',
-                resumen: 'Economía de la Educación y Laboral. 6 publicaciones indexadas, 2 proyectos FONDECYT.',
-                datos: {
-                    tesis_magister_guia: [],
-                    tesis_magister_coguia: [],
-                    tesis_doctorado_guia: [],
-                    tesis_doctorado_coguia: [],
-                    publicaciones_indexadas: [],
-                    publicaciones_no_indexadas: [],
-                    libros: [],
-                    capitulos: [],
-                    patentes: [],
-                    proyectos: []
-                }
-            },
-            {
-                id: 'prof14',
-                nombre: 'Juan Sotes Paladino',
-                rut: 'Por confirmar',
-                vinculo: 'Claustro',
-                titulo: 'Licenciatura en Economía (Licenciature in Economics), Universitat Autònoma de Barcelona',
-                grado: 'PhD en Finanzas, University of Southern California (EE.UU.)',
-                lineas: 'Asset Pricing (Valoración de Activos), Finanzas del Comportamiento',
-                resumen: 'Finanzas Teóricas. 7 publicaciones indexadas, 5 publicaciones no indexadas, 2 proyectos FONDECYT.',
-                datos: {
-                    tesis_magister_guia: [],
-                    tesis_magister_coguia: [],
-                    tesis_doctorado_guia: [],
-                    tesis_doctorado_coguia: [],
-                    publicaciones_indexadas: [],
-                    publicaciones_no_indexadas: [],
-                    libros: [],
-                    capitulos: [],
-                    patentes: [],
-                    proyectos: []
-                }
-            }
+            { id: 'prof01', nombre: 'Sebastián Claro Edwards', resumen: 'Economía Internacional. 14 pub indexadas + 8 no indexadas + 3 libros + 13 capítulos + 2 proyectos.', tieneDatos: true },
+            { id: 'prof02', nombre: 'Álvaro Felipe García Marín', resumen: 'Economía Aplicada. 1 publicación + 2 proyectos.', tieneDatos: true },
+            { id: 'prof03', nombre: 'Mauricio Larraín Errázuriz', resumen: 'Macroeconomía. Por actualizar.', tieneDatos: true },
+            { id: 'prof04', nombre: 'Álvaro Espejo', resumen: 'Management. Por completar datos.', tieneDatos: false },
+            { id: 'prof05', nombre: 'Ana Elisa Pereira Gonçalves', resumen: 'Economía Financiera. 9 pub indexadas + 2 no indexadas + 1 proyecto.', tieneDatos: true },
+            { id: 'prof06', nombre: 'Felipe Guzmán González', resumen: 'Comportamiento Organizacional. 14 publicaciones + 7 proyectos.', tieneDatos: true },
+            { id: 'prof07', nombre: 'Hugo Benedetti', resumen: 'Finanzas. Por completar datos.', tieneDatos: false },
+            { id: 'prof08', nombre: 'Jorge Rodriguez', resumen: 'Economía del Trabajo. Por completar datos.', tieneDatos: false },
+            { id: 'prof09', nombre: 'María José Bosch', resumen: 'Management. Por completar datos.', tieneDatos: false },
+            { id: 'prof10', nombre: 'Matias Braun', resumen: 'Finanzas. Por completar datos.', tieneDatos: false },
+            { id: 'prof11', nombre: 'Natalia Yankovic', resumen: 'Investigación de Operaciones. Por completar datos.', tieneDatos: false },
+            { id: 'prof12', nombre: 'Nicolás Riquelme', resumen: 'Organización Industrial. Por completar datos.', tieneDatos: false },
+            { id: 'prof13', nombre: 'Andrés Barrios Fernández', resumen: 'Economía de la Educación. Por completar datos.', tieneDatos: false },
+            { id: 'prof14', nombre: 'Juan Sotes Paladino', resumen: 'Finanzas. Por completar datos.', tieneDatos: false }
         ];
         
-        // Generar listado
         function generarListado() {
             const lista = document.getElementById('profesor-list');
             lista.innerHTML = profesores.map(p => `
@@ -755,231 +245,90 @@
             `).join('');
         }
         
-        // Generar modales
         function generarModales() {
             const container = document.getElementById('modales-container');
-            container.innerHTML = profesores.map(p => `
-                <div id="modal-${p.id}" class="modal">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <div>
-                                <h2>${p.nombre}</h2>
-                                <p>RUT: ${p.rut} | Vínculo: ${p.vinculo}</p>
+            container.innerHTML = profesores.map(p => {
+                const datos = datosCompletos[p.nombre];
+                
+                if (!datos) {
+                    return `
+                        <div id="modal-${p.id}" class="modal">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h2>${p.nombre}</h2>
+                                    <button class="close-btn" onclick="cerrarModal('${p.id}')">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="sin-datos">ℹ️ Información por completar.</div>
+                                </div>
                             </div>
-                            <button class="close-btn" onclick="cerrarModal('${p.id}')">&times;</button>
                         </div>
-                        
-                        <div class="modal-body">
-                            <!-- INFORMACIÓN PERSONAL -->
-                            <div class="info-section">
-                                <div class="section-title">Información Personal</div>
-                                <div class="info-grid">
-                                    <div class="info-item">
-                                        <div class="info-label">RUT</div>
-                                        <div class="info-value">${p.rut}</div>
+                    `;
+                }
+                
+                let seccionesHTML = '';
+                for (const [tipo, seccion] of Object.entries(datos.secciones || {})) {
+                    if (!seccion.filas || seccion.filas.length === 0) continue;
+                    
+                    const titulo = traducirTipo(tipo);
+                    const headers = seccion.headers;
+                    
+                    seccionesHTML += `
+                        <div class="info-section">
+                            <div class="section-title">${titulo} (${seccion.filas.length} registros)</div>
+                            <div class="table-container">
+                                <table>
+                                    <thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>
+                                    <tbody>${seccion.filas.map(fila => `
+                                        <tr>${headers.map(h => `<td>${fila[h] || 'N/A'}</td>`).join('')}</tr>
+                                    `).join('')}</tbody>
+                                </table>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                return `
+                    <div id="modal-${p.id}" class="modal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div><h2>${datos.nombre}</h2><p>Vínculo: ${datos.vinculo}</p></div>
+                                <button class="close-btn" onclick="cerrarModal('${p.id}')">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="info-section">
+                                    <div class="section-title">Información Académica</div>
+                                    <div class="info-grid">
+                                        <div class="info-item">
+                                            <div class="info-label">Título</div>
+                                            <div class="info-value">${datos.titulo}</div>
+                                        </div>
+                                        <div class="info-item">
+                                            <div class="info-label">Grado</div>
+                                            <div class="info-value">${datos.grado}</div>
+                                        </div>
+                                        <div class="info-item">
+                                            <div class="info-label">Líneas</div>
+                                            <div class="info-value">${datos.lineas}</div>
+                                        </div>
                                     </div>
-                                    <div class="info-item">
-                                        <div class="info-label">Vínculo</div>
-                                        <div class="info-value">${p.vinculo}</div>
-                                    </div>
                                 </div>
+                                ${seccionesHTML}
                             </div>
-                            
-                            <!-- INFORMACIÓN ACADÉMICA -->
-                            <div class="info-section">
-                                <div class="section-title">Información Académica</div>
-                                <div class="info-grid">
-                                    <div class="info-item">
-                                        <div class="info-label">Título Profesional</div>
-                                        <div class="info-value">${p.titulo}</div>
-                                    </div>
-                                    <div class="info-item">
-                                        <div class="info-label">Grado Académico</div>
-                                        <div class="info-value">${p.grado}</div>
-                                    </div>
-                                    <div class="info-item">
-                                        <div class="info-label">Líneas de Investigación</div>
-                                        <div class="info-value">${p.lineas}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- TESIS MAGISTER GUÍA -->
-                            ${p.datos.tesis_magister_guia.length > 0 ? `
-                            <div class="info-section">
-                                <div class="section-title">Tesis de Magíster Dirigidas (Profesor Guía)</div>
-                                <div class="table-container">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Autor</th>
-                                                <th>Año</th>
-                                                <th>Título</th>
-                                                <th>Programa</th>
-                                                <th>Institución</th>
-                                                <th>Link</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            ${p.datos.tesis_magister_guia.map(t => `
-                                            <tr>
-                                                <td>${t.autor}</td>
-                                                <td>${t.año}</td>
-                                                <td>${t.titulo}</td>
-                                                <td>${t.programa}</td>
-                                                <td>${t.institucion}</td>
-                                                <td>${t.link}</td>
-                                            </tr>
-                                            `).join('')}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            ` : ''}
-                            
-                            <!-- PUBLICACIONES INDEXADAS -->
-                            ${p.datos.publicaciones_indexadas.length > 0 ? `
-                            <div class="info-section">
-                                <div class="section-title">Publicaciones Indexadas</div>
-                                <div class="table-container">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Autor(es)</th>
-                                                <th>Principal</th>
-                                                <th>Año</th>
-                                                <th>Título</th>
-                                                <th>Revista</th>
-                                                <th>Estado</th>
-                                                <th>ISSN</th>
-                                                <th>Factor Impacto</th>
-                                                <th>Link</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            ${p.datos.publicaciones_indexadas.map(pub => `
-                                            <tr>
-                                                <td>${pub.autores}</td>
-                                                <td>${pub.principal}</td>
-                                                <td>${pub.año}</td>
-                                                <td>${pub.titulo}</td>
-                                                <td>${pub.revista}</td>
-                                                <td>${pub.estado}</td>
-                                                <td>${pub.issn}</td>
-                                                <td>${pub.factor}</td>
-                                                <td>${pub.link}</td>
-                                            </tr>
-                                            `).join('')}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            ` : ''}
-                            
-                            <!-- LIBROS -->
-                            ${p.datos.libros.length > 0 ? `
-                            <div class="info-section">
-                                <div class="section-title">Libros Publicados</div>
-                                <div class="table-container">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Autor(es)</th>
-                                                <th>Principal</th>
-                                                <th>Año</th>
-                                                <th>Nombre del Libro</th>
-                                                <th>Lugar</th>
-                                                <th>Editorial</th>
-                                                <th>Estado</th>
-                                                <th>Link</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            ${p.datos.libros.map(lib => `
-                                            <tr>
-                                                <td>${lib.autores}</td>
-                                                <td>${lib.principal}</td>
-                                                <td>${lib.año}</td>
-                                                <td>${lib.nombre}</td>
-                                                <td>${lib.lugar}</td>
-                                                <td>${lib.editorial}</td>
-                                                <td>${lib.estado}</td>
-                                                <td>${lib.link}</td>
-                                            </tr>
-                                            `).join('')}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            ` : ''}
-                            
-                            <!-- PROYECTOS -->
-                            ${p.datos.proyectos.length > 0 ? `
-                            <div class="info-section">
-                                <div class="section-title">Proyectos de Investigación</div>
-                                <div class="table-container">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Título</th>
-                                                <th>Fuente de Financiamiento</th>
-                                                <th>Código</th>
-                                                <th>Año Adjudicación</th>
-                                                <th>Fecha Inicio</th>
-                                                <th>Fecha Fin</th>
-                                                <th>Duración (años)</th>
-                                                <th>Rol</th>
-                                                <th>Link</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            ${p.datos.proyectos.map(proy => `
-                                            <tr>
-                                                <td>${proy.titulo}</td>
-                                                <td>${proy.fuente}</td>
-                                                <td>${proy.codigo}</td>
-                                                <td>${proy.año_adjudicacion}</td>
-                                                <td>${proy.fecha_inicio}</td>
-                                                <td>${proy.fecha_fin}</td>
-                                                <td>${proy.duracion}</td>
-                                                <td>${proy.rol}</td>
-                                                <td>${proy.link}</td>
-                                            </tr>
-                                            `).join('')}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            ` : ''}
-                            
-                            <!-- SIN DATOS -->
-                            ${Object.values(p.datos).every(arr => arr.length === 0) ? `
-                            <div class="sin-datos">
-                                ℹ️ Información por completar. Los datos académicos se actualizarán cuando se cargue la ficha completa.
-                            </div>
-                            ` : ''}
                         </div>
                     </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
         
-        // Generar botones de reportes individuales
-        function generarBotonesReportes() {
-            const container = document.getElementById('reportes-profesores');
-            container.innerHTML = profesores.map((p, i) => `
-                <button class="btn" onclick="descargarProfesorIndividual('${p.id}')">
-                    ${p.nombre.split(' ')[0]} - Excel
-                </button>
-            `).join('');
+        function traducirTipo(tipo) {
+            const t = {'publicaciones_indexadas': 'Publicaciones Indexadas', 'publicaciones_no_indexadas': 'Publicaciones No Indexadas', 'tesis_magister': 'Tesis Magister', 'tesis_doctorado': 'Tesis Doctorado', 'libros': 'Libros', 'capitulos': 'Capítulos', 'patentes': 'Patentes', 'proyectos': 'Proyectos'};
+            return t[tipo] || tipo;
         }
         
         function cambiarPagina(pagina) {
-            // Ocultar todas las páginas
             document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
-            
-            // Mostrar la página solicitada
             document.getElementById(`page-${pagina}`).classList.add('active');
             event.target.classList.add('active');
         }
@@ -1001,24 +350,8 @@
             }
         }
         
-        // Funciones de descarga (placeholders)
-        function descargarReporteCNA(formato) {
-            alert('Descargando Reporte CNA en ' + formato.toUpperCase());
-        }
-        
-        function descargarReporteCompleto(formato) {
-            alert('Descargando Reporte Completo en ' + formato.toUpperCase());
-        }
-        
-        function descargarProfesorIndividual(id) {
-            const prof = profesores.find(p => p.id === id);
-            alert('Descargando perfil de ' + prof.nombre);
-        }
-        
-        // Inicializar
         generarListado();
         generarModales();
-        generarBotonesReportes();
     </script>
 </body>
 </html>
