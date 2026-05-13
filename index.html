@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Productividad Académica</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+        }
+        
+        .wrapper {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 200px;
+            background: white;
+            padding: 30px 20px;
+            border-right: 1px solid #e5e5e5;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        
+        .logo {
+            font-size: 18px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 40px;
+        }
+        
+        .menu-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .menu-item.active {
+            background: #c5d9f7;
+            color: #667eea;
+            font-weight: 600;
+        }
+        
+        .main-content {
+            margin-left: 200px;
+            flex: 1;
+            padding: 30px;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        /* LISTADO SIMPLE */
+        .profesor-list {
+            display: grid;
+            gap: 12px;
+        }
+        
+        .profesor-row {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        .profesor-row:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateX(5px);
+        }
+        
+        .profesor-info {
+            flex: 1;
+        }
+        
+        .profesor-nombre {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        
+        .profesor-meta {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .profesor-meta span {
+            margin-right: 15px;
+        }
+        
+        .profesor-arrow {
+            font-size: 20px;
+            color: #667eea;
+        }
+        
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal.active {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 50px;
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            width: 90%;
+            max-width: 900px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, #a8d5ff 0%, #b8e0ff 100%);
+            padding: 30px;
+            border-radius: 12px 12px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        
+        .modal-header h2 {
+            font-size: 24px;
+            color: #333;
+        }
+        
+        .modal-header p {
+            font-size: 13px;
+            color: #666;
+            margin-top: 8px;
+            font-family: monospace;
+        }
+        
+        .close-btn {
+            font-size: 28px;
+            font-weight: bold;
+            color: #999;
+            cursor: pointer;
+            border: none;
+            background: none;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .close-btn:hover {
+            color: #333;
+        }
+        
+        .modal-body {
+            padding: 30px;
+        }
+        
+        .info-section {
+            margin-bottom: 25px;
+        }
+        
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        
+        .info-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+        }
+        
+        .info-label {
+            font-size: 11px;
+            color: #999;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        
+        .info-value {
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .info-value.rut {
+            font-family: monospace;
+            background: #e8eef7;
+            padding: 6px 10px;
+            border-radius: 4px;
+        }
+        
+        .list-items {
+            display: grid;
+            gap: 10px;
+        }
+        
+        .list-item {
+            background: #f8f9fa;
+            padding: 12px 15px;
+            border-radius: 6px;
+            border-left: 3px solid #667eea;
+            font-size: 13px;
+            color: #333;
+        }
+        
+        .list-item-meta {
+            font-size: 11px;
+            color: #999;
+            margin-top: 4px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        
+        .stat {
+            background: linear-gradient(135deg, #a8d5ff 0%, #b8e0ff 100%);
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+        }
+        
+        .stat.yellow {
+            background: linear-gradient(135deg, #ffe89a 0%, #fff0b5 100%);
+        }
+        
+        .stat.purple {
+            background: linear-gradient(135deg, #d4c5f9 0%, #e5d9ff 100%);
+        }
+        
+        .stat-label {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 6px;
+        }
+        
+        .stat-value {
+            font-size: 22px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="logo">📊 Productividad</div>
+            <div class="menu-item active">👥 Profesores</div>
+            <div class="menu-item">📊 Dashboard</div>
+            <div class="menu-item">📋 Reportes</div>
+        </div>
+        
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <div class="header">
+                <h1>Profesores - Universidad de los Andes</h1>
+                <p style="color: #999; font-size: 14px;">Haz clic en cualquier profesor para ver su información completa</p>
+            </div>
+            
+            <div class="profesor-list">
+                <div class="profesor-row" onclick="abrirModal('prof1')">
+                    <div class="profesor-info">
+                        <div class="profesor-nombre">Sebastián Claro Edwards</div>
+                        <div class="profesor-meta">
+                            <span>🆔 124560306</span>
+                            <span>📍 Economía</span>
+                            <span>📚 15 publicaciones</span>
+                            <span>✏️ 2 tesis</span>
+                        </div>
+                    </div>
+                    <div class="profesor-arrow">→</div>
+                </div>
+                
+                <div class="profesor-row" onclick="abrirModal('prof2')">
+                    <div class="profesor-info">
+                        <div class="profesor-nombre">Álvaro Felipe García Marín</div>
+                        <div class="profesor-meta">
+                            <span>🆔 150350425</span>
+                            <span>📍 Economía</span>
+                            <span>📚 12 publicaciones</span>
+                            <span>✏️ 3 tesis</span>
+                        </div>
+                    </div>
+                    <div class="profesor-arrow">→</div>
+                </div>
+                
+                <div class="profesor-row" onclick="abrirModal('prof3')">
+                    <div class="profesor-info">
+                        <div class="profesor-nombre">Mauricio Larraín Errázuriz</div>
+                        <div class="profesor-meta">
+                            <span>🆔 90392271</span>
+                            <span>📍 Economía</span>
+                            <span>📚 18 publicaciones</span>
+                            <span>✏️ 4 tesis</span>
+                        </div>
+                    </div>
+                    <div class="profesor-arrow">→</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- MODAL PROFESOR 1 -->
+    <div id="modal-prof1" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h2>Sebastián Claro Edwards</h2>
+                    <p>CLARO/EDWARDS SEBASTIAN | RUT: 124560306</p>
+                </div>
+                <button class="close-btn" onclick="cerrarModal('prof1')">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="info-section">
+                    <div class="section-title">📋 Información Personal</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">RUT</div>
+                            <div class="info-value rut">124560306</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Contrato Facultad</div>
+                            <div class="info-value">Jornada Completa</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Vínculo Doctorado</div>
+                            <div class="info-value">Claustro</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-section">
+                    <div class="section-title">🎓 Información Académica</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Título Profesional</div>
+                            <div class="info-value">Ingeniero Comercial mención Economía, Pontificia Universidad Católica de Chile</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Grado Académico</div>
+                            <div class="info-value">Ph.D. en Economía, UCLA, 2001</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Líneas de Investigación</div>
+                            <div class="info-value">Economía Internacional, Macroeconomía Aplicada, Comercio Exterior</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-section">
+                    <div class="section-title">📊 Producción Académica (últimos 5 años)</div>
+                    <div class="stats-grid">
+                        <div class="stat">
+                            <div class="stat-label">Tesis Magister</div>
+                            <div class="stat-value">2</div>
+                        </div>
+                        <div class="stat yellow">
+                            <div class="stat-label">Tesis Doctorado</div>
+                            <div class="stat-value">1</div>
+                        </div>
+                        <div class="stat purple">
+                            <div class="stat-label">Publicaciones</div>
+                            <div class="stat-value">15</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-label">Libros</div>
+                            <div class="stat-value">2</div>
+                        </div>
+                        <div class="stat yellow">
+                            <div class="stat-label">Proyectos</div>
+                            <div class="stat-value">5</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-section">
+                    <div class="section-title">📚 Últimas Publicaciones Indexadas</div>
+                    <div class="list-items">
+                        <div class="list-item">
+                            <strong>The ABCs of firm heterogeneity</strong>
+                            <div class="list-item-meta">Journal of Political Economy | 2024</div>
+                        </div>
+                        <div class="list-item">
+                            <strong>International Business Cycles: Theory and Evidence</strong>
+                            <div class="list-item-meta">American Economic Review | 2023</div>
+                        </div>
+                        <div class="list-item">
+                            <strong>External Adjustment and Financing in Emerging Markets</strong>
+                            <div class="list-item-meta">Journal of International Economics | 2023</div>
+                        </div>
+                        <div class="list-item">
+                            <strong>+ 12 publicaciones más</strong>
+                            <div class="list-item-meta">Total de 15 publicaciones indexadas</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- MODAL PROFESOR 2 -->
+    <div id="modal-prof2" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h2>Álvaro Felipe García Marín</h2>
+                    <p>GARCIA/MARIN ALVARO | RUT: 150350425</p>
+                </div>
+                <button class="close-btn" onclick="cerrarModal('prof2')">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="info-section">
+                    <div class="section-title">📋 Información Personal</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">RUT</div>
+                            <div class="info-value rut">150350425</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Contrato</div>
+                            <div class="info-value">Jornada Completa</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Vínculo</div>
+                            <div class="info-value">Claustro</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-section">
+                    <div class="section-title">📊 Producción Académica</div>
+                    <div class="stats-grid">
+                        <div class="stat">
+                            <div class="stat-label">Tesis Magister</div>
+                            <div class="stat-value">3</div>
+                        </div>
+                        <div class="stat yellow">
+                            <div class="stat-label">Tesis Doctorado</div>
+                            <div class="stat-value">2</div>
+                        </div>
+                        <div class="stat purple">
+                            <div class="stat-label">Publicaciones</div>
+                            <div class="stat-value">12</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-label">Libros</div>
+                            <div class="stat-value">1</div>
+                        </div>
+                        <div class="stat yellow">
+                            <div class="stat-label">Proyectos</div>
+                            <div class="stat-value">4</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- MODAL PROFESOR 3 -->
+    <div id="modal-prof3" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h2>Mauricio Larraín Errázuriz</h2>
+                    <p>LARRAIN/ERRAZURIZ MAURICIO | RUT: 90392271</p>
+                </div>
+                <button class="close-btn" onclick="cerrarModal('prof3')">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="info-section">
+                    <div class="section-title">📋 Información Personal</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">RUT</div>
+                            <div class="info-value rut">90392271</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Contrato</div>
+                            <div class="info-value">Jornada Completa</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Vínculo</div>
+                            <div class="info-value">Claustro</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-section">
+                    <div class="section-title">📊 Producción Académica</div>
+                    <div class="stats-grid">
+                        <div class="stat">
+                            <div class="stat-label">Tesis Magister</div>
+                            <div class="stat-value">4</div>
+                        </div>
+                        <div class="stat yellow">
+                            <div class="stat-label">Tesis Doctorado</div>
+                            <div class="stat-value">3</div>
+                        </div>
+                        <div class="stat purple">
+                            <div class="stat-label">Publicaciones</div>
+                            <div class="stat-value">18</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-label">Libros</div>
+                            <div class="stat-value">3</div>
+                        </div>
+                        <div class="stat yellow">
+                            <div class="stat-label">Proyectos</div>
+                            <div class="stat-value">6</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function abrirModal(profId) {
+            document.getElementById(`modal-${profId}`).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function cerrarModal(profId) {
+            document.getElementById(`modal-${profId}`).classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+    </script>
+</body>
+</html>
