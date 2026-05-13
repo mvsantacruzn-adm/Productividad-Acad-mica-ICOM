@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Productividad Académica - UANDES</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
@@ -56,6 +57,14 @@
             margin-left: 200px; 
             flex: 1; 
             padding: 30px; 
+        }
+        
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
         }
         
         .header h1 { 
@@ -213,7 +222,7 @@
             border-left: 3px solid #667eea;
         }
         
-        .info-label {
+        .info-label{
             font-size: 11px;
             color: #999;
             text-transform: uppercase;
@@ -222,19 +231,19 @@
             letter-spacing: 0.3px;
         }
         
-        .info-value {
+        .info-value{
             font-size: 14px;
             color: #333;
             word-break: break-word;
         }
         
         /* TABLAS STYLE EXCEL */
-        .table-container {
+        .table-container{
             overflow-x: auto;
             margin-bottom: 20px;
         }
         
-        table {
+        table{
             width: 100%;
             border-collapse: collapse;
             background: white;
@@ -242,12 +251,12 @@
             font-size: 12px;
         }
         
-        thead {
+        thead{
             background: #667eea;
             color: white;
         }
         
-        th {
+        th{
             padding: 12px;
             text-align: left;
             font-weight: 600;
@@ -256,7 +265,7 @@
             font-size: 12px;
         }
         
-        td {
+        td{
             padding: 10px 12px;
             border: 1px solid #e0e0e0;
             font-size: 12px;
@@ -264,15 +273,15 @@
             word-break: break-word;
         }
         
-        tbody tr:nth-child(even) {
+        tbody tr:nth-child(even){
             background: #f8f9fa;
         }
         
-        tbody tr:hover {
+        tbody tr:hover{
             background: #f0f0f0;
         }
         
-        .sin-datos {
+        .sin-datos{
             color: #999;
             font-style: italic;
             padding: 20px;
@@ -280,23 +289,126 @@
             background: #f8f9fa;
             border-radius: 6px;
         }
+        
+        /* REPORTES */
+        .reportes-section {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .reporte-card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        .reporte-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+        }
+        
+        .reporte-description {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #a8d5ff 0%, #b8e0ff 100%);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .btn.yellow {
+            background: linear-gradient(135deg, #ffe89a 0%, #fff0b5 100%);
+        }
+        
+        .btn.purple {
+            background: linear-gradient(135deg, #d4c5f9 0%, #e5d9ff 100%);
+        }
     </style>
 </head>
 <body>
     <div class="wrapper">
         <div class="sidebar">
             <div class="logo">📊 Productividad<br>UANDES</div>
-            <div class="menu-item active" onclick="mostrarPagina('profesores')">👥 Profesores</div>
-            <div class="menu-item" onclick="mostrarPagina('reportes')">📋 Reportes</div>
+            <div class="menu-item active" onclick="cambiarPagina('profesores')">👥 Profesores</div>
+            <div class="menu-item" onclick="cambiarPagina('reportes')">📋 Reportes</div>
         </div>
         
         <div class="main-content">
-            <div class="header">
-                <h1>Profesores - Claustro Doctorado</h1>
-                <p>14 integrantes del cuerpo académico | Haz clic para ver información completa</p>
+            <!-- PÁGINA PROFESORES -->
+            <div id="page-profesores" class="page active">
+                <div class="header">
+                    <h1>Profesores - Claustro Doctorado</h1>
+                    <p>14 integrantes del cuerpo académico | Haz clic para ver información completa</p>
+                </div>
+                
+                <div class="profesor-list" id="profesor-list"></div>
             </div>
             
-            <div class="profesor-list" id="profesor-list"></div>
+            <!-- PÁGINA REPORTES -->
+            <div id="page-reportes" class="page">
+                <div class="header">
+                    <h1>Descargar Reportes</h1>
+                    <p>Formatos CNA, Completo e Individual por Profesor</p>
+                </div>
+                
+                <div class="reportes-section">
+                    <div class="reporte-card">
+                        <div class="reporte-title">🎓 Reporte Formato CNA</div>
+                        <div class="reporte-description">
+                            Formato oficial para CNA. Información académica de todos los profesores en columnas específicas.
+                        </div>
+                        <div class="button-group">
+                            <button class="btn" onclick="descargarReporteCNA('excel')">📥 Descargar Excel</button>
+                            <button class="btn yellow" onclick="descargarReporteCNA('csv')">📥 Descargar CSV</button>
+                        </div>
+                    </div>
+                    
+                    <div class="reporte-card">
+                        <div class="reporte-title">📊 Reporte Completo (Todos los datos)</div>
+                        <div class="reporte-description">
+                            Información completa de todos los profesores. Incluye tipo de ítem, profesor, y todos los detalles.
+                        </div>
+                        <div class="button-group">
+                            <button class="btn" onclick="descargarReporteCompleto('excel')">📥 Descargar Excel</button>
+                            <button class="btn yellow" onclick="descargarReporteCompleto('csv')">📥 Descargar CSV</button>
+                        </div>
+                    </div>
+                    
+                    <div class="reporte-card">
+                        <div class="reporte-title">📄 Reporte Individual por Profesor</div>
+                        <div class="reporte-description">
+                            Histórico completo de cada profesor. Información académica detallada desde el inicio.
+                        </div>
+                        <div class="button-group" id="reportes-profesores">
+                            <!-- Se genera dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     
@@ -326,7 +438,7 @@
                     tesis_doctorado_coguia: [],
                     publicaciones_indexadas: [
                         { autores: 'Bernardo Blum, Sebastián Claro, Ignatius Horstmann, David Rivers', principal: 'Sebastián Claro', año: 2024, titulo: 'The ABCs of firm heterogeneity', revista: 'Journal of Political Economy', estado: 'Publicado', issn: '0022-3808', factor: '10.2 (WoS)', link: 'N/A' },
-                        { autores: 'Sebastián Claro, Assaf Razin', principal: 'Sebastián Claro', año: 2023, titulo: 'International Business Cycles: Theory and Evidence', revista: 'American Economic Review', estado: 'Published', issn: '0002-8282', factor: '14.7 (WoS)', link: 'N/A' }
+                        { autores: 'Sebastián Claro, Assaf Razin', principal: 'Sebastián Claro', año: 2023, titulo: 'International Business Cycles: Theory and Evidence', revista: 'American Economic Review', estado: 'Publicado', issn: '0002-8282', factor: '14.7 (WoS)', link: 'N/A' }
                     ],
                     publicaciones_no_indexadas: [],
                     libros: [
@@ -341,7 +453,6 @@
                     ]
                 }
             },
-            // Profesores con información parcial
             {
                 id: 'prof02',
                 nombre: 'Álvaro Felipe García Marín',
@@ -853,8 +964,24 @@
             `).join('');
         }
         
-        function mostrarPagina(pagina) {
-            // Para el futuro
+        // Generar botones de reportes individuales
+        function generarBotonesReportes() {
+            const container = document.getElementById('reportes-profesores');
+            container.innerHTML = profesores.map((p, i) => `
+                <button class="btn" onclick="descargarProfesorIndividual('${p.id}')">
+                    ${p.nombre.split(' ')[0]} - Excel
+                </button>
+            `).join('');
+        }
+        
+        function cambiarPagina(pagina) {
+            // Ocultar todas las páginas
+            document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
+            
+            // Mostrar la página solicitada
+            document.getElementById(`page-${pagina}`).classList.add('active');
+            event.target.classList.add('active');
         }
         
         function abrirModal(id) {
@@ -874,9 +1001,24 @@
             }
         }
         
+        // Funciones de descarga (placeholders)
+        function descargarReporteCNA(formato) {
+            alert('Descargando Reporte CNA en ' + formato.toUpperCase());
+        }
+        
+        function descargarReporteCompleto(formato) {
+            alert('Descargando Reporte Completo en ' + formato.toUpperCase());
+        }
+        
+        function descargarProfesorIndividual(id) {
+            const prof = profesores.find(p => p.id === id);
+            alert('Descargando perfil de ' + prof.nombre);
+        }
+        
         // Inicializar
         generarListado();
         generarModales();
+        generarBotonesReportes();
     </script>
 </body>
 </html>
