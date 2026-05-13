@@ -46,9 +46,15 @@ function inicializar() {
 }
 
 function generarResumen(nombre) {
+    const base = datosBase[nombre] || {};
     const secciones = datosProduccion[nombre]?.secciones || {};
     const items = [];
     
+    // Agregar Vínculo y Líneas de investigación
+    if (base.vinculo) items.push(base.vinculo);
+    if (base.lineas) items.push(base.lineas);
+    
+    // Agregar conteo de registros
     if (secciones.publicaciones_indexadas) items.push(`${secciones.publicaciones_indexadas.filas.length} pub ind`);
     if (secciones.publicaciones_no_indexadas) items.push(`${secciones.publicaciones_no_indexadas.filas.length} no ind`);
     if (secciones.libros) items.push(`${secciones.libros.filas.length} libros`);
