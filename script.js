@@ -1,5 +1,6 @@
 let datosBase = {};
 let datosProduccion = {};
+let profesorActualFicha = null;
 
 // Cargar datos desde los JSONs
 async function cargarDatos() {
@@ -51,11 +52,9 @@ function generarResumen(nombre) {
     const secciones = datosProduccion[nombre]?.secciones || {};
     const items = [];
     
-    // Agregar Vínculo y Líneas de investigación
     if (base.vinculo) items.push(base.vinculo);
     if (base.lineas) items.push(base.lineas);
     
-    // Agregar conteo de registros
     if (secciones.publicaciones_indexadas) items.push(`${secciones.publicaciones_indexadas.filas.length} pub ind`);
     if (secciones.publicaciones_no_indexadas) items.push(`${secciones.publicaciones_no_indexadas.filas.length} no ind`);
     if (secciones.libros) items.push(`${secciones.libros.filas.length} libros`);
@@ -86,12 +85,10 @@ function poblarSelectorProfesores() {
     const select = document.getElementById('profesor-select');
     const profesoresOrdenados = Object.keys(datosBase).sort();
     
-    // Limpiar opciones existentes (excepto la primera "Todos")
     while (select.options.length > 1) {
         select.remove(1);
     }
     
-    // Agregar profesores
     profesoresOrdenados.forEach(nombre => {
         const option = document.createElement('option');
         option.value = nombre;
@@ -100,10 +97,18 @@ function poblarSelectorProfesores() {
     });
 }
 
+function filtrarPorAño(filas, año = 2020) {
+    return filas.filter(fila => {
+        const añoFila = parseInt(fila.Año || fila['Año'] || '');
+        return !isNaN(añoFila) && añoFila >= año;
+    });
+}
+
 function generarFichaCNA() {
     const select = document.getElementById('profesor-select');
     const nombreProfesor = select.value;
     const preview = document.getElementById('ficha-cna-preview');
+    const btnDescarga = document.getElementById('btn-descargar-pdf');
     
     if (!nombreProfesor) {
         preview.innerHTML = `
@@ -111,6 +116,7 @@ function generarFichaCNA() {
                 <p>Selecciona un profesor para visualizar su ficha</p>
             </div>
         `;
+        btnDescarga.style.display = 'none';
         return;
     }
     
@@ -123,76 +129,205 @@ function generarFichaCNA() {
                 <p>No se encontraron datos para este profesor</p>
             </div>
         `;
+        btnDescarga.style.display = 'none';
         return;
     }
     
-    // Mostrar información básica de la ficha
-    preview.innerHTML = `
-        <div style="background: white; padding: 20px; border-radius: 8px;">
-            <h3 style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #e5e5e5;">Ficha Académica CNA</h3>
-            
-            <div style="margin-bottom: 20px;">
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
-                    <div style="background: #f8f9fa; padding: 12px; border-radius: 6px; border-left: 3px solid #667eea;">
-                        <div style="font-size: 11px; color: #999; text-transform: uppercase; font-weight: 600; margin-bottom: 4px;">Profesor</div>
-                        <div style="font-size: 14px; color: #333;">${base.nombre}</div>
-                    </div>
-                    <div style="background: #f8f9fa; padding: 12px; border-radius: 6px; border-left: 3px solid #667eea;">
-                        <div style="font-size: 11px; color: #999; text-transform: uppercase; font-weight: 600; margin-bottom: 4px;">Vínculo</div>
-                        <div style="font-size: 14px; color: #333;">${base.vinculo}</div>
-                    </div>
-                    <div style="background: #f8f9fa; padding: 12px; border-radius: 6px; border-left: 3px solid #667eea;">
-                        <div style="font-size: 11px; color: #999; text-transform: uppercase; font-weight: 600; margin-bottom: 4px;">Título Profesional</div>
-                        <div style="font-size: 14px; color: #333;">${base.titulo}</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div style="margin-bottom: 20px;">
-                <div style="background: #f8f9fa; padding: 12px; border-radius: 6px; border-left: 3px solid #667eea; margin-bottom: 15px;">
-                    <div style="font-size: 11px; color: #999; text-transform: uppercase; font-weight: 600; margin-bottom: 4px;">Grado Académico</div>
-                    <div style="font-size: 14px; color: #333;">${base.grado}</div>
-                </div>
-                <div style="background: #f8f9fa; padding: 12px; border-radius: 6px; border-left: 3px solid #667eea;">
-                    <div style="font-size: 11px; color: #999; text-transform: uppercase; font-weight: 600; margin-bottom: 4px;">Líneas de Investigación</div>
-                    <div style="font-size: 14px; color: #333; line-height: 1.5;">${base.lineas}</div>
-                </div>
-            </div>
-            
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 6px; border-top: 2px solid #667eea;">
-                <h4 style="font-size: 13px; font-weight: 600; color: #667eea; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Resumen de Producción Académica</h4>
-                <ul style="list-style: none; padding: 0; margin: 0;">
-                    ${generarResumenProduccion(produccion)}
-                </ul>
-            </div>
-        </div>
-    `;
+    profesorActualFicha = nombreProfesor;
+    const fichaHTML = construirFichaCNA(nombreProfesor, base, produccion);
+    preview.innerHTML = fichaHTML;
+    btnDescarga.style.display = 'inline-block';
 }
 
-function generarResumenProduccion(produccion) {
+function construirFichaCNA(nombreProfesor, base, produccion) {
     const secciones = produccion?.secciones || {};
-    const items = [];
+    let html = `
+        <div id="ficha-pdf-content" style="background: white; padding: 20px; border-radius: 8px; font-family: Arial, sans-serif; font-size: 12px; color: #333; line-height: 1.6;">
+            
+            <h1 style="font-size: 18px; font-weight: bold; text-align: center; margin-bottom: 20px; border-bottom: 2px solid #667eea; padding-bottom: 10px;">Ficha Académica CNA</h1>
+            
+            <h2 style="font-size: 16px; font-weight: bold; color: #333; margin-bottom: 15px;">${nombreProfesor}</h2>
+            
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px; border: 1px solid #ddd;">
+                <tbody>
+                    <tr>
+                        <td style="padding: 10px; background: #f0f0f0; font-weight: bold; width: 30%; border: 1px solid #ddd;">Nombre</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">${base.nombre || 'N/D'}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; background: #f0f0f0; font-weight: bold; border: 1px solid #ddd;">Vínculo</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">${base.vinculo || 'N/D'}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; background: #f0f0f0; font-weight: bold; border: 1px solid #ddd;">Título Profesional</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">${base.titulo || 'N/D'}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; background: #f0f0f0; font-weight: bold; border: 1px solid #ddd;">Grado Académico Máximo</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">${base.grado || 'N/D'}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; background: #f0f0f0; font-weight: bold; border: 1px solid #ddd;">Líneas de Investigación</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">${base.lineas || 'N/D'}</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div style="margin-bottom: 30px;"></div>
+    `;
     
-    const mapeoSecciones = {
-        'publicaciones_indexadas': 'Publicaciones Indexadas',
-        'publicaciones_no_indexadas': 'Publicaciones No Indexadas',
-        'libros': 'Libros',
-        'capitulos': 'Capítulos de Libro',
-        'proyectos': 'Proyectos de Investigación',
-        'tesis_doctorado_guia': 'Tesis Doctorado (Guía)',
-        'tesis_doctorado_coguia': 'Tesis Doctorado (Co-guía)',
-        'tesis_magister_guia': 'Tesis Magister (Guía)',
-        'tesis_magister_coguia': 'Tesis Magister (Co-guía)'
-    };
-    
-    for (const [clave, titulo] of Object.entries(mapeoSecciones)) {
-        const seccion = secciones[clave];
-        if (seccion && seccion.filas && seccion.filas.length > 0) {
-            items.push(`<li style="padding: 8px 0; color: #333; font-size: 13px;"><strong>${titulo}:</strong> ${seccion.filas.length} registro(s)</li>`);
+    // Tesis Magister Guía
+    if (secciones.tesis_magister_guia && secciones.tesis_magister_guia.filas.length > 0) {
+        const filasFiltradas = filtrarPorAño(secciones.tesis_magister_guia.filas);
+        if (filasFiltradas.length > 0) {
+            html += construirTabla('2.1. Tesis de Magister Dirigidas (Como Guía)', secciones.tesis_magister_guia.headers, filasFiltradas);
         }
     }
     
-    return items.length > 0 ? items.join('') : '<li style="color: #999; font-size: 13px;">Sin información de producción académica</li>';
+    // Tesis Magister Co-guía
+    if (secciones.tesis_magister_coguia && secciones.tesis_magister_coguia.filas.length > 0) {
+        const filasFiltradas = filtrarPorAño(secciones.tesis_magister_coguia.filas);
+        if (filasFiltradas.length > 0) {
+            html += construirTabla('2.2. Tesis de Magister Dirigidas (Como Co-guía)', secciones.tesis_magister_coguia.headers, filasFiltradas);
+        }
+    }
+    
+    // Tesis Doctorado Guía
+    if (secciones.tesis_doctorado_guia && secciones.tesis_doctorado_guia.filas.length > 0) {
+        const filasFiltradas = filtrarPorAño(secciones.tesis_doctorado_guia.filas);
+        if (filasFiltradas.length > 0) {
+            html += construirTabla('3.1. Tesis de Doctorado Dirigidas (Como Guía)', secciones.tesis_doctorado_guia.headers, filasFiltradas);
+        }
+    }
+    
+    // Tesis Doctorado Co-guía
+    if (secciones.tesis_doctorado_coguia && secciones.tesis_doctorado_coguia.filas.length > 0) {
+        const filasFiltradas = filtrarPorAño(secciones.tesis_doctorado_coguia.filas);
+        if (filasFiltradas.length > 0) {
+            html += construirTabla('3.2. Tesis de Doctorado Dirigidas (Como Co-guía)', secciones.tesis_doctorado_coguia.headers, filasFiltradas);
+        }
+    }
+    
+    // Publicaciones Indexadas
+    if (secciones.publicaciones_indexadas && secciones.publicaciones_indexadas.filas.length > 0) {
+        const filasFiltradas = filtrarPorAño(secciones.publicaciones_indexadas.filas);
+        if (filasFiltradas.length > 0) {
+            html += construirTabla('4.1. Publicaciones Indexadas', secciones.publicaciones_indexadas.headers, filasFiltradas);
+        }
+    }
+    
+    // Publicaciones No Indexadas
+    if (secciones.publicaciones_no_indexadas && secciones.publicaciones_no_indexadas.filas.length > 0) {
+        const filasFiltradas = filtrarPorAño(secciones.publicaciones_no_indexadas.filas);
+        if (filasFiltradas.length > 0) {
+            html += construirTabla('4.2. Publicaciones No Indexadas', secciones.publicaciones_no_indexadas.headers, filasFiltradas);
+        }
+    }
+    
+    // Libros
+    if (secciones.libros && secciones.libros.filas.length > 0) {
+        const filasFiltradas = filtrarPorAño(secciones.libros.filas);
+        if (filasFiltradas.length > 0) {
+            html += construirTabla('4.3. Libros', secciones.libros.headers, filasFiltradas);
+        }
+    }
+    
+    // Capítulos
+    if (secciones.capitulos && secciones.capitulos.filas.length > 0) {
+        const filasFiltradas = filtrarPorAño(secciones.capitulos.filas);
+        if (filasFiltradas.length > 0) {
+            html += construirTabla('4.4. Capítulos de Libro', secciones.capitulos.headers, filasFiltradas);
+        }
+    }
+    
+    // Patentes
+    if (secciones.patentes && secciones.patentes.filas.length > 0) {
+        const filasFiltradas = filtrarPorAño(secciones.patentes.filas);
+        if (filasFiltradas.length > 0) {
+            html += construirTabla('4.5. Patentes', secciones.patentes.headers, filasFiltradas);
+        }
+    }
+    
+    // Proyectos
+    if (secciones.proyectos && secciones.proyectos.filas.length > 0) {
+        const filasFiltradas = filtrarPorAño(secciones.proyectos.filas);
+        if (filasFiltradas.length > 0) {
+            html += construirTabla('5. Proyectos de Investigación', secciones.proyectos.headers, filasFiltradas);
+        }
+    }
+    
+    html += `
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; text-align: center; color: #999; font-size: 10px;">
+                <p>Reporte generado automáticamente desde el Sistema de Productividad Académica - UANDES</p>
+            </div>
+        </div>
+    `;
+    
+    return html;
+}
+
+function construirTabla(titulo, headers, filas) {
+    if (!filas || filas.length === 0) return '';
+    
+    let html = `
+        <h3 style="font-size: 13px; font-weight: bold; color: #333; margin-top: 25px; margin-bottom: 10px;">${titulo}</h3>
+        <table class="ficha-table" style="width: 100%; border-collapse: collapse; margin-bottom: 25px; border: 1px solid #ddd;">
+            <thead>
+                <tr style="background: #f0f0f0;">
+    `;
+    
+    // Crear headers con N° al inicio si no existe
+    const headersConNumero = !headers.includes('N°') ? ['N°', ...headers] : headers;
+    
+    headersConNumero.forEach(header => {
+        html += `<th style="padding: 10px; text-align: left; font-weight: bold; border: 1px solid #ddd; background: #f0f0f0;">${header}</th>`;
+    });
+    
+    html += `</tr></thead><tbody>`;
+    
+    filas.forEach((fila, idx) => {
+        html += `<tr>`;
+        
+        // Agregar número si no existe
+        if (!headers.includes('N°')) {
+            html += `<td style="padding: 10px; border: 1px solid #ddd; background: #fafafa;">${idx + 1}</td>`;
+        }
+        
+        headersConNumero.forEach(header => {
+            if (header !== 'N°') {
+                const valor = fila[header] || 'N/D';
+                html += `<td style="padding: 10px; border: 1px solid #ddd;">${valor}</td>`;
+            } else if (header === 'N°') {
+                html += `<td style="padding: 10px; border: 1px solid #ddd; background: #fafafa;">${fila['N°'] || idx + 1}</td>`;
+            }
+        });
+        
+        html += `</tr>`;
+    });
+    
+    html += `</tbody></table><div style="margin-bottom: 15px;"></div>`;
+    
+    return html;
+}
+
+function descargarPDF() {
+    if (!profesorActualFicha) {
+        alert('Por favor genera la ficha primero');
+        return;
+    }
+    
+    const element = document.getElementById('ficha-pdf-content');
+    const nombreArchivo = `Ficha_CNA_${profesorActualFicha.replace(/\s+/g, '_')}.pdf`;
+    
+    const opt = {
+        margin: 10,
+        filename: nombreArchivo,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+    
+    html2pdf().set(opt).from(element).save();
 }
 
 function generarModales(profesores) {

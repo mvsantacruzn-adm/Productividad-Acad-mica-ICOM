@@ -429,3 +429,40 @@ tbody tr:hover {
     font-size: 14px;
 }
 
+
+.btn-secondary {
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #667eea;
+    background: white;
+    border: 2px solid #667eea;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+    background: #f8f9fa;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+}
+
+.btn-secondary:active {
+    background: #f0f0f0;
+}
+
+@media print {
+    body, .wrapper, .sidebar, .main-content {
+        background: white !important;
+    }
+    .sidebar, .header, .form-actions, .btn-primary, .btn-secondary {
+        display: none !important;
+    }
+    #ficha-pdf-content {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    .ficha-table {
+        page-break-inside: avoid;
+    }
+}

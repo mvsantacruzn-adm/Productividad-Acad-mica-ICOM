@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Productividad Académica - UANDES Doctorado</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
     <div class="wrapper">
@@ -46,6 +47,7 @@
                             
                             <div class="form-actions">
                                 <button class="btn-primary" onclick="generarFichaCNA()">Generar Ficha CNA</button>
+                                <button class="btn-secondary" id="btn-descargar-pdf" onclick="descargarPDF()" style="display: none;">Descargar PDF</button>
                             </div>
                         </div>
                         
@@ -63,6 +65,7 @@
     </div>
     
     <div id="modales-container"></div>
+    <div id="ficha-pdf-container" style="display: none;"></div>
     
     <script src="script.js"></script>
 </body>
