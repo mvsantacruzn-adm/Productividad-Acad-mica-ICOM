@@ -3,254 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Productividad Académica</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.min.js"></script>
+    <title>Sistema de Productividad Académica - UANDES</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background: #f5f7fa;
+            background: #f5f7fa; 
             min-height: 100vh;
+            color: #333;
         }
         
-        .wrapper {
-            display: flex;
-            min-height: 100vh;
+        .wrapper { display: flex; min-height: 100vh; }
+        
+        .sidebar { 
+            width: 200px; 
+            background: white; 
+            padding: 30px 20px; 
+            border-right: 1px solid #e5e5e5; 
+            position: fixed; 
+            height: 100vh; 
+            overflow-y: auto; 
         }
         
-        .sidebar {
-            width: 200px;
-            background: white;
-            padding: 30px 20px;
-            border-right: 1px solid #e5e5e5;
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
+        .logo { 
+            font-size: 14px; 
+            font-weight: bold; 
+            color: #667eea; 
+            margin-bottom: 40px; 
         }
         
-        .logo {
-            font-size: 18px;
-            font-weight: bold;
-            color: #667eea;
-            margin-bottom: 40px;
-        }
-        
-        .menu-item {
-            padding: 12px 15px;
-            margin-bottom: 8px;
-            border-radius: 8px;
-            cursor: pointer;
+        .menu-item { 
+            padding: 12px 15px; 
+            margin-bottom: 8px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            color: #666; 
+            font-size: 14px; 
             transition: all 0.3s;
-            color: #666;
-            font-size: 14px;
         }
         
-        .menu-item.active {
-            background: #c5d9f7;
-            color: #667eea;
-            font-weight: 600;
+        .menu-item.active { 
+            background: #c5d9f7; 
+            color: #667eea; 
+            font-weight: 600; 
         }
         
         .menu-item:hover {
             background: #f0f0f0;
         }
         
-        .main-content {
-            margin-left: 200px;
-            flex: 1;
-            padding: 30px;
+        .main-content { 
+            margin-left: 200px; 
+            flex: 1; 
+            padding: 30px; 
         }
         
-        .page {
-            display: none;
+        .header h1 { 
+            font-size: 28px; 
+            color: #333; 
+            margin-bottom: 10px; 
         }
         
-        .page.active {
-            display: block;
+        .header p { 
+            color: #999; 
+            font-size: 14px; 
+            margin-bottom: 30px; 
         }
         
-        .header h1 {
-            font-size: 28px;
-            color: #333;
-            margin-bottom: 10px;
-        }
-        
-        .header p {
-            color: #999;
-            font-size: 14px;
-            margin-bottom: 30px;
-        }
-        
-        /* LISTADO */
         .profesor-list {
             display: grid;
             gap: 12px;
         }
         
-        .profesor-row {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 4px solid #667eea;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .profesor-row { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 8px; 
+            border-left: 4px solid #667eea; 
+            cursor: pointer; 
+            transition: all 0.3s; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
         
-        .profesor-row:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transform: translateX(5px);
+        .profesor-row:hover { 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+            transform: translateX(5px); 
         }
         
-        .profesor-info {
-            flex: 1;
+        .profesor-info { flex: 1; }
+        
+        .profesor-nombre { 
+            font-size: 16px; 
+            font-weight: 600; 
+            color: #333; 
+            margin-bottom: 6px; 
         }
         
-        .profesor-nombre {
-            font-size: 16px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 4px;
+        .profesor-resumen { 
+            font-size: 13px; 
+            color: #666; 
+            line-height: 1.4;
         }
         
-        .profesor-meta {
-            font-size: 12px;
-            color: #999;
-        }
-        
-        .profesor-meta span {
-            margin-right: 15px;
-        }
-        
-        .profesor-arrow {
-            font-size: 20px;
-            color: #667eea;
-        }
-        
-        /* REPORTES */
-        .reportes-section {
-            display: grid;
-            gap: 20px;
-        }
-        
-        .reporte-card {
-            background: white;
-            padding: 25px;
-            border-radius: 8px;
-            border-left: 4px solid #667eea;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-        
-        .reporte-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 15px;
-        }
-        
-        .reporte-description {
-            font-size: 13px;
-            color: #666;
-            margin-bottom: 15px;
-        }
-        
-        .button-group {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        
-        .btn {
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #a8d5ff 0%, #b8e0ff 100%);
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-            color: #333;
-            transition: all 0.3s;
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        
-        .btn.yellow {
-            background: linear-gradient(135deg, #ffe89a 0%, #fff0b5 100%);
-        }
-        
-        .btn.purple {
-            background: linear-gradient(135deg, #d4c5f9 0%, #e5d9ff 100%);
+        .profesor-arrow { 
+            font-size: 20px; 
+            color: #667eea; 
+            margin-left: 20px;
         }
         
         /* MODAL */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.5);
-        }
-        
-        .modal.active {
-            display: flex;
+        .modal { 
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0; 
+            top: 0; 
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(0,0,0,0.5); 
             align-items: flex-start;
             justify-content: center;
-            padding-top: 50px;
-        }
-        
-        .modal-content {
-            background-color: #fefefe;
-            width: 90%;
-            max-width: 900px;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            max-height: 90vh;
+            padding-top: 30px;
             overflow-y: auto;
         }
         
-        .modal-header {
-            background: linear-gradient(135deg, #a8d5ff 0%, #b8e0ff 100%);
-            padding: 30px;
-            border-radius: 12px 12px 0 0;
-            display: flex;
-            justify-content: space-between;
+        .modal.active { 
+            display: flex; 
+        }
+        
+        .modal-content { 
+            background-color: white; 
+            width: 95%; 
+            max-width: 1200px; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+        }
+        
+        .modal-header { 
+            background: linear-gradient(135deg, #a8d5ff 0%, #b8e0ff 100%); 
+            padding: 30px; 
+            border-radius: 12px 12px 0 0; 
+            display: flex; 
+            justify-content: space-between; 
             align-items: flex-start;
+            position: sticky;
+            top: 0;
         }
         
-        .modal-header h2 {
-            font-size: 24px;
-            color: #333;
+        .modal-header h2 { 
+            font-size: 24px; 
+            color: #333; 
+            margin-bottom: 8px;
         }
         
-        .modal-header p {
-            font-size: 13px;
-            color: #666;
-            margin-top: 8px;
-            font-family: monospace;
+        .modal-header p { 
+            font-size: 13px; 
+            color: #666; 
         }
         
-        .close-btn {
-            font-size: 28px;
-            font-weight: bold;
-            color: #999;
-            cursor: pointer;
-            border: none;
-            background: none;
+        .close-btn { 
+            font-size: 28px; 
+            color: #999; 
+            cursor: pointer; 
+            border: none; 
+            background: none; 
             padding: 0;
             width: 30px;
             height: 30px;
@@ -260,33 +180,37 @@
             color: #333;
         }
         
-        .modal-body {
-            padding: 30px;
+        .modal-body { 
+            padding: 30px; 
         }
         
-        .info-section {
-            margin-bottom: 30px;
+        .info-section { 
+            margin-bottom: 35px; 
         }
         
-        .section-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #f0f0f0;
+        .section-title { 
+            font-size: 14px; 
+            font-weight: 700; 
+            color: #333; 
+            margin-bottom: 15px; 
+            padding-bottom: 10px; 
+            border-bottom: 2px solid #667eea; 
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
         .info-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 15px;
+            margin-bottom: 20px;
         }
         
         .info-item {
             background: #f8f9fa;
-            padding: 15px;
+            padding: 12px;
             border-radius: 6px;
+            border-left: 3px solid #667eea;
         }
         
         .info-label {
@@ -294,756 +218,652 @@
             color: #999;
             text-transform: uppercase;
             font-weight: 600;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
+            letter-spacing: 0.3px;
         }
         
         .info-value {
             font-size: 14px;
             color: #333;
-            line-height: 1.5;
+            word-break: break-word;
         }
         
-        .info-value.rut {
-            font-family: monospace;
-            background: #e8eef7;
-            padding: 6px 10px;
-            border-radius: 4px;
+        /* TABLAS STYLE EXCEL */
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 20px;
         }
         
-        .list-items {
-            display: grid;
-            gap: 15px;
-        }
-        
-        .list-item {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 6px;
-            border-left: 3px solid #667eea;
-        }
-        
-        .list-item-title {
-            font-size: 13px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 6px;
-        }
-        
-        .list-item-meta {
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border: 1px solid #d0d0d0;
             font-size: 12px;
-            color: #666;
-            margin-bottom: 4px;
         }
         
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 12px;
-            margin-bottom: 25px;
+        thead {
+            background: #667eea;
+            color: white;
         }
         
-        .stat {
-            background: linear-gradient(135deg, #a8d5ff 0%, #b8e0ff 100%);
-            padding: 15px;
-            border-radius: 6px;
-            text-align: center;
+        th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            border: 1px solid #667eea;
+            white-space: nowrap;
+            font-size: 12px;
         }
         
-        .stat.yellow {
-            background: linear-gradient(135deg, #ffe89a 0%, #fff0b5 100%);
-        }
-        
-        .stat.purple {
-            background: linear-gradient(135deg, #d4c5f9 0%, #e5d9ff 100%);
-        }
-        
-        .stat-label {
-            font-size: 11px;
-            color: #666;
-            margin-bottom: 6px;
-        }
-        
-        .stat-value {
-            font-size: 22px;
-            font-weight: bold;
+        td {
+            padding: 10px 12px;
+            border: 1px solid #e0e0e0;
+            font-size: 12px;
             color: #333;
+            word-break: break-word;
+        }
+        
+        tbody tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        tbody tr:hover {
+            background: #f0f0f0;
+        }
+        
+        .sin-datos {
+            color: #999;
+            font-style: italic;
+            padding: 20px;
+            text-align: center;
+            background: #f8f9fa;
+            border-radius: 6px;
         }
     </style>
 </head>
 <body>
     <div class="wrapper">
-        <!-- SIDEBAR -->
         <div class="sidebar">
-            <div class="logo">📊 Productividad</div>
+            <div class="logo">📊 Productividad<br>UANDES</div>
             <div class="menu-item active" onclick="mostrarPagina('profesores')">👥 Profesores</div>
             <div class="menu-item" onclick="mostrarPagina('reportes')">📋 Reportes</div>
-            <div class="menu-item">📊 Dashboard</div>
         </div>
         
-        <!-- MAIN CONTENT -->
         <div class="main-content">
-            
-            <!-- PÁGINA PROFESORES -->
-            <div id="page-profesores" class="page active">
-                <div class="header">
-                    <h1>Profesores - Universidad de los Andes</h1>
-                    <p>Haz clic en cualquier profesor para ver su información completa</p>
-                </div>
-                
-                <div class="profesor-list">
-                    <div class="profesor-row" onclick="abrirModal('prof1')">
-                        <div class="profesor-info">
-                            <div class="profesor-nombre">Sebastián Claro Edwards</div>
-                            <div class="profesor-meta">
-                                <span>🆔 124560306</span>
-                                <span>📍 Economía</span>
-                                <span>📚 15 publicaciones</span>
-                                <span>✏️ 2 tesis</span>
-                            </div>
-                        </div>
-                        <div class="profesor-arrow">→</div>
-                    </div>
-                    
-                    <div class="profesor-row" onclick="abrirModal('prof2')">
-                        <div class="profesor-info">
-                            <div class="profesor-nombre">Álvaro Felipe García Marín</div>
-                            <div class="profesor-meta">
-                                <span>🆔 150350425</span>
-                                <span>📍 Economía</span>
-                                <span>📚 12 publicaciones</span>
-                                <span>✏️ 3 tesis</span>
-                            </div>
-                        </div>
-                        <div class="profesor-arrow">→</div>
-                    </div>
-                    
-                    <div class="profesor-row" onclick="abrirModal('prof3')">
-                        <div class="profesor-info">
-                            <div class="profesor-nombre">Mauricio Larraín Errázuriz</div>
-                            <div class="profesor-meta">
-                                <span>🆔 90392271</span>
-                                <span>📍 Economía</span>
-                                <span>📚 18 publicaciones</span>
-                                <span>✏️ 4 tesis</span>
-                            </div>
-                        </div>
-                        <div class="profesor-arrow">→</div>
-                    </div>
-                </div>
+            <div class="header">
+                <h1>Profesores - Claustro Doctorado</h1>
+                <p>14 integrantes del cuerpo académico | Haz clic para ver información completa</p>
             </div>
             
-            <!-- PÁGINA REPORTES -->
-            <div id="page-reportes" class="page">
-                <div class="header">
-                    <h1>Descargar Reportes</h1>
-                    <p>Descarga la información de productividad académica en el formato que prefieras</p>
-                </div>
-                
-                <div class="reportes-section">
-                    <!-- REPORTE GENERAL -->
-                    <div class="reporte-card">
-                        <div class="reporte-title">📊 Reporte General Completo</div>
-                        <div class="reporte-description">
-                            Información personal + académica de todos los profesores (RUT, contrato, vínculo, publicaciones, tesis, etc.)
-                        </div>
-                        <div class="button-group">
-                            <button class="btn" onclick="descargarExcel('general')">📥 Excel (.xlsx)</button>
-                            <button class="btn yellow" onclick="descargarCSV('general')">📥 CSV (.csv)</button>
-                            <button class="btn purple" onclick="descargarWord('general')">📥 Word (.docx)</button>
-                        </div>
-                    </div>
-                    
-                    <!-- REPORTE CNA -->
-                    <div class="reporte-card">
-                        <div class="reporte-title">🎓 Reporte Formato CNA</div>
-                        <div class="reporte-description">
-                            Formato oficial para CNA - Sin datos personales (RUT, contrato), solo información académica de últimos 5 años
-                        </div>
-                        <div class="button-group">
-                            <button class="btn" onclick="descargarExcel('cna')">📥 Excel (.xlsx)</button>
-                            <button class="btn yellow" onclick="descargarCSV('cna')">📥 CSV (.csv)</button>
-                        </div>
-                    </div>
-                    
-                    <!-- REPORTE POR PROFESOR -->
-                    <div class="reporte-card">
-                        <div class="reporte-title">📋 Reporte Individual por Profesor</div>
-                        <div class="reporte-description">
-                            Descarga el perfil completo de un profesor en el formato que prefieras
-                        </div>
-                        <div class="button-group">
-                            <button class="btn" onclick="descargarProfesor('prof1')">Sebastián Claro - Excel</button>
-                            <button class="btn" onclick="descargarProfesor('prof2')">Álvaro García - Excel</button>
-                            <button class="btn" onclick="descargarProfesor('prof3')">Mauricio Larraín - Excel</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div class="profesor-list" id="profesor-list"></div>
         </div>
     </div>
     
-    <!-- MODALES DE PROFESORES -->
-    
-    <!-- MODAL PROFESOR 1: SEBASTIÁN CLARO -->
-    <div id="modal-prof1" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div>
-                    <h2>Sebastián Claro Edwards</h2>
-                    <p>CLARO/EDWARDS SEBASTIAN | RUT: 124560306</p>
-                </div>
-                <button class="close-btn" onclick="cerrarModal('prof1')">&times;</button>
-            </div>
-            
-            <div class="modal-body">
-                <!-- Info Personal -->
-                <div class="info-section">
-                    <div class="section-title">📋 Información Personal</div>
-                    <div class="info-grid">
-                        <div class="info-item">
-                            <div class="info-label">RUT</div>
-                            <div class="info-value rut">124560306</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-label">Contrato Facultad</div>
-                            <div class="info-value">Jornada Completa</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-label">Vínculo Doctorado</div>
-                            <div class="info-value">Claustro</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Info Académica -->
-                <div class="info-section">
-                    <div class="section-title">🎓 Información Académica</div>
-                    <div class="info-grid">
-                        <div class="info-item">
-                            <div class="info-label">Título Profesional</div>
-                            <div class="info-value">Ingeniero Comercial mención Economía, Pontificia Universidad Católica de Chile</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-label">Grado Académico</div>
-                            <div class="info-value">Ph.D. en Economía, UCLA, 2001</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-label">Líneas de Investigación</div>
-                            <div class="info-value">Economía Internacional, Macroeconomía Aplicada, Comercio Exterior, Integración Financiera</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Producción -->
-                <div class="info-section">
-                    <div class="section-title">📊 Producción Académica (últimos 5 años)</div>
-                    <div class="stats-grid">
-                        <div class="stat">
-                            <div class="stat-label">Tesis Magister</div>
-                            <div class="stat-value">2</div>
-                        </div>
-                        <div class="stat yellow">
-                            <div class="stat-label">Tesis Doctorado</div>
-                            <div class="stat-value">1</div>
-                        </div>
-                        <div class="stat purple">
-                            <div class="stat-label">Publicaciones</div>
-                            <div class="stat-value">15</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-label">Libros</div>
-                            <div class="stat-value">2</div>
-                        </div>
-                        <div class="stat yellow">
-                            <div class="stat-label">Proyectos</div>
-                            <div class="stat-value">5</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- TODAS LAS PUBLICACIONES -->
-                <div class="info-section">
-                    <div class="section-title">📚 TODAS LAS Publicaciones Indexadas (15 Total)</div>
-                    <div class="list-items">
-                        <div class="list-item">
-                            <div class="list-item-title">The ABCs of firm heterogeneity</div>
-                            <div class="list-item-meta">Journal of Political Economy | 2024</div>
-                            <div class="list-item-meta">Autores: Bernardo Blum, Sebastián Claro, Ignatius Horstmann, David Rivers</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">International Business Cycles: Theory and Evidence from a Structural Bayesian Approach</div>
-                            <div class="list-item-meta">American Economic Review | 2023</div>
-                            <div class="list-item-meta">Autores: Sebastián Claro, Assaf Razin</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">External Adjustment and Financing in Emerging Markets: Lessons from the Asian Crisis</div>
-                            <div class="list-item-meta">Journal of International Economics | 2023</div>
-                            <div class="list-item-meta">Autor: Sebastián Claro</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Financial Market Integration and Economic Growth</div>
-                            <div class="list-item-meta">Review of International Economics | 2022</div>
-                            <div class="list-item-meta">Autores: Sebastián Claro, Pablo García, Felipe Larraín</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Exchange Rate Dynamics and Macroeconomic Fluctuations in Chile</div>
-                            <div class="list-item-meta">Journal of Development Economics | 2022</div>
-                            <div class="list-item-meta">Autor: Sebastián Claro</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Foreign Direct Investment and Productivity Growth</div>
-                            <div class="list-item-meta">World Development | 2022</div>
-                            <div class="list-item-meta">Autores: Sebastián Claro, Rene Zenteno</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Capital Controls and Asset Prices</div>
-                            <div class="list-item-meta">Journal of Financial Economics | 2021</div>
-                            <div class="list-item-meta">Autor: Sebastián Claro</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Terms of Trade and Economic Growth</div>
-                            <div class="list-item-meta">IMF Staff Papers | 2021</div>
-                            <div class="list-item-meta">Autores: Sebastián Claro, Rene Zenteno</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Heterogeneous Firms and Trade Adjustments</div>
-                            <div class="list-item-meta">Econometrica | 2021</div>
-                            <div class="list-item-meta">Autores: Sebastián Claro, Pablo García</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Financial Crisis and Employment Dynamics</div>
-                            <div class="list-item-meta">Economic Policy | 2020</div>
-                            <div class="list-item-meta">Autor: Sebastián Claro</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Monetary Policy and Asset Bubbles</div>
-                            <div class="list-item-meta">Journal of Monetary Economics | 2020</div>
-                            <div class="list-item-meta">Autores: Sebastián Claro, Mauricio Larraín</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Global Supply Chains and Local Shocks</div>
-                            <div class="list-item-meta">International Review of Economics and Finance | 2020</div>
-                            <div class="list-item-meta">Autores: Sebastián Claro, Álvaro García</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Convergence Patterns in Emerging Markets</div>
-                            <div class="list-item-meta">World Bank Economic Review | 2020</div>
-                            <div class="list-item-meta">Autor: Sebastián Claro</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Commodity Price Volatility and Stabilization Policies</div>
-                            <div class="list-item-meta">Journal of International Money and Finance | 2019</div>
-                            <div class="list-item-meta">Autores: Sebastián Claro, Felipe Larraín</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Institutional Reforms and Economic Performance</div>
-                            <div class="list-item-meta">Review of Economics and Statistics | 2019</div>
-                            <div class="list-item-meta">Autor: Sebastián Claro</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- TESIS DIRIGIDAS -->
-                <div class="info-section">
-                    <div class="section-title">✏️ Tesis de Magister Dirigidas (2 Total)</div>
-                    <div class="list-items">
-                        <div class="list-item">
-                            <div class="list-item-title">Análisis del Régimen de Tipo de Cambio Flexible en Economías Emergentes</div>
-                            <div class="list-item-meta">Autor: Juan López | Año: 2024 | Universidad de los Andes</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Integración Financiera e Inestabilidad Macroeconómica</div>
-                            <div class="list-item-meta">Autor: María González | Año: 2023 | Universidad de los Andes</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- LIBROS -->
-                <div class="info-section">
-                    <div class="section-title">📖 Libros Publicados (2 Total)</div>
-                    <div class="list-items">
-                        <div class="list-item">
-                            <div class="list-item-title">Economía Internacional: Teoría y Política</div>
-                            <div class="list-item-meta">Editorial: Oxford University Press | Año: 2022</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Crisis Financieras en Economías Emergentes</div>
-                            <div class="list-item-meta">Editorial: Cambridge University Press | Año: 2020</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- PROYECTOS -->
-                <div class="info-section">
-                    <div class="section-title">🔬 Proyectos de Investigación (5 Total)</div>
-                    <div class="list-items">
-                        <div class="list-item">
-                            <div class="list-item-title">Efectos de Shocks Externos en Economías Latinoamericanas</div>
-                            <div class="list-item-meta">Financiamiento: FONDECYT | Monto: $450,000 USD | 2024-2026</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Dinámicas de Empleo en Tiempos de Crisis Económica</div>
-                            <div class="list-item-meta">Financiamiento: ANID | Monto: $350,000 USD | 2023-2025</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Integración Comercial y Cambio Tecnológico</div>
-                            <div class="list-item-meta">Financiamiento: Inter-American Development Bank | Monto: $200,000 USD | 2022-2024</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Políticas Macroeconómicas y Volatilidad Financiera</div>
-                            <div class="list-item-meta">Financiamiento: World Bank | Monto: $180,000 USD | 2022-2024</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Inclusión Financiera en América Latina</div>
-                            <div class="list-item-meta">Financiamiento: ICBC | Monto: $150,000 USD | 2021-2023</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- MODAL PROFESOR 2: ÁLVARO GARCÍA -->
-    <div id="modal-prof2" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div>
-                    <h2>Álvaro Felipe García Marín</h2>
-                    <p>GARCIA/MARIN ALVARO | RUT: 150350425</p>
-                </div>
-                <button class="close-btn" onclick="cerrarModal('prof2')">&times;</button>
-            </div>
-            
-            <div class="modal-body">
-                <div class="info-section">
-                    <div class="section-title">📋 Información Personal</div>
-                    <div class="info-grid">
-                        <div class="info-item">
-                            <div class="info-label">RUT</div>
-                            <div class="info-value rut">150350425</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-label">Contrato</div>
-                            <div class="info-value">Jornada Completa</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-label">Vínculo</div>
-                            <div class="info-value">Claustro</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="info-section">
-                    <div class="section-title">🎓 Información Académica</div>
-                    <div class="info-grid">
-                        <div class="info-item">
-                            <div class="info-label">Título Profesional</div>
-                            <div class="info-value">Ingeniero Civil, Universidad de Chile</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-label">Grado Académico</div>
-                            <div class="info-value">Ph.D. en Economía, Stanford University, 2005</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-label">Líneas de Investigación</div>
-                            <div class="info-value">Economía del Sector Público, Políticas Públicas, Análisis Costo-Beneficio</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="info-section">
-                    <div class="section-title">📊 Producción Académica</div>
-                    <div class="stats-grid">
-                        <div class="stat">
-                            <div class="stat-label">Tesis Magister</div>
-                            <div class="stat-value">3</div>
-                        </div>
-                        <div class="stat yellow">
-                            <div class="stat-label">Tesis Doctorado</div>
-                            <div class="stat-value">2</div>
-                        </div>
-                        <div class="stat purple">
-                            <div class="stat-label">Publicaciones</div>
-                            <div class="stat-value">12</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-label">Libros</div>
-                            <div class="stat-value">1</div>
-                        </div>
-                        <div class="stat yellow">
-                            <div class="stat-label">Proyectos</div>
-                            <div class="stat-value">4</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="info-section">
-                    <div class="section-title">📚 Publicaciones Indexadas (12 Total)</div>
-                    <div class="list-items">
-                        <div class="list-item">
-                            <div class="list-item-title">Evaluación de Políticas Públicas: Metodología y Aplicaciones</div>
-                            <div class="list-item-meta">Journal of Public Economics | 2024 | Autor: Álvaro García</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Eficiencia del Gasto Público en Educación</div>
-                            <div class="list-item-meta">Economics of Education Review | 2023 | Autores: Álvaro García, Rodrigo López</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Análisis Costo-Beneficio de Intervenciones Sociales</div>
-                            <div class="list-item-meta">World Development | 2023 | Autor: Álvaro García</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Impacto de Reforma Tributaria en Desigualdad</div>
-                            <div class="list-item-meta">Economic Policy | 2022 | Autores: Álvaro García, Carmen Silva</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Gasto Público y Crecimiento Económico</div>
-                            <div class="list-item-meta">IMF Working Papers | 2022 | Autor: Álvaro García</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Transferencias Monetarias Condicionadas: Impacto y Eficiencia</div>
-                            <div class="list-item-meta">Journal of Development Studies | 2022 | Autores: Álvaro García, Mauricio Larraín</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Política Fiscal y Estabilidad Macroeconómica</div>
-                            <div class="list-item-meta">Oxford Economic Papers | 2021 | Autor: Álvaro García</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Presupuesto Participativo y Rendición de Cuentas</div>
-                            <div class="list-item-meta">Governance | 2021 | Autores: Álvaro García, Francisco Morales</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Efectividad de Programas de Subsidio Habitacional</div>
-                            <div class="list-item-meta">Urban Studies | 2021 | Autor: Álvaro García</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Regulación del Sector de Utilidades Públicas</div>
-                            <div class="list-item-meta">Journal of Regulatory Economics | 2020 | Autores: Álvaro García, Patricio Navarro</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Ciclo Político y Gasto Público</div>
-                            <div class="list-item-meta">Public Choice | 2020 | Autor: Álvaro García</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Incentivos Fiscales y Inversión Privada</div>
-                            <div class="list-item-meta">International Tax and Public Finance | 2019 | Autores: Álvaro García, Roberto Castro</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="info-section">
-                    <div class="section-title">✏️ Tesis de Magister Dirigidas (3 Total)</div>
-                    <div class="list-items">
-                        <div class="list-item">
-                            <div class="list-item-title">Evaluación de Impacto de Política de Empleo Público</div>
-                            <div class="list-item-meta">Autor: Catalina Rojas | Año: 2024 | Universidad de los Andes</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Análisis de Eficiencia en Provisión de Servicios de Salud</div>
-                            <div class="list-item-meta">Autor: Pedro Martínez | Año: 2023 | Universidad de los Andes</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Impacto de Descentralización Fiscal en Desigualdad Regional</div>
-                            <div class="list-item-meta">Autor: Elena Gutiérrez | Año: 2023 | Universidad de los Andes</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- MODAL PROFESOR 3: MAURICIO LARRAÍN -->
-    <div id="modal-prof3" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div>
-                    <h2>Mauricio Larraín Errázuriz</h2>
-                    <p>LARRAIN/ERRAZURIZ MAURICIO | RUT: 90392271</p>
-                </div>
-                <button class="close-btn" onclick="cerrarModal('prof3')">&times;</button>
-            </div>
-            
-            <div class="modal-body">
-                <div class="info-section">
-                    <div class="section-title">📋 Información Personal</div>
-                    <div class="info-grid">
-                        <div class="info-item">
-                            <div class="info-label">RUT</div>
-                            <div class="info-value rut">90392271</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-label">Contrato</div>
-                            <div class="info-value">Jornada Completa</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-label">Vínculo</div>
-                            <div class="info-value">Claustro</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="info-section">
-                    <div class="section-title">🎓 Información Académica</div>
-                    <div class="info-grid">
-                        <div class="info-item">
-                            <div class="info-label">Título Profesional</div>
-                            <div class="info-value">Economista, Pontificia Universidad Católica de Chile</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-label">Grado Académico</div>
-                            <div class="info-value">Ph.D. en Economía, MIT, 2000</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-label">Líneas de Investigación</div>
-                            <div class="info-value">Macroeconomía, Teoría Económica, Finanzas Internacionales</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="info-section">
-                    <div class="section-title">📊 Producción Académica</div>
-                    <div class="stats-grid">
-                        <div class="stat">
-                            <div class="stat-label">Tesis Magister</div>
-                            <div class="stat-value">4</div>
-                        </div>
-                        <div class="stat yellow">
-                            <div class="stat-label">Tesis Doctorado</div>
-                            <div class="stat-value">3</div>
-                        </div>
-                        <div class="stat purple">
-                            <div class="stat-label">Publicaciones</div>
-                            <div class="stat-value">18</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-label">Libros</div>
-                            <div class="stat-value">3</div>
-                        </div>
-                        <div class="stat yellow">
-                            <div class="stat-label">Proyectos</div>
-                            <div class="stat-value">6</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="info-section">
-                    <div class="section-title">📚 Publicaciones Indexadas (18 Total)</div>
-                    <div class="list-items">
-                        <div class="list-item">
-                            <div class="list-item-title">Ciclos de Negocios y Política Monetaria en Economías Pequeñas y Abiertas</div>
-                            <div class="list-item-meta">Econometrica | 2024 | Autor: Mauricio Larraín</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Dinámica de Precios de Activos en Mercados Emergentes</div>
-                            <div class="list-item-meta">Journal of Financial Economics | 2024 | Autores: Mauricio Larraín, Sebastián Claro</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Transmisión de Shocks Internacionales a Través del Sector Financiero</div>
-                            <div class="list-item-meta">Journal of International Economics | 2023 | Autor: Mauricio Larraín</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Modelos DSGE con Fricciones Financieras para Economías Emergentes</div>
-                            <div class="list-item-meta">Review of Economic Studies | 2023 | Autores: Mauricio Larraín, Pablo García</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Inflación y Crecimiento: Una Perspectiva Macroeconómica</div>
-                            <div class="list-item-meta">American Economic Review | 2022 | Autor: Mauricio Larraín</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Coordinación de Políticas Macroeconómicas en América Latina</div>
-                            <div class="list-item-meta">World Bank Economic Review | 2022 | Autores: Mauricio Larraín, Álvaro García</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Burbujas de Activos y Estabilidad Financiera</div>
-                            <div class="list-item-meta">Journal of Monetary Economics | 2022 | Autor: Mauricio Larraín</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Crisis Bancarias y Contagio Regional</div>
-                            <div class="list-item-meta">Journal of Development Economics | 2021 | Autores: Mauricio Larraín, Rene Zenteno</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Integración Financiera y Sincronización de Ciclos Económicos</div>
-                            <div class="list-item-meta">International Review of Economics and Finance | 2021 | Autor: Mauricio Larraín</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Heterogeneidad en Modelos Macroeconómicos con Agentes Heterogéneos</div>
-                            <div class="list-item-meta">Oxford Economic Papers | 2021 | Autores: Mauricio Larraín, Carolina Villegas</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Expectativas y Volatilidad en Mercados Financieros Emergentes</div>
-                            <div class="list-item-meta">Emerging Markets Finance and Trade | 2020 | Autor: Mauricio Larraín</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Transición Demográfica y Ahorro Agregado</div>
-                            <div class="list-item-meta">Journal of Economic Growth | 2020 | Autores: Mauricio Larraín, Felipe Soto</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Choques de Precios de Commodities y Ciclos Económicos</div>
-                            <div class="list-item-meta">IMF Economic Review | 2020 | Autor: Mauricio Larraín</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Regímenes Cambiarios y Estabilidad de Precios</div>
-                            <div class="list-item-meta">Economic Policy | 2019 | Autores: Mauricio Larraín, Alejandro Werner</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Ahorro Doméstico y Acumulación de Capital</div>
-                            <div class="list-item-meta">Review of Economics and Statistics | 2019 | Autor: Mauricio Larraín</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Multiplicadores Fiscales en Tiempos de Crisis</div>
-                            <div class="list-item-meta">Journal of International Money and Finance | 2019 | Autores: Mauricio Larraín, Patricio Navarro</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Efectos de Terremoto en Economía: Análisis Empírico para Chile</div>
-                            <div class="list-item-meta">Journal of Development Economics | 2018 | Autor: Mauricio Larraín</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Mercados de Crédito e Impacto de Shocks Macroeconómicos</div>
-                            <div class="list-item-meta">World Development | 2018 | Autores: Mauricio Larraín, Rodrigo López</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="info-section">
-                    <div class="section-title">✏️ Tesis de Magister Dirigidas (4 Total)</div>
-                    <div class="list-items">
-                        <div class="list-item">
-                            <div class="list-item-title">Efectos Macroeconómicos de Choques de Precios de Petróleo</div>
-                            <div class="list-item-meta">Autor: Sofía Ramírez | Año: 2024 | Universidad de los Andes</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Ciclos de Crédito y Ciclos Económicos en Chile</div>
-                            <div class="list-item-meta">Autor: Andrés López | Año: 2023 | Universidad de los Andes</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Expectativas de Inflación y Comportamiento del Banco Central</div>
-                            <div class="list-item-meta">Autor: Francisca González | Año: 2023 | Universidad de los Andes</div>
-                        </div>
-                        <div class="list-item">
-                            <div class="list-item-title">Persistencia de Ciclos Económicos en América Latina</div>
-                            <div class="list-item-meta">Autor: Diego Fernández | Año: 2022 | Universidad de los Andes</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div id="modales-container"></div>
     
     <script>
-        function mostrarPagina(pagina) {
-            document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
-            document.getElementById(`page-${pagina}`).classList.add('active');
-            event.target.classList.add('active');
+        // Datos de los 14 profesores
+        const profesores = [
+            {
+                id: 'prof01',
+                nombre: 'Sebastián Claro Edwards',
+                rut: '124560306',
+                vinculo: 'Claustro',
+                titulo: 'Ingeniero Comercial mención Economía, Pontificia Universidad Católica de Chile',
+                grado: 'Ph.D. en Economía, UCLA, 2001',
+                lineas: 'Economía Internacional, Macroeconomía Aplicada',
+                resumen: 'Economía Internacional. 15 publicaciones, 2 tesis magister, 1 tesis doctorado, 2 libros, 5 proyectos.',
+                datos: {
+                    tesis_magister_guia: [
+                        { autor: 'Juan López', año: 2024, titulo: 'Análisis del Régimen de Tipo de Cambio Flexible en Economías Emergentes', programa: 'Magíster en Economía', institucion: 'Universidad de los Andes', link: 'N/A' },
+                        { autor: 'María González', año: 2023, titulo: 'Integración Financiera e Inestabilidad Macroeconómica', programa: 'Magíster en Economía', institucion: 'Universidad de los Andes', link: 'N/A' }
+                    ],
+                    tesis_magister_coguia: [],
+                    tesis_doctorado_guia: [
+                        { autor: 'Carlos Mendoza', año: 2024, titulo: 'Dinámicas de Tipo de Cambio en Pequeñas Economías Abiertas', programa: 'Doctorado en Economía, Finanzas y Administración', institucion: 'Universidad de los Andes', mismo_programa: 'Si', link: 'N/A' }
+                    ],
+                    tesis_doctorado_coguia: [],
+                    publicaciones_indexadas: [
+                        { autores: 'Bernardo Blum, Sebastián Claro, Ignatius Horstmann, David Rivers', principal: 'Sebastián Claro', año: 2024, titulo: 'The ABCs of firm heterogeneity', revista: 'Journal of Political Economy', estado: 'Publicado', issn: '0022-3808', factor: '10.2 (WoS)', link: 'N/A' },
+                        { autores: 'Sebastián Claro, Assaf Razin', principal: 'Sebastián Claro', año: 2023, titulo: 'International Business Cycles: Theory and Evidence', revista: 'American Economic Review', estado: 'Published', issn: '0002-8282', factor: '14.7 (WoS)', link: 'N/A' }
+                    ],
+                    publicaciones_no_indexadas: [],
+                    libros: [
+                        { autores: 'Sebastián Claro', principal: 'Sebastián Claro', año: 2022, nombre: 'Economía Internacional: Teoría y Política', lugar: 'Oxford', editorial: 'Oxford University Press', estado: 'Publicado', link: 'N/A' },
+                        { autores: 'Sebastián Claro', principal: 'Sebastián Claro', año: 2020, nombre: 'Crisis Financieras en Economías Emergentes', lugar: 'Cambridge', editorial: 'Cambridge University Press', estado: 'Publicado', link: 'N/A' }
+                    ],
+                    capitulos: [],
+                    patentes: [],
+                    proyectos: [
+                        { titulo: 'Efectos de Shocks Externos en Economías Latinoamericanas', fuente: 'FONDECYT', codigo: '1241234', año_adjudicacion: 2024, fecha_inicio: '01/01/2024', fecha_fin: '31/12/2026', duracion: 3.0, rol: 'Investigador Responsable', link: 'N/A' },
+                        { titulo: 'Dinámicas de Empleo en Tiempos de Crisis Económica', fuente: 'ANID', codigo: 'ANID-2023', año_adjudicacion: 2023, fecha_inicio: '01/01/2023', fecha_fin: '31/12/2025', duracion: 3.0, rol: 'Investigador Responsable', link: 'N/A' }
+                    ]
+                }
+            },
+            // Profesores con información parcial
+            {
+                id: 'prof02',
+                nombre: 'Álvaro Felipe García Marín',
+                rut: '150350425',
+                vinculo: 'Claustro',
+                titulo: 'Ingeniero Civil, Universidad de Chile',
+                grado: 'Ph.D. en Economía, Stanford University, 2005',
+                lineas: 'Economía del Sector Público',
+                resumen: 'Economía Aplicada a Políticas Públicas. Enfoque en evaluación de políticas.',
+                datos: {
+                    tesis_magister_guia: [],
+                    tesis_magister_coguia: [],
+                    tesis_doctorado_guia: [],
+                    tesis_doctorado_coguia: [],
+                    publicaciones_indexadas: [],
+                    publicaciones_no_indexadas: [],
+                    libros: [],
+                    capitulos: [],
+                    patentes: [],
+                    proyectos: []
+                }
+            },
+            {
+                id: 'prof03',
+                nombre: 'Mauricio Larraín Errázuriz',
+                rut: '90392271',
+                vinculo: 'Claustro',
+                titulo: 'Economista, Pontificia Universidad Católica de Chile',
+                grado: 'Ph.D. en Economía, MIT, 2000',
+                lineas: 'Macroeconomía, Teoría Económica',
+                resumen: 'Macroeconomía y ciclos económicos. Especialización en modelos DSGE.',
+                datos: {
+                    tesis_magister_guia: [],
+                    tesis_magister_coguia: [],
+                    tesis_doctorado_guia: [],
+                    tesis_doctorado_coguia: [],
+                    publicaciones_indexadas: [],
+                    publicaciones_no_indexadas: [],
+                    libros: [],
+                    capitulos: [],
+                    patentes: [],
+                    proyectos: []
+                }
+            },
+            {
+                id: 'prof04',
+                nombre: 'Álvaro Espejo',
+                rut: 'Por confirmar',
+                vinculo: 'Claustro',
+                titulo: 'Ingeniero Civil Industrial, Pontificia Universidad Católica de Chile',
+                grado: 'PhD en Management, IESE Business School',
+                lineas: 'Comportamientos proactivos, Motivación',
+                resumen: 'Management y comportamiento organizacional. 11 publicaciones indexadas.',
+                datos: {
+                    tesis_magister_guia: [],
+                    tesis_magister_coguia: [],
+                    tesis_doctorado_guia: [],
+                    tesis_doctorado_coguia: [],
+                    publicaciones_indexadas: [],
+                    publicaciones_no_indexadas: [],
+                    libros: [],
+                    capitulos: [],
+                    patentes: [],
+                    proyectos: []
+                }
+            },
+            {
+                id: 'prof05',
+                nombre: 'Ana Elisa Pereira Gonçalves',
+                rut: 'Por confirmar',
+                vinculo: 'Claustro',
+                titulo: 'Licenciada en Ciencias Económicas, Universidad de São Paulo',
+                grado: 'Ph.D. en Economía, FGV São Paulo School of Business',
+                lineas: 'Flujos de información en mercados financieros',
+                resumen: 'Economía Financiera. 9 publicaciones indexadas, 2 proyectos FONDECYT.',
+                datos: {
+                    tesis_magister_guia: [],
+                    tesis_magister_coguia: [],
+                    tesis_doctorado_guia: [],
+                    tesis_doctorado_coguia: [],
+                    publicaciones_indexadas: [],
+                    publicaciones_no_indexadas: [],
+                    libros: [],
+                    capitulos: [],
+                    patentes: [],
+                    proyectos: []
+                }
+            },
+            {
+                id: 'prof06',
+                nombre: 'Felipe Guzmán González',
+                rut: 'Por confirmar',
+                vinculo: 'Claustro',
+                titulo: 'Licenciado en Administración (Management), Universidad de Chile',
+                grado: 'PhD en Management (Comportamiento Organizacional), IESEG School of Management',
+                lineas: 'Comportamiento organizacional, Liderazgo',
+                resumen: 'Comportamiento Organizacional. 14 publicaciones indexadas, 16 tesis magister dirigidas.',
+                datos: {
+                    tesis_magister_guia: [],
+                    tesis_magister_coguia: [],
+                    tesis_doctorado_guia: [],
+                    tesis_doctorado_coguia: [],
+                    publicaciones_indexadas: [],
+                    publicaciones_no_indexadas: [],
+                    libros: [],
+                    capitulos: [],
+                    patentes: [],
+                    proyectos: []
+                }
+            },
+            {
+                id: 'prof07',
+                nombre: 'Hugo Benedetti',
+                rut: 'Por confirmar',
+                vinculo: 'Claustro',
+                titulo: 'Licenciado en Ciencias Económicas, Universidad de la República (Uruguay)',
+                grado: 'PhD en Finanzas, Boston College (EE.UU.)',
+                lineas: 'Criptoactivos y blockchain, Fintech y mercados',
+                resumen: 'Finanzas Digitales. 8 publicaciones indexadas, 12 capítulos de libro, 1 proyecto FONDECYT.',
+                datos: {
+                    tesis_magister_guia: [],
+                    tesis_magister_coguia: [],
+                    tesis_doctorado_guia: [],
+                    tesis_doctorado_coguia: [],
+                    publicaciones_indexadas: [],
+                    publicaciones_no_indexadas: [],
+                    libros: [],
+                    capitulos: [],
+                    patentes: [],
+                    proyectos: []
+                }
+            },
+            {
+                id: 'prof08',
+                nombre: 'Jorge Rodriguez',
+                rut: 'Por confirmar',
+                vinculo: 'Claustro',
+                titulo: 'Ingeniero Comercial con mención en Economía, Pontificia Universidad Católica de Chile',
+                grado: 'PhD en Economía, University of California Davis (EE.UU.)',
+                lineas: 'Economía laboral, Economía de la educación',
+                resumen: 'Economía del Trabajo y Educación. 4 publicaciones indexadas, 2 proyectos FONDECYT.',
+                datos: {
+                    tesis_magister_guia: [],
+                    tesis_magister_coguia: [],
+                    tesis_doctorado_guia: [],
+                    tesis_doctorado_coguia: [],
+                    publicaciones_indexadas: [],
+                    publicaciones_no_indexadas: [],
+                    libros: [],
+                    capitulos: [],
+                    patentes: [],
+                    proyectos: []
+                }
+            },
+            {
+                id: 'prof09',
+                nombre: 'María José Bosch',
+                rut: 'Por confirmar',
+                vinculo: 'Claustro',
+                titulo: 'Ingeniero Comercial, Pontificia Universidad Católica de Chile',
+                grado: 'PhD en Management (General Management), IESE Business School',
+                lineas: 'Equilibrio trabajo–familia, Liderazgo femenino',
+                resumen: 'Management y Organizaciones. 20 publicaciones indexadas, 6 capítulos de libro.',
+                datos: {
+                    tesis_magister_guia: [],
+                    tesis_magister_coguia: [],
+                    tesis_doctorado_guia: [],
+                    tesis_doctorado_coguia: [],
+                    publicaciones_indexadas: [],
+                    publicaciones_no_indexadas: [],
+                    libros: [],
+                    capitulos: [],
+                    patentes: [],
+                    proyectos: []
+                }
+            },
+            {
+                id: 'prof10',
+                nombre: 'Matias Braun',
+                rut: 'Por confirmar',
+                vinculo: 'Claustro',
+                titulo: 'Ingeniero Comercial mención Economía, Pontificia Universidad Católica de Chile',
+                grado: 'PhD in Economics, Harvard University (EE.UU.)',
+                lineas: 'Finanzas corporativas internacionales, Ciclos económicos',
+                resumen: 'Finanzas Corporativas. 11 publicaciones indexadas, 1 proyecto FAI.',
+                datos: {
+                    tesis_magister_guia: [],
+                    tesis_magister_coguia: [],
+                    tesis_doctorado_guia: [],
+                    tesis_doctorado_coguia: [],
+                    publicaciones_indexadas: [],
+                    publicaciones_no_indexadas: [],
+                    libros: [],
+                    capitulos: [],
+                    patentes: [],
+                    proyectos: []
+                }
+            },
+            {
+                id: 'prof11',
+                nombre: 'Natalia Yankovic',
+                rut: 'Por confirmar',
+                vinculo: 'Claustro',
+                titulo: 'Ingeniero Civil Industrial, Universidad de Chile',
+                grado: 'PhD en Decision, Risk and Operations, Columbia University (EE.UU.)',
+                lineas: 'Gestión de operaciones en salud, Modelos de optimización',
+                resumen: 'Investigación de Operaciones en Salud. 6 publicaciones indexadas.',
+                datos: {
+                    tesis_magister_guia: [],
+                    tesis_magister_coguia: [],
+                    tesis_doctorado_guia: [],
+                    tesis_doctorado_coguia: [],
+                    publicaciones_indexadas: [],
+                    publicaciones_no_indexadas: [],
+                    libros: [],
+                    capitulos: [],
+                    patentes: [],
+                    proyectos: []
+                }
+            },
+            {
+                id: 'prof12',
+                nombre: 'Nicolás Riquelme',
+                rut: 'Por confirmar',
+                vinculo: 'Claustro',
+                titulo: 'Ingeniero Civil Industrial, Universidad de Chile',
+                grado: 'PhD en Economía, University of Rochester (EE.UU.)',
+                lineas: 'Organización industrial, Teoría de juegos',
+                resumen: 'Economía de la Organización Industrial. 4 publicaciones indexadas, 4 tesis magister dirigidas.',
+                datos: {
+                    tesis_magister_guia: [],
+                    tesis_magister_coguia: [],
+                    tesis_doctorado_guia: [],
+                    tesis_doctorado_coguia: [],
+                    publicaciones_indexadas: [],
+                    publicaciones_no_indexadas: [],
+                    libros: [],
+                    capitulos: [],
+                    patentes: [],
+                    proyectos: []
+                }
+            },
+            {
+                id: 'prof13',
+                nombre: 'Andrés Barrios Fernández',
+                rut: 'Por confirmar',
+                vinculo: 'Claustro',
+                titulo: 'Ingeniero Civil Industrial, Pontificia Universidad Católica de Chile',
+                grado: 'PhD en Economía, London School of Economics (Reino Unido)',
+                lineas: 'Microeconomía aplicada, Economía laboral',
+                resumen: 'Economía de la Educación y Laboral. 6 publicaciones indexadas, 2 proyectos FONDECYT.',
+                datos: {
+                    tesis_magister_guia: [],
+                    tesis_magister_coguia: [],
+                    tesis_doctorado_guia: [],
+                    tesis_doctorado_coguia: [],
+                    publicaciones_indexadas: [],
+                    publicaciones_no_indexadas: [],
+                    libros: [],
+                    capitulos: [],
+                    patentes: [],
+                    proyectos: []
+                }
+            },
+            {
+                id: 'prof14',
+                nombre: 'Juan Sotes Paladino',
+                rut: 'Por confirmar',
+                vinculo: 'Claustro',
+                titulo: 'Licenciatura en Economía (Licenciature in Economics), Universitat Autònoma de Barcelona',
+                grado: 'PhD en Finanzas, University of Southern California (EE.UU.)',
+                lineas: 'Asset Pricing (Valoración de Activos), Finanzas del Comportamiento',
+                resumen: 'Finanzas Teóricas. 7 publicaciones indexadas, 5 publicaciones no indexadas, 2 proyectos FONDECYT.',
+                datos: {
+                    tesis_magister_guia: [],
+                    tesis_magister_coguia: [],
+                    tesis_doctorado_guia: [],
+                    tesis_doctorado_coguia: [],
+                    publicaciones_indexadas: [],
+                    publicaciones_no_indexadas: [],
+                    libros: [],
+                    capitulos: [],
+                    patentes: [],
+                    proyectos: []
+                }
+            }
+        ];
+        
+        // Generar listado
+        function generarListado() {
+            const lista = document.getElementById('profesor-list');
+            lista.innerHTML = profesores.map(p => `
+                <div class="profesor-row" onclick="abrirModal('${p.id}')">
+                    <div class="profesor-info">
+                        <div class="profesor-nombre">${p.nombre}</div>
+                        <div class="profesor-resumen">${p.resumen}</div>
+                    </div>
+                    <div class="profesor-arrow">→</div>
+                </div>
+            `).join('');
         }
         
-        function abrirModal(profId) {
-            document.getElementById(`modal-${profId}`).classList.add('active');
+        // Generar modales
+        function generarModales() {
+            const container = document.getElementById('modales-container');
+            container.innerHTML = profesores.map(p => `
+                <div id="modal-${p.id}" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div>
+                                <h2>${p.nombre}</h2>
+                                <p>RUT: ${p.rut} | Vínculo: ${p.vinculo}</p>
+                            </div>
+                            <button class="close-btn" onclick="cerrarModal('${p.id}')">&times;</button>
+                        </div>
+                        
+                        <div class="modal-body">
+                            <!-- INFORMACIÓN PERSONAL -->
+                            <div class="info-section">
+                                <div class="section-title">Información Personal</div>
+                                <div class="info-grid">
+                                    <div class="info-item">
+                                        <div class="info-label">RUT</div>
+                                        <div class="info-value">${p.rut}</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">Vínculo</div>
+                                        <div class="info-value">${p.vinculo}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- INFORMACIÓN ACADÉMICA -->
+                            <div class="info-section">
+                                <div class="section-title">Información Académica</div>
+                                <div class="info-grid">
+                                    <div class="info-item">
+                                        <div class="info-label">Título Profesional</div>
+                                        <div class="info-value">${p.titulo}</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">Grado Académico</div>
+                                        <div class="info-value">${p.grado}</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">Líneas de Investigación</div>
+                                        <div class="info-value">${p.lineas}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- TESIS MAGISTER GUÍA -->
+                            ${p.datos.tesis_magister_guia.length > 0 ? `
+                            <div class="info-section">
+                                <div class="section-title">Tesis de Magíster Dirigidas (Profesor Guía)</div>
+                                <div class="table-container">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Autor</th>
+                                                <th>Año</th>
+                                                <th>Título</th>
+                                                <th>Programa</th>
+                                                <th>Institución</th>
+                                                <th>Link</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            ${p.datos.tesis_magister_guia.map(t => `
+                                            <tr>
+                                                <td>${t.autor}</td>
+                                                <td>${t.año}</td>
+                                                <td>${t.titulo}</td>
+                                                <td>${t.programa}</td>
+                                                <td>${t.institucion}</td>
+                                                <td>${t.link}</td>
+                                            </tr>
+                                            `).join('')}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            ` : ''}
+                            
+                            <!-- PUBLICACIONES INDEXADAS -->
+                            ${p.datos.publicaciones_indexadas.length > 0 ? `
+                            <div class="info-section">
+                                <div class="section-title">Publicaciones Indexadas</div>
+                                <div class="table-container">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Autor(es)</th>
+                                                <th>Principal</th>
+                                                <th>Año</th>
+                                                <th>Título</th>
+                                                <th>Revista</th>
+                                                <th>Estado</th>
+                                                <th>ISSN</th>
+                                                <th>Factor Impacto</th>
+                                                <th>Link</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            ${p.datos.publicaciones_indexadas.map(pub => `
+                                            <tr>
+                                                <td>${pub.autores}</td>
+                                                <td>${pub.principal}</td>
+                                                <td>${pub.año}</td>
+                                                <td>${pub.titulo}</td>
+                                                <td>${pub.revista}</td>
+                                                <td>${pub.estado}</td>
+                                                <td>${pub.issn}</td>
+                                                <td>${pub.factor}</td>
+                                                <td>${pub.link}</td>
+                                            </tr>
+                                            `).join('')}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            ` : ''}
+                            
+                            <!-- LIBROS -->
+                            ${p.datos.libros.length > 0 ? `
+                            <div class="info-section">
+                                <div class="section-title">Libros Publicados</div>
+                                <div class="table-container">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Autor(es)</th>
+                                                <th>Principal</th>
+                                                <th>Año</th>
+                                                <th>Nombre del Libro</th>
+                                                <th>Lugar</th>
+                                                <th>Editorial</th>
+                                                <th>Estado</th>
+                                                <th>Link</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            ${p.datos.libros.map(lib => `
+                                            <tr>
+                                                <td>${lib.autores}</td>
+                                                <td>${lib.principal}</td>
+                                                <td>${lib.año}</td>
+                                                <td>${lib.nombre}</td>
+                                                <td>${lib.lugar}</td>
+                                                <td>${lib.editorial}</td>
+                                                <td>${lib.estado}</td>
+                                                <td>${lib.link}</td>
+                                            </tr>
+                                            `).join('')}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            ` : ''}
+                            
+                            <!-- PROYECTOS -->
+                            ${p.datos.proyectos.length > 0 ? `
+                            <div class="info-section">
+                                <div class="section-title">Proyectos de Investigación</div>
+                                <div class="table-container">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Título</th>
+                                                <th>Fuente de Financiamiento</th>
+                                                <th>Código</th>
+                                                <th>Año Adjudicación</th>
+                                                <th>Fecha Inicio</th>
+                                                <th>Fecha Fin</th>
+                                                <th>Duración (años)</th>
+                                                <th>Rol</th>
+                                                <th>Link</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            ${p.datos.proyectos.map(proy => `
+                                            <tr>
+                                                <td>${proy.titulo}</td>
+                                                <td>${proy.fuente}</td>
+                                                <td>${proy.codigo}</td>
+                                                <td>${proy.año_adjudicacion}</td>
+                                                <td>${proy.fecha_inicio}</td>
+                                                <td>${proy.fecha_fin}</td>
+                                                <td>${proy.duracion}</td>
+                                                <td>${proy.rol}</td>
+                                                <td>${proy.link}</td>
+                                            </tr>
+                                            `).join('')}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            ` : ''}
+                            
+                            <!-- SIN DATOS -->
+                            ${Object.values(p.datos).every(arr => arr.length === 0) ? `
+                            <div class="sin-datos">
+                                ℹ️ Información por completar. Los datos académicos se actualizarán cuando se cargue la ficha completa.
+                            </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function mostrarPagina(pagina) {
+            // Para el futuro
+        }
+        
+        function abrirModal(id) {
+            document.getElementById(`modal-${id}`).classList.add('active');
             document.body.style.overflow = 'hidden';
         }
         
-        function cerrarModal(profId) {
-            document.getElementById(`modal-${profId}`).classList.remove('active');
+        function cerrarModal(id) {
+            document.getElementById(`modal-${id}`).classList.remove('active');
             document.body.style.overflow = 'auto';
         }
         
@@ -1054,57 +874,9 @@
             }
         }
         
-        // DESCARGAS
-        function descargarExcel(tipo) {
-            const wb = XLSX.utils.book_new();
-            let ws_data = [];
-            
-            if (tipo === 'general') {
-                ws_data = [
-                    ['Nombre', 'RUT', 'Contrato', 'Vínculo', 'Tesis Magister', 'Publicaciones', 'Libros', 'Proyectos'],
-                    ['Sebastián Claro Edwards', '124560306', 'Jornada Completa', 'Claustro', 2, 15, 2, 5],
-                    ['Álvaro Felipe García Marín', '150350425', 'Jornada Completa', 'Claustro', 3, 12, 1, 4],
-                    ['Mauricio Larraín Errázuriz', '90392271', 'Jornada Completa', 'Claustro', 4, 18, 3, 6]
-                ];
-            } else if (tipo === 'cna') {
-                ws_data = [
-                    ['Profesor', 'Tesis Magister', 'Tesis Doctorado', 'Publicaciones', 'Libros', 'Proyectos'],
-                    ['Sebastián Claro Edwards', 2, 1, 15, 2, 5],
-                    ['Álvaro Felipe García Marín', 3, 2, 12, 1, 4],
-                    ['Mauricio Larraín Errázuriz', 4, 3, 18, 3, 6]
-                ];
-            }
-            
-            const ws = XLSX.utils.aoa_to_sheet(ws_data);
-            XLSX.utils.book_append_sheet(wb, ws, "Reportes");
-            XLSX.writeFile(wb, `Reporte_${tipo}_${new Date().toISOString().split('T')[0]}.xlsx`);
-        }
-        
-        function descargarCSV(tipo) {
-            let csv = '';
-            
-            if (tipo === 'general') {
-                csv = 'Nombre,RUT,Contrato,Vínculo,Tesis Magister,Publicaciones,Libros,Proyectos\n';
-                csv += '123Sebastián Claro Edwards,124560306,Jornada Completa,Claustro,2,15,2,5\n';
-                csv += 'Álvaro Felipe García Marín,150350425,Jornada Completa,Claustro,3,12,1,4\n';
-                csv += 'Mauricio Larraín Errázuriz,90392271,Jornada Completa,Claustro,4,18,3,6\n';
-            }
-            
-            const blob = new Blob([csv], { type: 'text/csv' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `Reporte_${tipo}_${new Date().toISOString().split('T')[0]}.csv`;
-            a.click();
-        }
-        
-        function descargarProfesor(profId) {
-            alert('Descarga de perfil individual en desarrollo');
-        }
-        
-        function descargarWord(tipo) {
-            alert('Descarga de Word en desarrollo');
-        }
+        // Inicializar
+        generarListado();
+        generarModales();
     </script>
 </body>
 </html>
