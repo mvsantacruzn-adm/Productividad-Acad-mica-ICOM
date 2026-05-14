@@ -387,3 +387,237 @@ function cambiarPagina(pagina) {
 
 // Cargar datos al iniciar
 cargarDatos();
+
+// ============================================
+// MENÚ EXPANDIBLE
+// ============================================
+
+function toggleSubmenu(event) {
+    const parent = event.currentTarget;
+    const submenu = parent.nextElementSibling;
+    
+    if (submenu && submenu.classList.contains('submenu')) {
+        submenu.style.display = submenu.style.display === 'none' ? 'block' : 'none';
+        parent.classList.toggle('active');
+    }
+}
+
+// ============================================
+// CONTROL DE ESTRUCTURA - VALIDACIÓN
+// ============================================
+
+function obtenerDatosValidacion() {
+    const tipos_tabla = [
+        'publicaciones_indexadas',
+        'publicaciones_no_indexadas',
+        'libros',
+        'capitulos',
+        'proyectos',
+        'tesis_magister_guia',
+        'tesis_magister_coguia',
+        'tesis_doctorado_guia',
+        'tesis_doctorado_coguia',
+        'patentes'
+    ];
+    
+    let tablasData = [];
+    
+    for (const nombreProfesor of Object.keys(datosProduccion)) {
+        const profesor = datosProduccion[nombreProfesor];
+        const base = datosBase[nombreProfesor] || {};
+        
+        if (!profesor.secciones) continue;
+        
+        for (const tipo of tipos_tabla) {
+            if (tipo in profesor.secciones) {
+                const seccion = profesor.secciones[tipo];
+                const headers = seccion.headers || [];
+                const filas = seccion.filas || [];
+                
+                const titulo = getTituloTabla(tipo);
+                
+                tablasData.push({
+                    profesor: nombreProfesor,
+                    nombre_visual: base.nombre_visual || nombreProfesor,
+                    tipo: tipo,
+                    titulo: titulo,
+                    headers: headers.join(' | '),
+                    numColumnas: headers.length,
+                    numRegistros: filas.length
+                });
+            }
+        }
+    }
+    
+    return tablasData;
+}
+
+function getTituloTabla(tipo) {
+    const titulos = {
+        'publicaciones_indexadas': 'Publicaciones Indexadas',
+        'publicaciones_no_indexadas': 'Publicaciones No Indexadas',
+        'libros': 'Libros',
+        'capitulos': 'Capítulos de Libro',
+        'proyectos': 'Proyectos de Investigación',
+        'tesis_magister_guia': 'Tesis Magíster (Profesor Guía)',
+        'tesis_magister_coguia': 'Tesis Magíster (Profesor Co-Guía)',
+        'tesis_doctorado_guia': 'Tesis Doctorado (Profesor Guía)',
+        'tesis_doctorado_coguia': 'Tesis Doctorado (Profesor Co-Guía)',
+        'patentes': 'Patentes'
+    };
+    return titulos[tipo] || tipo;
+}
+
+function generarValidacion() {
+    const container = document.getElementById('control-tabla');
+    const tablasData = obtenerDatosValidacion();
+    
+    let html = `
+        <table>
+            <thead>
+                <tr>
+                    <th>Profesor</th>
+                    <th>Categoría / Tabla</th>
+                    <th>Headers Detectados</th>
+                    <th>Columnas</th>
+                    <th>Registros</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+    
+    for (const tabla of tablasData) {
+        html += `
+            <tr>
+                <td>${tabla.nombre_visual}</td>
+                <td><strong>${tabla.titulo}</strong></td>
+                <td style="font-family: monospace; font-size: 9px; word-break: break-all;">${tabla.headers}</td>
+                <td style="text-align: center;">${tabla.numColumnas}</td>
+                <td style="text-align: center;">${tabla.numRegistros}</td>
+            </tr>
+        `;
+    }
+    
+    html += `
+            </tbody>
+        </table>
+    `;
+    
+    container.innerHTML = html;
+}
+
+function descargarValidacionExcel() {
+    const tablasData = obtenerDatosValidacion();
+    
+    const datos = tablasData.map(tabla => ({
+        'Profesor': tabla.nombre_visual,
+        'Categoría / Tabla': tabla.titulo,
+        'Headers Detectados': tabla.headers,
+        'Cantidad Columnas': tabla.numColumnas,
+        'Cantidad Registros': tabla.numRegistros
+    }));
+    
+    const ws = XLSX.utils.json_to_sheet(datos);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Validación Headers');
+    
+    const colWidths = [
+        { wch: 25 },  // Profesor
+        { wch: 30 },  // Categoría
+        { wch: 50 },  // Headers
+        { wch: 12 },  // Columnas
+        { wch: 12 }   // Registros
+    ];
+    ws['!cols'] = colWidths;
+    
+    XLSX.writeFile(wb, 'Validacion_Headers_UANDES.xlsx');
+}
+
+function generarNormalizacion() {
+    const container = document.getElementById('normalizacion-container');
+    container.innerHTML = `
+        <div style="padding: 30px; text-align: center; color: #666;">
+            <p style="font-size: 16px; font-weight: 600; margin-bottom: 10px;">⚙️ Módulo de Corrección y Normalización</p>
+            <p style="font-size: 12px; color: #999;">Herramienta para gestionar inconsistencias de estructura.</p>
+        </div>
+    `;
+}
+
+// ============================================
+// INICIALIZACIÓN MEJORADA
+// ============================================
+
+function inicializarMejorado() {
+    const profesoresConDatos = Object.keys(datosBase).map((nombre, idx) => ({
+        id: `prof${String(idx + 1).padStart(2, '0')}`,
+        nombre: nombre,
+        nombres: datosBase[nombre].nombres || nombre,
+        grado: datosBase[nombre].grado || '',
+        nombreVisual: datosBase[nombre].nombre_visual || nombre,
+        tieneDatos: true
+    }));
+    
+    const profesoresSinDatos = sinFicha.map((p, idx) => ({
+        id: `prof${String(Object.keys(datosBase).length + idx + 1).padStart(2, '0')}`,
+        nombre: p.nombre,
+        nombres: p.nombre,
+        grado: '',
+        nombreVisual: p.nombre,
+        tieneDatos: false
+    }));
+    
+    const profesores = [...profesoresConDatos, ...profesoresSinDatos];
+    
+    generarListado(profesores);
+    generarModales(profesoresConDatos);
+    poblarSelectorProfesores();
+    
+    // Mostrar/ocultar Control según MODO_ADMIN
+    const elementosControl = document.querySelectorAll('.menu-control');
+    elementosControl.forEach(elem => {
+        elem.style.display = MODO_ADMIN ? (elem.classList.contains('menu-parent') ? 'flex' : 'block') : 'none';
+    });
+    
+    // Generar validación
+    if (MODO_ADMIN) {
+        generarValidacion();
+        generarNormalizacion();
+    }
+}
+
+function cambiarPaginaMejorado(pagina) {
+    // Cerrar submenú si es necesario
+    if (!pagina.startsWith('control')) {
+        document.querySelectorAll('.submenu').forEach(menu => {
+            menu.style.display = 'none';
+            const parent = menu.previousElementSibling;
+            if (parent) parent.classList.remove('active');
+        });
+    }
+    
+    document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.submenu-item').forEach(el => el.classList.remove('active'));
+    
+    document.getElementById(`page-${pagina}`).classList.add('active');
+    event.target.classList.add('active');
+    
+    // Generar contenido si es necesario
+    if (pagina === 'control-validacion') {
+        generarValidacion();
+    } else if (pagina === 'control-normalizacion') {
+        generarNormalizacion();
+    }
+}
+
+// Sobrescribir función cambiarPagina original
+const cambiarPaginaOriginal = cambiarPagina;
+window.cambiarPagina = function(pagina) {
+    cambiarPaginaMejorado(pagina);
+};
+
+// Sobrescribir función inicializar original
+const inicializarOriginal = inicializar;
+window.inicializar = function() {
+    inicializarMejorado();
+};
