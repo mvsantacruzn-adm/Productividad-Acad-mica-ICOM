@@ -198,83 +198,40 @@ function construirFichaCNA(nombreProfesor, base, produccion) {
             <div style="margin-bottom: 20px;"></div>
     `;
     
-    // Tesis Magister Guía
-    if (secciones.tesis_magister_guia && secciones.tesis_magister_guia.filas.length > 0) {
-        const filasFiltradas = filtrarPorAño(secciones.tesis_magister_guia.filas);
-        if (filasFiltradas.length > 0) {
-            html += construirTabla('2.1. Tesis de Magister Dirigidas (Como Guía)', secciones.tesis_magister_guia.headers, filasFiltradas);
-        }
-    }
+    // Orden definido de todas las secciones posibles
+    const ordenSecciones = [
+        'tesis_magister_guia', 'tesis_magister_coguia',
+        'tesis_doctorado_guia', 'tesis_doctorado_coguia',
+        'publicaciones_indexadas', 'publicaciones_no_indexadas',
+        'libros', 'capitulos', 'patentes', 'proyectos'
+    ];
     
-    // Tesis Magister Co-guía
-    if (secciones.tesis_magister_coguia && secciones.tesis_magister_coguia.filas.length > 0) {
-        const filasFiltradas = filtrarPorAño(secciones.tesis_magister_coguia.filas);
-        if (filasFiltradas.length > 0) {
-            html += construirTabla('2.2. Tesis de Magister Dirigidas (Como Co-guía)', secciones.tesis_magister_coguia.headers, filasFiltradas);
-        }
-    }
+    const mapeoTitulos = {
+        'tesis_magister_guia': '2.1. Tesis de Magister Dirigidas (Como Guía)',
+        'tesis_magister_coguia': '2.2. Tesis de Magister Dirigidas (Como Co-guía)',
+        'tesis_doctorado_guia': '3.1. Tesis de Doctorado Dirigidas (Como Guía)',
+        'tesis_doctorado_coguia': '3.2. Tesis de Doctorado Dirigidas (Como Co-guía)',
+        'publicaciones_indexadas': '4.1. Publicaciones Indexadas',
+        'publicaciones_no_indexadas': '4.2. Publicaciones No Indexadas',
+        'libros': '4.3. Libros',
+        'capitulos': '4.4. Capítulos de Libro',
+        'patentes': '4.5. Patentes',
+        'proyectos': '5. Proyectos de Investigación'
+    };
     
-    // Tesis Doctorado Guía
-    if (secciones.tesis_doctorado_guia && secciones.tesis_doctorado_guia.filas.length > 0) {
-        const filasFiltradas = filtrarPorAño(secciones.tesis_doctorado_guia.filas);
-        if (filasFiltradas.length > 0) {
-            html += construirTabla('3.1. Tesis de Doctorado Dirigidas (Como Guía)', secciones.tesis_doctorado_guia.headers, filasFiltradas);
-        }
-    }
-    
-    // Tesis Doctorado Co-guía
-    if (secciones.tesis_doctorado_coguia && secciones.tesis_doctorado_coguia.filas.length > 0) {
-        const filasFiltradas = filtrarPorAño(secciones.tesis_doctorado_coguia.filas);
-        if (filasFiltradas.length > 0) {
-            html += construirTabla('3.2. Tesis de Doctorado Dirigidas (Como Co-guía)', secciones.tesis_doctorado_coguia.headers, filasFiltradas);
-        }
-    }
-    
-    // Publicaciones Indexadas
-    if (secciones.publicaciones_indexadas && secciones.publicaciones_indexadas.filas.length > 0) {
-        const filasFiltradas = filtrarPorAño(secciones.publicaciones_indexadas.filas);
-        if (filasFiltradas.length > 0) {
-            html += construirTabla('4.1. Publicaciones Indexadas', secciones.publicaciones_indexadas.headers, filasFiltradas);
-        }
-    }
-    
-    // Publicaciones No Indexadas
-    if (secciones.publicaciones_no_indexadas && secciones.publicaciones_no_indexadas.filas.length > 0) {
-        const filasFiltradas = filtrarPorAño(secciones.publicaciones_no_indexadas.filas);
-        if (filasFiltradas.length > 0) {
-            html += construirTabla('4.2. Publicaciones No Indexadas', secciones.publicaciones_no_indexadas.headers, filasFiltradas);
-        }
-    }
-    
-    // Libros
-    if (secciones.libros && secciones.libros.filas.length > 0) {
-        const filasFiltradas = filtrarPorAño(secciones.libros.filas);
-        if (filasFiltradas.length > 0) {
-            html += construirTabla('4.3. Libros', secciones.libros.headers, filasFiltradas);
-        }
-    }
-    
-    // Capítulos
-    if (secciones.capitulos && secciones.capitulos.filas.length > 0) {
-        const filasFiltradas = filtrarPorAño(secciones.capitulos.filas);
-        if (filasFiltradas.length > 0) {
-            html += construirTabla('4.4. Capítulos de Libro', secciones.capitulos.headers, filasFiltradas);
-        }
-    }
-    
-    // Patentes
-    if (secciones.patentes && secciones.patentes.filas.length > 0) {
-        const filasFiltradas = filtrarPorAño(secciones.patentes.filas);
-        if (filasFiltradas.length > 0) {
-            html += construirTabla('4.5. Patentes', secciones.patentes.headers, filasFiltradas);
-        }
-    }
-    
-    // Proyectos
-    if (secciones.proyectos && secciones.proyectos.filas.length > 0) {
-        const filasFiltradas = filtrarPorAño(secciones.proyectos.filas);
-        if (filasFiltradas.length > 0) {
-            html += construirTabla('5. Proyectos de Investigación', secciones.proyectos.headers, filasFiltradas);
+    // Recorrer TODAS las secciones en orden
+    for (const tipo of ordenSecciones) {
+        const seccion = secciones[tipo];
+        
+        // Incluir tabla SI existe la sección Y tiene filas
+        if (seccion && seccion.filas && seccion.filas.length > 0) {
+            const filasFiltradas = filtrarPorAño(seccion.filas);
+            
+            // Incluir tabla INCLUSO si filasFiltradas está vacío después de filtrar por año
+            // Mostrar tabla con todos los registros sin filtro de año
+            if (seccion.filas.length > 0) {
+                html += construirTabla(mapeoTitulos[tipo], seccion.headers, seccion.filas);
+            }
         }
     }
     
@@ -345,7 +302,7 @@ function descargarPDF() {
         margin: 8,
         filename: nombreArchivo,
         image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
+        html2canvas: { scale: 2, useCORS: true },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
     
@@ -362,45 +319,29 @@ function descargarWord() {
     const produccion = datosProduccion[profesorActualFicha];
     const secciones = produccion?.secciones || {};
     
-    const doc = new docx.Document({
-        sections: [{
-            properties: {},
-            children: generarDocxContent(profesorActualFicha, base, secciones)
-        }]
-    });
-    
-    docx.Packer.toBlob(doc).then(blob => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `Ficha_CNA_${profesorActualFicha.replace(/\s+/g, '_')}.docx`;
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
-    });
-}
-
-function generarDocxContent(nombreProfesor, base, secciones) {
     const children = [];
     
-    // Título
-    children.push(new docx.Paragraph({
-        text: 'Ficha Académica CNA',
-        heading: docx.HeadingLevel.HEADING_1,
-        alignment: docx.AlignmentType.CENTER,
-        spacing: { after: 400 }
-    }));
+    // Título principal
+    children.push(
+        new docx.Paragraph({
+            text: 'Ficha Académica CNA',
+            heading: docx.HeadingLevel.HEADING_1,
+            alignment: docx.AlignmentType.CENTER,
+            spacing: { after: 400 }
+        })
+    );
     
     // Nombre del profesor
-    children.push(new docx.Paragraph({
-        text: nombreProfesor,
-        bold: true,
-        fontSize: 24,
-        spacing: { after: 200 }
-    }));
+    children.push(
+        new docx.Paragraph({
+            text: profesorActualFicha,
+            bold: true,
+            fontSize: 24,
+            spacing: { after: 200 }
+        })
+    );
     
-    // Tabla de información básica
+    // Tabla información básica
     const infoBásica = [
         ['Nombre', base.nombre || 'N/D'],
         ['Vínculo', base.vinculo || 'N/D'],
@@ -409,24 +350,26 @@ function generarDocxContent(nombreProfesor, base, secciones) {
         ['Líneas de Investigación', base.lineas || 'N/D']
     ];
     
-    children.push(new docx.Table({
-        rows: infoBásica.map(([label, value]) => new docx.TableRow({
-            cells: [
-                new docx.TableCell({
-                    children: [new docx.Paragraph({ text: label, bold: true })],
-                    width: { size: 30, type: docx.WidthType.PERCENTAGE }
-                }),
-                new docx.TableCell({
-                    children: [new docx.Paragraph({ text: value })],
-                    width: { size: 70, type: docx.WidthType.PERCENTAGE }
-                })
-            ]
-        }))
-    }));
+    children.push(
+        new docx.Table({
+            rows: infoBásica.map(([label, value]) => new docx.TableRow({
+                cells: [
+                    new docx.TableCell({
+                        children: [new docx.Paragraph({ text: label, bold: true })],
+                        width: { size: 30, type: docx.WidthType.PERCENTAGE }
+                    }),
+                    new docx.TableCell({
+                        children: [new docx.Paragraph({ text: value })],
+                        width: { size: 70, type: docx.WidthType.PERCENTAGE }
+                    })
+                ]
+            }))
+        })
+    );
     
     children.push(new docx.Paragraph({ text: '', spacing: { after: 200 } }));
     
-    // Tablas de contenido
+    // Definir orden y títulos de TODAS las secciones
     const ordenSecciones = [
         'tesis_magister_guia', 'tesis_magister_coguia',
         'tesis_doctorado_guia', 'tesis_doctorado_coguia',
@@ -447,67 +390,95 @@ function generarDocxContent(nombreProfesor, base, secciones) {
         'proyectos': '5. Proyectos de Investigación'
     };
     
+    // Recorrer TODAS las secciones
     for (const tipo of ordenSecciones) {
         const seccion = secciones[tipo];
-        if (!seccion || !seccion.filas || seccion.filas.length === 0) continue;
         
-        const filasFiltradas = filtrarPorAño(seccion.filas);
-        if (filasFiltradas.length === 0) continue;
-        
-        // Título de sección
-        children.push(new docx.Paragraph({
-            text: mapeoTitulos[tipo],
-            bold: true,
-            fontSize: 22,
-            spacing: { before: 200, after: 200 }
-        }));
-        
-        // Tabla
-        const headers = seccion.headers;
-        const headersConNumero = !headers.includes('N°') ? ['N°', ...headers] : headers;
-        
-        children.push(new docx.Table({
-            width: { size: 100, type: docx.WidthType.PERCENTAGE },
-            rows: [
-                new docx.TableRow({
-                    cells: headersConNumero.map(h => new docx.TableCell({
-                        children: [new docx.Paragraph({
-                            text: h,
-                            bold: true,
-                            color: '000000'
-                        })],
-                        shading: { fill: 'f0f0f0' }
-                    }))
-                }),
-                ...filasFiltradas.map((fila, idx) => new docx.TableRow({
-                    cells: headersConNumero.map((header, colIdx) => {
-                        let valor = 'N/D';
-                        if (header === 'N°') {
-                            valor = fila['N°'] || (idx + 1).toString();
-                        } else {
-                            valor = fila[header] || 'N/D';
-                        }
-                        return new docx.TableCell({
-                            children: [new docx.Paragraph({ text: valor, fontSize: 20 })]
-                        });
-                    })
-                }))
-            ]
-        }));
-        
-        children.push(new docx.Paragraph({ text: '', spacing: { after: 200 } }));
+        // Incluir tabla SI tiene filas
+        if (seccion && seccion.filas && seccion.filas.length > 0) {
+            // Título de sección
+            children.push(
+                new docx.Paragraph({
+                    text: mapeoTitulos[tipo],
+                    bold: true,
+                    fontSize: 22,
+                    spacing: { before: 200, after: 200 }
+                })
+            );
+            
+            // Tabla
+            const headers = seccion.headers;
+            const headersConNumero = !headers.includes('N°') ? ['N°', ...headers] : headers;
+            
+            children.push(
+                new docx.Table({
+                    width: { size: 100, type: docx.WidthType.PERCENTAGE },
+                    rows: [
+                        // Encabezado
+                        new docx.TableRow({
+                            cells: headersConNumero.map(h => new docx.TableCell({
+                                children: [new docx.Paragraph({
+                                    text: h,
+                                    bold: true,
+                                    color: '000000'
+                                })],
+                                shading: { fill: 'f0f0f0' }
+                            }))
+                        }),
+                        // Filas de datos
+                        ...seccion.filas.map((fila, idx) => new docx.TableRow({
+                            cells: headersConNumero.map((header, colIdx) => {
+                                let valor = 'N/D';
+                                if (header === 'N°') {
+                                    valor = fila['N°'] || (idx + 1).toString();
+                                } else {
+                                    valor = fila[header] || 'N/D';
+                                }
+                                return new docx.TableCell({
+                                    children: [new docx.Paragraph({ text: valor, fontSize: 20 })]
+                                });
+                            })
+                        }))
+                    ]
+                })
+            );
+            
+            children.push(new docx.Paragraph({ text: '', spacing: { after: 200 } }));
+        }
     }
     
     // Pie de página
-    children.push(new docx.Paragraph({
-        text: 'Reporte generado automáticamente desde el Sistema de Productividad Académica - UANDES',
-        alignment: docx.AlignmentType.CENTER,
-        fontSize: 18,
-        color: '999999',
-        spacing: { before: 200 }
-    }));
+    children.push(
+        new docx.Paragraph({
+            text: 'Reporte generado automáticamente desde el Sistema de Productividad Académica - UANDES',
+            alignment: docx.AlignmentType.CENTER,
+            fontSize: 18,
+            color: '999999',
+            spacing: { before: 200 }
+        })
+    );
     
-    return children;
+    // Crear y descargar documento
+    const doc = new docx.Document({
+        sections: [{
+            properties: {},
+            children: children
+        }]
+    });
+    
+    docx.Packer.toBlob(doc).then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `Ficha_CNA_${profesorActualFicha.replace(/\s+/g, '_')}.docx`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+    }).catch(err => {
+        console.error('Error generando Word:', err);
+        alert('Error al generar archivo Word');
+    });
 }
 
 function generarModales(profesores) {

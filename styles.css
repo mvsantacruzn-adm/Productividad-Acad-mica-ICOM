@@ -426,16 +426,16 @@ tbody tr:hover {
     padding: 25px;
     background: #f8f9fa;
     flex: 1;
-    min-height: 400px;
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
+    /* SIN LIMITACIÓN DE ALTURA */
 }
 
 .preview-content {
     flex: 1;
     display: flex;
     flex-direction: column;
+    /* SIN OVERFLOW O MAX-HEIGHT */
 }
 
 .preview-placeholder {
