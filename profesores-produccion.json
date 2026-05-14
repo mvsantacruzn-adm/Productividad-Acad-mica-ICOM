@@ -693,8 +693,7 @@
           "Año",
           "Nombre del libro / Nombre del capítulo",
           "Lugar",
-          "Editorial",
-          "Estado"
+          "Editorial"
         ],
         "filas": [
           {
@@ -703,8 +702,7 @@
             "Año": "2024",
             "Nombre del libro / Nombre del capítulo": "Environmental, Social, and Governance Factors in Long-term Value Creation. En: Boardrooms in Action: Creating Sustainable Value in Latin America",
             "Lugar": "Santiago, Chile",
-            "Editorial": "Universidad de los Andes / ESE Business School",
-            "Estado": "Publicado"
+            "Editorial": "Universidad de los Andes / ESE Business School"
           }
         ]
       },
@@ -730,18 +728,18 @@
       "tesis_doctorado_guia": {
         "headers": [
           "N°",
-          "Autor",
           "Año",
-          "Título de la Tesis",
+          "Autor",
+          "Título de la tesis",
           "Nombre del programa",
           "Institución"
         ],
         "filas": [
           {
             "N°": "1",
-            "Autor": "Pablo Slutzky",
             "Año": "2017",
-            "Título de la Tesis": "Essays in Empirical Corporate Finance",
+            "Autor": "Pablo Slutzky",
+            "Título de la tesis": "Essays in Empirical Corporate Finance",
             "Nombre del programa": "Doctorado de Finanzas",
             "Institución": "Columbia University (NYC)"
           }
@@ -1538,8 +1536,7 @@
       },
       "capitulos": {
         "headers": [
-          "Capítulo de Libro con Referato Externo",
-          "Capítulo de Libro con Referato Externo",
+          "N°",
           "Autor(es)",
           "Año",
           "Título de la publicación",
@@ -1548,7 +1545,7 @@
         ],
         "filas": [
           {
-            "Capítulo de Libro con Referato Externo": "1",
+            "N°": "N/D",
             "Autor(es)": "Guzman, F.A.",
             "Año": "Inprogress",
             "Título de la publicación": "Human failures in cross-cultural leadership research",
@@ -1773,6 +1770,7 @@
       },
       "proyectos": {
         "headers": [
+          "N°",
           "Título",
           "Fuente de financiamiento",
           "Año de adjudicación",
@@ -1793,7 +1791,6 @@
       },
       "capitulos": {
         "headers": [
-          "Capítulo de libro con referato externo",
           "N°",
           "Autor(es)",
           "Año",
@@ -1803,7 +1800,6 @@
         ],
         "filas": [
           {
-            "Capítulo de libro con referato externo": "N/D",
             "N°": "1",
             "Autor(es)": "Jasa, N., Ta, A., & Morales, F. ",
             "Año": "2026",
@@ -1812,7 +1808,6 @@
             "Editorial": "Springer Nature"
           },
           {
-            "Capítulo de libro con referato externo": "N/D",
             "N°": "2",
             "Autor(es)": "Zhang, K.; Reuer, J. J.; Morales, F.",
             "Año": "2020",
@@ -1825,56 +1820,50 @@
       "tesis_magister_guia": {
         "headers": [
           "N°",
-          "Rol",
-          "Autor",
           "Año",
-          "Título",
+          "Autor",
+          "Título de la tesis",
           "Nombre del programa",
           "Institución"
         ],
         "filas": [
           {
             "N°": "1",
-            "Rol": "Guía",
-            "Autor": "Richard Abraham Ortúzar Neira",
             "Año": "2022",
-            "Título": "Bienestar Subjetivo: Un Enfoque de la Economía en torno al Modelo Residencial del Servicio Nacional de Menores de Chile.",
+            "Autor": "Richard Abraham Ortúzar Neira",
+            "Título de la tesis": "N/D",
             "Nombre del programa": "Magíster en Empresa y Tecnología (MEET)",
             "Institución": "Universidad Diego Portales"
           },
           {
             "N°": "2",
-            "Rol": "Guía",
-            "Autor": "Patricio Salas",
             "Año": "2022",
-            "Título": "Colaboración interna: lidiar con la ausencia de un integrante en una organización",
+            "Autor": "Patricio Salas",
+            "Título de la tesis": "N/D",
             "Nombre del programa": "Ingeniero Comercial y Magíster de continuidad en Negocios Digitales",
             "Institución": "Universidad Diego Portales"
           },
           {
             "N°": "3",
-            "Rol": "Guía",
-            "Autor": "Catalina Campos Hernández",
             "Año": "2021",
-            "Título": "Novelty as the Main Characteristic in Venture Capital Firm Investments",
+            "Autor": "Catalina Campos Hernández",
+            "Título de la tesis": "N/D",
             "Nombre del programa": "Magíster en Empresa y Tecnología (MEET)",
             "Institución": "Universidad Diego Portales"
           },
           {
             "N°": "4",
-            "Rol": "Guía",
-            "Autor": "José Ignacio Malbrán Bastías",
             "Año": "2021",
-            "Título": "Violencia en los estadios",
+            "Autor": "José Ignacio Malbrán Bastías",
+            "Título de la tesis": "N/D",
             "Nombre del programa": "Magíster en Políticas Públicas (MPP)",
             "Institución": "Universidad Diego Portales"
           },
           {
             "N°": "5",
-            "Rol": "Guía",
-            "Autor": "Hugo Vallejos Silva",
             "Año": "2020",
-            "Título": "Ley de Financiamiento Urbano Compartido: análisis y propuesta de modificaciones en el contexto comunal de Estación Central",
+            "Autor": "Hugo Vallejos Silva",
+            "Título de la tesis": "N/D",
             "Nombre del programa": "Magíster en Políticas Públicas (MPP)",
             "Institución": "Universidad Diego Portales"
           }
@@ -2009,7 +1998,6 @@
       },
       "publicaciones_no_indexadas": {
         "headers": [
-          "Publicaciones No Indexadas",
           "N°",
           "Autor(es)",
           "Año",
@@ -2073,7 +2061,6 @@
       },
       "proyectos": {
         "headers": [
-          "Proyectos",
           "N°",
           "Título",
           "Fuente de financiamiento",
@@ -2084,7 +2071,6 @@
         "filas": [
           {
             "N°": "1",
-            "Proyectos": "N/D",
             "Título": "FONDECYT REGULAR - 1231421: PERFORMANCE-BASED PAY IN MONEY MANAGEMENT: EXPLICIT AND IMPLICIT INCENTIVES, RISK TAKING AND PERFORMANCE",
             "Fuente de financiamiento": "Agencia Nacional de Investigación y Desarrollo (ANID) - FONDECYT REGULAR",
             "Año de adjudicación": "2023",
@@ -2093,7 +2079,6 @@
           },
           {
             "N°": "2",
-            "Proyectos": "N/D",
             "Título": "FONDECYT INICIACIÓN - 11190917: DIFFERENCES AMONG SHORT SELLERS, MISPRICING AND CORRECTION",
             "Fuente de financiamiento": "Agencia Nacional de Investigación y Desarrollo (ANID) FONDECYT INICIACIÓN",
             "Año de adjudicación": "2019",
@@ -2526,8 +2511,7 @@
           "Título de la publicación",
           "Nombre revista",
           "Estado",
-          "ISSN",
-          "Factor de impacto"
+          "ISSN"
         ],
         "filas": [
           {
@@ -2538,8 +2522,7 @@
             "Título de la publicación": "Getting Teachers Back to Study: Input-Based Teacher Incentives and Student Achievement",
             "Nombre revista": "No aplica",
             "Estado": "Working paper",
-            "ISSN": "No aplica",
-            "Factor de impacto": "N/A"
+            "ISSN": "No aplica"
           },
           {
             "N°": "2",
@@ -2549,14 +2532,12 @@
             "Título de la publicación": "Maternal Labor Supply, Children's Cognitive Development, and the Welfare Effects of Childcare Policies",
             "Nombre revista": "No aplica",
             "Estado": "Working paper",
-            "ISSN": "No aplica",
-            "Factor de impacto": "N/A"
+            "ISSN": "No aplica"
           }
         ]
       },
       "proyectos": {
         "headers": [
-          "Listado de proyectos de investigación en los últimos 10 años",
           "N°",
           "Título",
           "Fuente de financiamiento",
@@ -2567,7 +2548,6 @@
         "filas": [
           {
             "N°": "1",
-            "Listado de proyectos de investigación en los últimos 10 años": "N/D",
             "Título": "FONDECYT Regular N°1261519: Supply-Side Incentives and Labor Market Responses: Evidence from Labor and Higher Education Policies",
             "Fuente de financiamiento": "Agencia Nacional de Investigación y Desarrollo (ANID) - FONDECYT Regular",
             "Año de adjudicación": "2026",
@@ -2576,7 +2556,6 @@
           },
           {
             "N°": "2",
-            "Listado de proyectos de investigación en los últimos 10 años": "N/D",
             "Título": "FONDECYT Iniciación N°11190481: Essays on Welfare Policies, Household Choices, and Child Development",
             "Fuente de financiamiento": "Agencia Nacional de Investigación y Desarrollo (ANID) - FONDECYT Iniciación",
             "Año de adjudicación": "2019",
