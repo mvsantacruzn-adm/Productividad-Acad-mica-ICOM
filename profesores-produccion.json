@@ -719,36 +719,11 @@
         ],
         "filas": [
           {
-            "N°": "2",
-            "Título": "Leadership emergence in multinational teams",
-            "Fuente de financiamiento": "Agencia Nacional de Investigación y Desarrollo (ANID) FONDECYT de Iniciación",
-            "Año de adjudicación": "2026",
-            "Período de ejecución": "2026–2029",
-            "Rol en el proyecto": "Investigador Responsable (PI)"
-          },
-          {
-            "N°": "1",
             "Título": "FONDECYT REGULAR - 1240442: Climate Finance and Sustainability in Chile",
             "Fuente de financiamiento": "Agencia Nacional de Investigación y Desarrollo (ANID) FONDECYT REGULAR",
             "Año de adjudicación": "2024",
             "Período de ejecución": "2024-2028",
-            "Rol en el proyecto": "Investigador Responsable (PI)"
-          },
-          {
-            "N°": "3",
-            "Título": "Grant to hire a post-doctoral research fellow",
-            "Fuente de financiamiento": "IESEG, France",
-            "Año de adjudicación": "2023",
-            "Período de ejecución": "2023–2025",
-            "Rol en el proyecto": "Investigador Responsable (PI), en colaboración con A. Giangreco"
-          },
-          {
-            "N°": "4",
-            "Título": "IESEG’s Research Excellence Grant (REG)",
-            "Fuente de financiamiento": "IESEG, France",
-            "Año de adjudicación": "2022",
-            "Período de ejecución": "2022–2027",
-            "Rol en el proyecto": "Investigador Responsable (PI)"
+            "Rol en el proyecto": "Investigador Responsable (Principal Investigator)"
           }
         ]
       },
@@ -1550,6 +1525,14 @@
             "Año de adjudicación": "2016",
             "Período de ejecución": "2016–2017",
             "Rol en el proyecto": "Investigador Responsable"
+          },
+          {
+            "N°": "8",
+            "Título": "IESEG's Research Excellence Grant (REG)",
+            "Fuente de financiamiento": "IESEG, France",
+            "Año de adjudicación": "2022",
+            "Período de ejecución": "2022–2027",
+            "Rol en el proyecto": "Investigador Responsable (PI)"
           }
         ]
       },
