@@ -554,16 +554,6 @@
           },
           {
             "N°": "9",
-            "Autor(es)": "Poblete, J.; Larraín, M.",
-            "Año": "2007",
-            "Título de la publicación": "Age-differentiated Minimum Wages in Developing Countries",
-            "Nombre revista": "Journal of Development Economics",
-            "Estado": "Publicado",
-            "ISSN": "0304-3878",
-            "Factor de impacto + tipo de medición": "2,4 JIF"
-          },
-          {
-            "N°": "10",
             "Autor(es)": "Calomiris, C.; Liberti, J.; Sturgess, J.; Larraín, M.",
             "Año": "2016",
             "Título de la publicación": "Which Creditors’ Rights Reforms Drive Financial Deepening and Economic Development?",
@@ -571,6 +561,16 @@
             "Estado": "Publicado",
             "ISSN": "N/D",
             "Factor de impacto + tipo de medición": "N/D"
+          },
+          {
+            "N°": "10",
+            "Autor(es)": "Poblete, J.; Larraín, M.",
+            "Año": "2007",
+            "Título de la publicación": "Age-differentiated Minimum Wages in Developing Countries",
+            "Nombre revista": "Journal of Development Economics",
+            "Estado": "Publicado",
+            "ISSN": "0304-3878",
+            "Factor de impacto + tipo de medición": "2,4 JIF"
           }
         ]
       },
@@ -977,6 +977,16 @@
           },
           {
             "N°": "2",
+            "Autor(es)": "Garcia Marin, Á. F.; Cusolito, A.; Maloney, W.",
+            "Año": "2023",
+            "Título de la publicación": "Proximity to the frontier, markups, and the response of innovation to foreign competition: Evidence from matched production-innovation surveys in Chile",
+            "Nombre revista": "American Economic Review: Insights",
+            "Estado": "Publicado",
+            "ISSN": "2640-205X",
+            "Factor de impacto + tipo de medición": "~4,7 JIF"
+          },
+          {
+            "N°": "3",
             "Autor(es)": "Álvarez, R.; García-Marín, Á.; Ilabaca, S.",
             "Año": "2021",
             "Título de la publicación": "Commodity price shocks and poverty reduction in Chile",
@@ -986,7 +996,7 @@
             "Factor de impacto + tipo de medición": "5,4 JIF"
           },
           {
-            "N°": "3",
+            "N°": "4",
             "Autor(es)": "Garcia Marin, Á. F.; Canales, M.",
             "Año": "2019",
             "Título de la publicación": "Empresas de crecimiento acelerado y productividad: evidencia microeconómica para Chile",
@@ -996,7 +1006,7 @@
             "Factor de impacto + tipo de medición": "0,2 SJR"
           },
           {
-            "N°": "4",
+            "N°": "5",
             "Autor(es)": "Garcia-Marin, A.; Voigtländer, N.",
             "Año": "2019",
             "Título de la publicación": "Exporting and plant-level efficiency gains: It’s in the measure",
@@ -1006,7 +1016,7 @@
             "Factor de impacto + tipo de medición": "7,0 JIF"
           },
           {
-            "N°": "5",
+            "N°": "6",
             "Autor(es)": "Edwards, S.; Garcia Marin, A.",
             "Año": "2015",
             "Título de la publicación": "Constitutional rights and education: An international comparative study",
@@ -1016,7 +1026,7 @@
             "Factor de impacto + tipo de medición": "2,1 JIF"
           },
           {
-            "N°": "6",
+            "N°": "7",
             "Autor(es)": "Garcia Marin, Á. F.; Edwards, S.",
             "Año": "2015",
             "Título de la publicación": "Educación y derechos constitucionales",
@@ -1026,7 +1036,7 @@
             "Factor de impacto + tipo de medición": "0,15 SJR"
           },
           {
-            "N°": "7",
+            "N°": "8",
             "Autor(es)": "Garcia Marin, Á. F.; Pincheira, P.",
             "Año": "2012",
             "Título de la publicación": "En busca de un buen marco de referencia predictivo para la inflación en Chile",
@@ -1036,7 +1046,7 @@
             "Factor de impacto + tipo de medición": "0,2 SJR"
           },
           {
-            "N°": "8",
+            "N°": "9",
             "Autor(es)": "Bravo-Ortega, C.; García Marín, Á.",
             "Año": "2011",
             "Título de la publicación": "R&D and Productivity: A Two Way Avenue?",
@@ -1046,7 +1056,7 @@
             "Factor de impacto + tipo de medición": "3,7 JIF"
           },
           {
-            "N°": "9",
+            "N°": "10",
             "Autor(es)": "Garcia Marin, Á. F.; Álvarez, R.",
             "Año": "2010",
             "Título de la publicación": "Productividad, innovación y exportaciones en la industria manufacturera chilena",
@@ -1054,16 +1064,6 @@
             "Estado": "Publicado",
             "ISSN": "0041-3011",
             "Factor de impacto + tipo de medición": "0,15 SJR"
-          },
-          {
-            "N°": "10",
-            "Autor(es)": "Garcia Marin, Á. F.; Cusolito, A.; Maloney, W.",
-            "Año": "2023",
-            "Título de la publicación": "Proximity to the frontier, markups, and the response of innovation to foreign competition: Evidence from matched production-innovation surveys in Chile",
-            "Nombre revista": "American Economic Review: Insights",
-            "Estado": "Publicado",
-            "ISSN": "2640-205X",
-            "Factor de impacto + tipo de medición": "~4,7 JIF"
           }
         ]
       },
@@ -1959,7 +1959,8 @@
             "Nombre revista": "Management Science",
             "Estado": "Publicado",
             "ISSN": "0025-1909",
-            "Factor de impacto": "4,9 JIF"
+            "Factor de impacto": "4,9 JIF",
+            "N°": "1"
           },
           {
             "Autor(es)": "Lim, B.; Sotes-Paladino, J.; Wang, G. J.; Yao, Y.",
@@ -1968,16 +1969,8 @@
             "Nombre revista": "Journal of Banking and Finance",
             "Estado": "Publicado",
             "ISSN": "0378-4266",
-            "Factor de impacto": "3,9 JIF"
-          },
-          {
-            "Autor(es)": "Sotes-Paladino, J.; Zapatero, F.",
-            "Año": "2022",
-            "Título de la publicación": "Carrot and Stick: A Role for Benchmark-Adjusted Compensation in Active Fund Management",
-            "Nombre revista": "Journal of Financial Intermediation",
-            "Estado": "Publicado",
-            "ISSN": "1042-9573",
-            "Factor de impacto": "5,2 JIF"
+            "Factor de impacto": "3,9 JIF",
+            "N°": "2"
           },
           {
             "Autor(es)": "Gargano, A.; Sotes-Paladino, J.; Verwijmeren, P.",
@@ -1986,7 +1979,18 @@
             "Nombre revista": "Journal of Financial and Quantitative Analysis",
             "Estado": "Publicado",
             "ISSN": "0022-1090",
-            "Factor de impacto": "5,5 JIF"
+            "Factor de impacto": "5,5 JIF",
+            "N°": "3"
+          },
+          {
+            "Autor(es)": "Sotes-Paladino, J.; Zapatero, F.",
+            "Año": "2022",
+            "Título de la publicación": "Carrot and Stick: A Role for Benchmark-Adjusted Compensation in Active Fund Management",
+            "Nombre revista": "Journal of Financial Intermediation",
+            "Estado": "Publicado",
+            "ISSN": "1042-9573",
+            "Factor de impacto": "5,2 JIF",
+            "N°": "4"
           },
           {
             "Autor(es)": "Sotes-Paladino, J.; Zapatero, F.",
@@ -1995,7 +1999,8 @@
             "Nombre revista": "Review of Financial Studies",
             "Estado": "Publicado",
             "ISSN": "0893-9454",
-            "Factor de impacto": "5,8 JIF"
+            "Factor de impacto": "5,8 JIF",
+            "N°": "5"
           },
           {
             "Autor(es)": "Goncalves-Pinto, L.; Sotes-Paladino, J.; Xu, J.",
@@ -2004,7 +2009,8 @@
             "Nombre revista": "Journal of Banking and Finance",
             "Estado": "Publicado",
             "ISSN": "0378-4266",
-            "Factor de impacto": "4,1 JIF"
+            "Factor de impacto": "4,1 JIF",
+            "N°": "6"
           },
           {
             "Autor(es)": "Brown, S. J.; Sotes-Paladino, J.; Wang, J.; Yao, Y.",
@@ -2013,7 +2019,8 @@
             "Nombre revista": "Journal of Banking and Finance",
             "Estado": "Publicado",
             "ISSN": "0378-4266",
-            "Factor de impacto": "3,8 JIF"
+            "Factor de impacto": "3,8 JIF",
+            "N°": "7"
           }
         ]
       },
@@ -2165,7 +2172,8 @@
             "Estado": "Publicado",
             "ISSN": "0899-8256",
             "Factor de impacto": "1,8 JIF",
-            "Link de verificación": "https://www.sciencedirect.com/journal/games-and-economic-behavior"
+            "Link de verificación": "https://www.sciencedirect.com/journal/games-and-economic-behavior",
+            "N°": "1"
           },
           {
             "Autor(es)": "Awad, E.; Judd, G.; Riquelme, N.",
@@ -2175,7 +2183,8 @@
             "Estado": "Publicado",
             "ISSN": "0092-5853",
             "Factor de impacto": "4,3 JIF",
-            "Link de verificación": "https://www.cambridge.org/core/journals/american-journal-of-political-science"
+            "Link de verificación": "https://www.cambridge.org/core/journals/american-journal-of-political-science",
+            "N°": "2"
           },
           {
             "Autor(es)": "Do, J.; Riquelme, N.",
@@ -2185,7 +2194,8 @@
             "Estado": "Publicado",
             "ISSN": "0938-2259",
             "Factor de impacto": "1,6 JIF",
-            "Link de verificación": "https://www.sciencedirect.com/journal/economic-theory"
+            "Link de verificación": "https://www.sciencedirect.com/journal/economic-theory",
+            "N°": "3"
           },
           {
             "Autor(es)": "Awad, E.; Riquelme, N.",
@@ -2195,7 +2205,8 @@
             "Estado": "Publicado",
             "ISSN": "1554-0626",
             "Factor de impacto": "1,5 JIF",
-            "Link de verificación": "https://www.cambridge.org/core/journals/quarterly-journal-of-political-science"
+            "Link de verificación": "https://www.cambridge.org/core/journals/quarterly-journal-of-political-science",
+            "N°": "4"
           }
         ]
       },
@@ -2500,7 +2511,7 @@
             "Link de verificación electrónica": "https://www.journals.uchicago.edu/journals/jole/about"
           },
           {
-            "N°": "4",
+            "N°": "3",
             "Autor(es)": "Prieto, M.; Carocca, A.; Fullerton, C.; Hidalgo, A.; Diaz, J.; San Martin, P.; Godoy, M.; Nuño, M.; De Leon, A.; Rodriguez, J.; Sanchez, R.; Batiz, F.; Castillo, A.; Cuellar-Barboza, A.; Biernacka, J.; Frye, M.",
             "Año": "2022",
             "Título de la publicación": "Clinical Correlates of Cardiac Conduction in Bipolar Disorder",
@@ -2511,7 +2522,7 @@
             "Link de verificación electrónica": "https://www.cambridge.org/core/journals/european-psychiatry"
           },
           {
-            "N°": "3",
+            "N°": "4",
             "Autor(es)": "Rodríguez, J.; Saltiel, F.; Urzúa, S.",
             "Año": "2021",
             "Título de la publicación": "Dynamic treatment effects of job training",

@@ -375,6 +375,7 @@ tbody tr:hover {
     display: flex;
     gap: 12px;
     margin-top: 20px;
+    flex-wrap: wrap;
 }
 
 .btn-primary {
@@ -400,6 +401,27 @@ tbody tr:hover {
     transform: translateY(0);
 }
 
+.btn-secondary {
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #667eea;
+    background: white;
+    border: 2px solid #667eea;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+    background: #f8f9fa;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+}
+
+.btn-secondary:active {
+    background: #f0f0f0;
+}
+
 .card-preview {
     padding: 25px;
     background: #f8f9fa;
@@ -407,6 +429,7 @@ tbody tr:hover {
     min-height: 400px;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
 }
 
 .preview-content {
@@ -427,28 +450,6 @@ tbody tr:hover {
     justify-content: center;
     color: #999;
     font-size: 14px;
-}
-
-
-.btn-secondary {
-    padding: 12px 24px;
-    font-size: 14px;
-    font-weight: 600;
-    color: #667eea;
-    background: white;
-    border: 2px solid #667eea;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.btn-secondary:hover {
-    background: #f8f9fa;
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
-}
-
-.btn-secondary:active {
-    background: #f0f0f0;
 }
 
 @media print {

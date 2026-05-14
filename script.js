@@ -68,12 +68,30 @@ function generarResumen(nombre) {
     return items.join(' • ') || 'Sin datos';
 }
 
+function formatearApellidos(nombre) {
+    const partes = nombre.split(' ');
+    if (partes.length < 2) return nombre;
+    
+    const apellidos = partes.slice(0, -1).join(' ').toUpperCase();
+    const nombres = partes[partes.length - 1];
+    
+    return `${apellidos}, ${nombres}`;
+}
+
 function generarListado(profesores) {
     const lista = document.getElementById('profesor-list');
-    lista.innerHTML = profesores.map(p => `
+    
+    // Ordenar alfabéticamente por apellido
+    const profesoresOrdenados = [...profesores].sort((a, b) => {
+        const apellidoA = a.nombre.split(' ').slice(0, -1).join(' ').toUpperCase();
+        const apellidoB = b.nombre.split(' ').slice(0, -1).join(' ').toUpperCase();
+        return apellidoA.localeCompare(apellidoB);
+    });
+    
+    lista.innerHTML = profesoresOrdenados.map(p => `
         <div class="profesor-row ${!p.tieneDatos ? 'sin-ficha' : ''}" onclick="${p.tieneDatos ? `abrirModal('${p.id}')` : ''}">
             <div class="profesor-info">
-                <div class="profesor-nombre">${p.nombre}</div>
+                <div class="profesor-nombre">${formatearApellidos(p.nombre)}</div>
                 <div class="profesor-resumen">${p.resumen}</div>
             </div>
             <div class="profesor-arrow">${p.tieneDatos ? '→' : ''}</div>
@@ -108,7 +126,8 @@ function generarFichaCNA() {
     const select = document.getElementById('profesor-select');
     const nombreProfesor = select.value;
     const preview = document.getElementById('ficha-cna-preview');
-    const btnDescarga = document.getElementById('btn-descargar-pdf');
+    const btnDescargaPDF = document.getElementById('btn-descargar-pdf');
+    const btnDescargaWord = document.getElementById('btn-descargar-word');
     
     if (!nombreProfesor) {
         preview.innerHTML = `
@@ -116,7 +135,8 @@ function generarFichaCNA() {
                 <p>Selecciona un profesor para visualizar su ficha</p>
             </div>
         `;
-        btnDescarga.style.display = 'none';
+        btnDescargaPDF.style.display = 'none';
+        btnDescargaWord.style.display = 'none';
         return;
     }
     
@@ -129,51 +149,53 @@ function generarFichaCNA() {
                 <p>No se encontraron datos para este profesor</p>
             </div>
         `;
-        btnDescarga.style.display = 'none';
+        btnDescargaPDF.style.display = 'none';
+        btnDescargaWord.style.display = 'none';
         return;
     }
     
     profesorActualFicha = nombreProfesor;
     const fichaHTML = construirFichaCNA(nombreProfesor, base, produccion);
     preview.innerHTML = fichaHTML;
-    btnDescarga.style.display = 'inline-block';
+    btnDescargaPDF.style.display = 'inline-block';
+    btnDescargaWord.style.display = 'inline-block';
 }
 
 function construirFichaCNA(nombreProfesor, base, produccion) {
     const secciones = produccion?.secciones || {};
     let html = `
-        <div id="ficha-pdf-content" style="background: white; padding: 20px; border-radius: 8px; font-family: Arial, sans-serif; font-size: 12px; color: #333; line-height: 1.6;">
+        <div id="ficha-pdf-content" style="background: white; padding: 20px; border-radius: 8px; font-family: Arial, sans-serif; font-size: 11px; color: #333; line-height: 1.5;">
             
-            <h1 style="font-size: 18px; font-weight: bold; text-align: center; margin-bottom: 20px; border-bottom: 2px solid #667eea; padding-bottom: 10px;">Ficha Académica CNA</h1>
+            <h1 style="font-size: 16px; font-weight: bold; text-align: center; margin-bottom: 15px; border-bottom: 2px solid #667eea; padding-bottom: 10px;">Ficha Académica CNA</h1>
             
-            <h2 style="font-size: 16px; font-weight: bold; color: #333; margin-bottom: 15px;">${nombreProfesor}</h2>
+            <h2 style="font-size: 14px; font-weight: bold; color: #333; margin-bottom: 12px;">${nombreProfesor}</h2>
             
-            <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px; border: 1px solid #ddd;">
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; border: 1px solid #ddd;">
                 <tbody>
                     <tr>
-                        <td style="padding: 10px; background: #f0f0f0; font-weight: bold; width: 30%; border: 1px solid #ddd;">Nombre</td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">${base.nombre || 'N/D'}</td>
+                        <td style="padding: 8px; background: #f0f0f0; font-weight: bold; width: 30%; border: 1px solid #ddd;">Nombre</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${base.nombre || 'N/D'}</td>
                     </tr>
                     <tr>
-                        <td style="padding: 10px; background: #f0f0f0; font-weight: bold; border: 1px solid #ddd;">Vínculo</td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">${base.vinculo || 'N/D'}</td>
+                        <td style="padding: 8px; background: #f0f0f0; font-weight: bold; border: 1px solid #ddd;">Vínculo</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${base.vinculo || 'N/D'}</td>
                     </tr>
                     <tr>
-                        <td style="padding: 10px; background: #f0f0f0; font-weight: bold; border: 1px solid #ddd;">Título Profesional</td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">${base.titulo || 'N/D'}</td>
+                        <td style="padding: 8px; background: #f0f0f0; font-weight: bold; border: 1px solid #ddd;">Título Profesional</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${base.titulo || 'N/D'}</td>
                     </tr>
                     <tr>
-                        <td style="padding: 10px; background: #f0f0f0; font-weight: bold; border: 1px solid #ddd;">Grado Académico Máximo</td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">${base.grado || 'N/D'}</td>
+                        <td style="padding: 8px; background: #f0f0f0; font-weight: bold; border: 1px solid #ddd;">Grado Académico Máximo</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${base.grado || 'N/D'}</td>
                     </tr>
                     <tr>
-                        <td style="padding: 10px; background: #f0f0f0; font-weight: bold; border: 1px solid #ddd;">Líneas de Investigación</td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">${base.lineas || 'N/D'}</td>
+                        <td style="padding: 8px; background: #f0f0f0; font-weight: bold; border: 1px solid #ddd;">Líneas de Investigación</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${base.lineas || 'N/D'}</td>
                     </tr>
                 </tbody>
             </table>
             
-            <div style="margin-bottom: 30px;"></div>
+            <div style="margin-bottom: 20px;"></div>
     `;
     
     // Tesis Magister Guía
@@ -257,7 +279,7 @@ function construirFichaCNA(nombreProfesor, base, produccion) {
     }
     
     html += `
-            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; text-align: center; color: #999; font-size: 10px;">
+            <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #ddd; text-align: center; color: #999; font-size: 9px;">
                 <p>Reporte generado automáticamente desde el Sistema de Productividad Académica - UANDES</p>
             </div>
         </div>
@@ -270,8 +292,8 @@ function construirTabla(titulo, headers, filas) {
     if (!filas || filas.length === 0) return '';
     
     let html = `
-        <h3 style="font-size: 13px; font-weight: bold; color: #333; margin-top: 25px; margin-bottom: 10px;">${titulo}</h3>
-        <table class="ficha-table" style="width: 100%; border-collapse: collapse; margin-bottom: 25px; border: 1px solid #ddd;">
+        <h3 style="font-size: 11px; font-weight: bold; color: #333; margin-top: 18px; margin-bottom: 8px;">${titulo}</h3>
+        <table class="ficha-table" style="width: 100%; border-collapse: collapse; margin-bottom: 18px; border: 1px solid #ddd; font-size: 10px;">
             <thead>
                 <tr style="background: #f0f0f0;">
     `;
@@ -280,7 +302,7 @@ function construirTabla(titulo, headers, filas) {
     const headersConNumero = !headers.includes('N°') ? ['N°', ...headers] : headers;
     
     headersConNumero.forEach(header => {
-        html += `<th style="padding: 10px; text-align: left; font-weight: bold; border: 1px solid #ddd; background: #f0f0f0;">${header}</th>`;
+        html += `<th style="padding: 6px; text-align: left; font-weight: bold; border: 1px solid #ddd; background: #f0f0f0; color: black;">${header}</th>`;
     });
     
     html += `</tr></thead><tbody>`;
@@ -290,22 +312,22 @@ function construirTabla(titulo, headers, filas) {
         
         // Agregar número si no existe
         if (!headers.includes('N°')) {
-            html += `<td style="padding: 10px; border: 1px solid #ddd; background: #fafafa;">${idx + 1}</td>`;
+            html += `<td style="padding: 6px; border: 1px solid #ddd; background: #fafafa;">${idx + 1}</td>`;
         }
         
         headersConNumero.forEach(header => {
             if (header !== 'N°') {
                 const valor = fila[header] || 'N/D';
-                html += `<td style="padding: 10px; border: 1px solid #ddd;">${valor}</td>`;
+                html += `<td style="padding: 6px; border: 1px solid #ddd;">${valor}</td>`;
             } else if (header === 'N°') {
-                html += `<td style="padding: 10px; border: 1px solid #ddd; background: #fafafa;">${fila['N°'] || idx + 1}</td>`;
+                html += `<td style="padding: 6px; border: 1px solid #ddd; background: #fafafa;">${fila['N°'] || idx + 1}</td>`;
             }
         });
         
         html += `</tr>`;
     });
     
-    html += `</tbody></table><div style="margin-bottom: 15px;"></div>`;
+    html += `</tbody></table><div style="margin-bottom: 10px;"></div>`;
     
     return html;
 }
@@ -320,7 +342,7 @@ function descargarPDF() {
     const nombreArchivo = `Ficha_CNA_${profesorActualFicha.replace(/\s+/g, '_')}.pdf`;
     
     const opt = {
-        margin: 10,
+        margin: 8,
         filename: nombreArchivo,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2 },
@@ -328,6 +350,164 @@ function descargarPDF() {
     };
     
     html2pdf().set(opt).from(element).save();
+}
+
+function descargarWord() {
+    if (!profesorActualFicha) {
+        alert('Por favor genera la ficha primero');
+        return;
+    }
+    
+    const base = datosBase[profesorActualFicha];
+    const produccion = datosProduccion[profesorActualFicha];
+    const secciones = produccion?.secciones || {};
+    
+    const doc = new docx.Document({
+        sections: [{
+            properties: {},
+            children: generarDocxContent(profesorActualFicha, base, secciones)
+        }]
+    });
+    
+    docx.Packer.toBlob(doc).then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Ficha_CNA_${profesorActualFicha.replace(/\s+/g, '_')}.docx`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+    });
+}
+
+function generarDocxContent(nombreProfesor, base, secciones) {
+    const children = [];
+    
+    // Título
+    children.push(new docx.Paragraph({
+        text: 'Ficha Académica CNA',
+        heading: docx.HeadingLevel.HEADING_1,
+        alignment: docx.AlignmentType.CENTER,
+        spacing: { after: 400 }
+    }));
+    
+    // Nombre del profesor
+    children.push(new docx.Paragraph({
+        text: nombreProfesor,
+        bold: true,
+        fontSize: 24,
+        spacing: { after: 200 }
+    }));
+    
+    // Tabla de información básica
+    const infoBásica = [
+        ['Nombre', base.nombre || 'N/D'],
+        ['Vínculo', base.vinculo || 'N/D'],
+        ['Título Profesional', base.titulo || 'N/D'],
+        ['Grado Académico Máximo', base.grado || 'N/D'],
+        ['Líneas de Investigación', base.lineas || 'N/D']
+    ];
+    
+    children.push(new docx.Table({
+        rows: infoBásica.map(([label, value]) => new docx.TableRow({
+            cells: [
+                new docx.TableCell({
+                    children: [new docx.Paragraph({ text: label, bold: true })],
+                    width: { size: 30, type: docx.WidthType.PERCENTAGE }
+                }),
+                new docx.TableCell({
+                    children: [new docx.Paragraph({ text: value })],
+                    width: { size: 70, type: docx.WidthType.PERCENTAGE }
+                })
+            ]
+        }))
+    }));
+    
+    children.push(new docx.Paragraph({ text: '', spacing: { after: 200 } }));
+    
+    // Tablas de contenido
+    const ordenSecciones = [
+        'tesis_magister_guia', 'tesis_magister_coguia',
+        'tesis_doctorado_guia', 'tesis_doctorado_coguia',
+        'publicaciones_indexadas', 'publicaciones_no_indexadas',
+        'libros', 'capitulos', 'patentes', 'proyectos'
+    ];
+    
+    const mapeoTitulos = {
+        'tesis_magister_guia': '2.1. Tesis de Magister Dirigidas (Como Guía)',
+        'tesis_magister_coguia': '2.2. Tesis de Magister Dirigidas (Como Co-guía)',
+        'tesis_doctorado_guia': '3.1. Tesis de Doctorado Dirigidas (Como Guía)',
+        'tesis_doctorado_coguia': '3.2. Tesis de Doctorado Dirigidas (Como Co-guía)',
+        'publicaciones_indexadas': '4.1. Publicaciones Indexadas',
+        'publicaciones_no_indexadas': '4.2. Publicaciones No Indexadas',
+        'libros': '4.3. Libros',
+        'capitulos': '4.4. Capítulos de Libro',
+        'patentes': '4.5. Patentes',
+        'proyectos': '5. Proyectos de Investigación'
+    };
+    
+    for (const tipo of ordenSecciones) {
+        const seccion = secciones[tipo];
+        if (!seccion || !seccion.filas || seccion.filas.length === 0) continue;
+        
+        const filasFiltradas = filtrarPorAño(seccion.filas);
+        if (filasFiltradas.length === 0) continue;
+        
+        // Título de sección
+        children.push(new docx.Paragraph({
+            text: mapeoTitulos[tipo],
+            bold: true,
+            fontSize: 22,
+            spacing: { before: 200, after: 200 }
+        }));
+        
+        // Tabla
+        const headers = seccion.headers;
+        const headersConNumero = !headers.includes('N°') ? ['N°', ...headers] : headers;
+        
+        children.push(new docx.Table({
+            width: { size: 100, type: docx.WidthType.PERCENTAGE },
+            rows: [
+                new docx.TableRow({
+                    cells: headersConNumero.map(h => new docx.TableCell({
+                        children: [new docx.Paragraph({
+                            text: h,
+                            bold: true,
+                            color: '000000'
+                        })],
+                        shading: { fill: 'f0f0f0' }
+                    }))
+                }),
+                ...filasFiltradas.map((fila, idx) => new docx.TableRow({
+                    cells: headersConNumero.map((header, colIdx) => {
+                        let valor = 'N/D';
+                        if (header === 'N°') {
+                            valor = fila['N°'] || (idx + 1).toString();
+                        } else {
+                            valor = fila[header] || 'N/D';
+                        }
+                        return new docx.TableCell({
+                            children: [new docx.Paragraph({ text: valor, fontSize: 20 })]
+                        });
+                    })
+                }))
+            ]
+        }));
+        
+        children.push(new docx.Paragraph({ text: '', spacing: { after: 200 } }));
+    }
+    
+    // Pie de página
+    children.push(new docx.Paragraph({
+        text: 'Reporte generado automáticamente desde el Sistema de Productividad Académica - UANDES',
+        alignment: docx.AlignmentType.CENTER,
+        fontSize: 18,
+        color: '999999',
+        spacing: { before: 200 }
+    }));
+    
+    return children;
 }
 
 function generarModales(profesores) {
