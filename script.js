@@ -227,11 +227,21 @@ function construirFichaCNA(nombreProfesor, base, produccion) {
     for (const tipo of ordenSecciones) {
         const seccion = secciones[tipo];
         
+        // REGLA: Publicaciones No Indexadas NO se muestran en Ficha CNA
+        if (tipo === 'publicaciones_no_indexadas') continue;
+        
         // Incluir tabla SI existe la sección Y tiene filas
         if (seccion && seccion.filas && seccion.filas.length > 0) {
-            if (seccion.filas.length > 0) {
-                html += construirTabla(titulosOficiales[tipo], seccion.headers, seccion.filas);
-            }
+            // REGLA: Filtrar desde año 2020 para todas las otras tablas
+            const filasFiltradas = filtrarDesde2020(seccion.filas);
+            
+            // Si no hay registros después del filtro, no mostrar tabla
+            if (filasFiltradas.length === 0) continue;
+            
+            // Aplicar orden visual por Año (descendente) y reenumerar
+            const filasOrdenadas = ordenarPorAnoYRenumerar(filasFiltradas, seccion.headers);
+            
+            html += construirTabla(titulosOficiales[tipo], seccion.headers, filasOrdenadas);
         }
     }
     
@@ -635,12 +645,25 @@ function inicializarMejorado() {
     poblarSelectorProfesores();
     
     // Mostrar/ocultar Control según MODO_ADMIN
-    const elementosControl = document.querySelectorAll('.menu-control');
-    elementosControl.forEach(elem => {
-        elem.style.display = MODO_ADMIN ? (elem.classList.contains('menu-parent') ? 'flex' : 'block') : 'none';
-    });
+    const menuControl = document.getElementById('menu-control');
+    const submenuControl = document.getElementById('submenu-control');
+    const pagesControl = document.querySelectorAll('.menu-control');
     
-    // Generar validación
+    if (MODO_ADMIN) {
+        // Mostrar Control
+        if (menuControl) menuControl.style.display = 'flex';
+        if (submenuControl) submenuControl.style.display = 'none';
+        pagesControl.forEach(page => {
+            // Las páginas se mostrarán cuando se navegue a ellas
+        });
+    } else {
+        // Ocultar Control completamente
+        if (menuControl) menuControl.style.display = 'none';
+        if (submenuControl) submenuControl.style.display = 'none';
+        pagesControl.forEach(page => page.style.display = 'none');
+    }
+    
+    // Generar contenido si es necesario
     if (MODO_ADMIN) {
         generarValidacion();
         generarNormalizacion();
@@ -818,7 +841,9 @@ function construirReporteDatos() {
             const headers = seccion.headers || [];
             const filas = seccion.filas || [];
             
-            for (const fila of filas) {
+            // Aplicar orden visual por Año
+            const filasOrdenadas = ordenarPorAnoYRenumerar(filas, headers);
+            for (const fila of filasOrdenadas) {
                 const filaReporte = {
                     'RUT': base.rut || 'N/D',
                     'Apellido paterno': base.apellido_paterno || 'N/D',
@@ -991,6 +1016,12 @@ window.cambiarPagina = function(pagina) {
 const cambiarPaginaAnteriorFunc = typeof cambiarPagina !== 'undefined' ? cambiarPagina : function() {};
 
 function cambiarPaginaMejorada(pagina) {
+    // Validar acceso a Control según MODO_ADMIN
+    if (!MODO_ADMIN && (pagina.startsWith('control-') || pagina === 'control-validacion' || pagina === 'control-normalizacion')) {
+        console.warn('Acceso denegado: Control requiere MODO_ADMIN = true');
+        return;
+    }
+    
     // Cerrar TODOS los submenús
     document.querySelectorAll('.submenu').forEach(menu => {
         menu.style.display = 'none';
@@ -1022,11 +1053,11 @@ function cambiarPaginaMejorada(pagina) {
             inicializarFiltrosDatosProfesores();
         }
     } else if (pagina === 'control-validacion') {
-        if (typeof generarValidacion === 'function') {
+        if (MODO_ADMIN && typeof generarValidacion === 'function') {
             generarValidacion();
         }
     } else if (pagina === 'control-normalizacion') {
-        if (typeof generarNormalizacion === 'function') {
+        if (MODO_ADMIN && typeof generarNormalizacion === 'function') {
             generarNormalizacion();
         }
     }
@@ -1211,7 +1242,9 @@ function construirReporteDatos() {
             const headers = seccion.headers || [];
             const filas = seccion.filas || [];
             
-            for (const fila of filas) {
+            // Aplicar orden visual por Año
+            const filasOrdenadas = ordenarPorAnoYRenumerar(filas, headers);
+            for (const fila of filasOrdenadas) {
                 const filaReporte = {
                     'RUT': base.rut || 'N/D',
                     'Apellido paterno': base.apellido_paterno || 'N/D',

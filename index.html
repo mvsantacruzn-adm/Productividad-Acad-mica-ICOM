@@ -12,8 +12,11 @@
     <div class="wrapper">
         <div class="sidebar">
             <div class="logo">📊 Productividad<br>UANDES</div>
+            
+            <!-- PROFESORES -->
             <div class="menu-item active" onclick="cambiarPagina('profesores')">👥 Profesores</div>
             
+            <!-- REPORTERÍA -->
             <div class="menu-item menu-parent" id="menu-reporteria" onclick="toggleMenuReporteria(event)">
                 📋 Reportería
                 <span class="submenu-toggle">▼</span>
@@ -23,17 +26,18 @@
                     📄 Ficha Académica CNA
                 </div>
                 <div class="submenu-item" onclick="cambiarPagina('reporteria-datos-profesores')">
-                    📊 Datos profesores
+                    📊 Reporte Personalizado
                 </div>
             </div>
             
+            <!-- CONTROL (SOLO PARA MODO ADMIN) -->
             <div class="menu-item menu-parent menu-control" id="menu-control" style="display: none;" onclick="toggleMenuControl(event)">
                 🔧 Control
                 <span class="submenu-toggle">▼</span>
             </div>
             <div class="submenu menu-control" id="submenu-control" style="display: none;">
                 <div class="submenu-item" onclick="cambiarPagina('control-validacion')">
-                    📊 Validación de Headers
+                    📋 Validación de Headers
                 </div>
                 <div class="submenu-item" onclick="cambiarPagina('control-normalizacion')">
                     ✏️ Corrección y Normalización
@@ -42,6 +46,7 @@
         </div>
         
         <div class="main-content">
+            <!-- PÁGINA: PROFESORES -->
             <div id="page-profesores" class="page active">
                 <div class="header">
                     <h1>Claustro de Doctorado</h1>
@@ -50,6 +55,7 @@
                 <div id="profesor-list" class="profesor-list"></div>
             </div>
 
+            <!-- PÁGINA: FICHA ACADÉMICA CNA -->
             <div id="page-reporteria-ficha-cna" class="page">
                 <div class="header">
                     <h1>Reportería</h1>
@@ -73,7 +79,8 @@
                             
                             <div class="form-actions">
                                 <button class="btn-primary" onclick="generarFichaCNA()">Generar Ficha CNA</button>
-                                <button class="btn-secondary" id="btn-descargar-pdf" onclick="descargarPDF()" style="display: none;">Descargar PDF</button>
+                                <button class="btn-secondary" id="btn-descargar-pdf" onclick="descargarPDF()" style="display: none;">📥 Descargar PDF</button>
+                                <button class="btn-secondary" id="btn-descargar-ficha-excel" onclick="descargarFichaExcel()" style="display: none;">📥 Descargar Excel</button>
                             </div>
                         </div>
                         
@@ -88,9 +95,10 @@
                 </div>
             </div>
 
+            <!-- PÁGINA: REPORTE PERSONALIZADO -->
             <div id="page-reporteria-datos-profesores" class="page">
                 <div class="header">
-                    <h1>Datos profesores</h1>
+                    <h1>Reporte Personalizado</h1>
                     <p>Reporte flexible de datos académicos</p>
                 </div>
                 
@@ -116,6 +124,10 @@
                             <div class="filtro-grupo">
                                 <h3 class="filtro-titulo">📚 Tablas académicas</h3>
                                 <div class="filtro-contenido">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="checkbox-todas-tablas" onchange="toggleTodasTablas()">
+                                        Todas las tablas
+                                    </label>
                                     <div id="lista-tablas" class="checkbox-lista"></div>
                                 </div>
                             </div>
@@ -137,6 +149,7 @@
                 </div>
             </div>
 
+            <!-- PÁGINA: VALIDACIÓN DE HEADERS -->
             <div id="page-control-validacion" class="page menu-control" style="display: none;">
                 <div class="header">
                     <h1>Control de Estructura</h1>
@@ -161,6 +174,7 @@
                 </div>
             </div>
 
+            <!-- PÁGINA: CORRECCIÓN Y NORMALIZACIÓN -->
             <div id="page-control-normalizacion" class="page menu-control" style="display: none;">
                 <div class="header">
                     <h1>Corrección y Normalización de Tablas</h1>
