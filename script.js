@@ -789,13 +789,13 @@ function descargarNormalizado() {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = 'profesores-produccion-normalizado.json';
+    link.download = 'profesores-produccion.json';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
     
-    alert(`✓ Descargado: profesores-produccion-normalizado.json\n\nRecuerda reemplazar el archivo original en GitHub.`);
+    alert(`✓ Descargado: profesores-produccion.json\n\nRecuerda reemplazar el archivo original en GitHub.`);
 }
 
 // ============================================
