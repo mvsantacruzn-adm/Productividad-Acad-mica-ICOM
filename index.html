@@ -28,6 +28,9 @@
                 <div class="submenu-item" onclick="cambiarPagina('reporteria-datos-profesores')">
                     📊 Reporte Personalizado
                 </div>
+                <div class="submenu-item" onclick="cambiarPagina('reporteria-proyectos-vigentes')">
+                    📅 Proyectos vigentes del claustro
+                </div>
             </div>
             
             <!-- CONTROL (SOLO PARA MODO ADMIN) -->
@@ -190,6 +193,37 @@
                         
                         <div class="control-body">
                             <div id="normalizacion-container" class="normalizacion-container"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="page-reporteria-proyectos-vigentes" class="page">
+                <div class="header">
+                    <h1>Proyectos vigentes del claustro</h1>
+                    <p>Proyectos de investigación vigentes en 2026</p>
+                </div>
+                
+                <div class="reporteria-grid">
+                    <div class="reporteria-card">
+                        <div class="card-header">
+                            <h2 class="card-title">📅 Resumen de proyectos vigentes</h2>
+                            <p class="card-subtitle">Proyectos de investigación vigentes en 2026 del claustro</p>
+                        </div>
+                        
+                        <div class="card-body">
+                            <div class="form-actions">
+                                <button class="btn-primary" onclick="generarReporteProyectosVigentes()">Generar Reporte</button>
+                                <button class="btn-secondary" id="btn-descargar-proyectos-excel" onclick="descargarProyectosVigentesExcel()" style="display: none;">📥 Descargar Excel</button>
+                            </div>
+                        </div>
+                        
+                        <div class="card-preview">
+                            <div id="proyectos-vigentes-preview" class="preview-content">
+                                <div class="preview-placeholder">
+                                    <p>Haz clic en "Generar Reporte" para ver los proyectos vigentes</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

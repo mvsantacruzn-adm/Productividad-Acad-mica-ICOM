@@ -1667,3 +1667,288 @@ window.descargarFichaCNAExcel = descargarFichaCNAExcel;
 
 console.log('✓ Función descargarFichaCNAExcel disponible globalmente');
 
+
+// ============================================
+// REPORTE: PROYECTOS VIGENTES DEL CLAUSTRO
+// ============================================
+
+function generarReporteProyectosVigentes() {
+    console.log('=== generarReporteProyectosVigentes INICIADO ===');
+    
+    try {
+        // Obtener proyectos vigentes
+        const proyectosVigentes = obtenerProyectosVigentes();
+        console.log(`✓ Proyectos vigentes encontrados: ${proyectosVigentes.length}`);
+        
+        // Clasificar
+        const internos = proyectosVigentes.filter(p => p.clasificacion === 'INTERNO');
+        const externos = proyectosVigentes.filter(p => p.clasificacion === 'EXTERNO');
+        
+        console.log(`✓ Internos: ${internos.length}`);
+        console.log(`✓ Externos: ${externos.length}`);
+        
+        // Generar HTML
+        let html = `
+            <div style="background: white; padding: 20px; border-radius: 8px; font-family: Arial, sans-serif; font-size: 12px; color: #333;">
+                <h1 style="font-size: 16px; font-weight: bold; margin-bottom: 20px;">Proyectos vigentes del claustro - 2026</h1>
+                
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 30px;">
+                    <div style="background: #f0f0f0; padding: 15px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 24px; font-weight: bold; color: #667eea;">${proyectosVigentes.length}</div>
+                        <div style="font-size: 12px; color: #666; margin-top: 5px;">Total vigentes</div>
+                    </div>
+                    <div style="background: #e8f5e9; padding: 15px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 24px; font-weight: bold; color: #4caf50;">${internos.length}</div>
+                        <div style="font-size: 12px; color: #666; margin-top: 5px;">Internos</div>
+                    </div>
+                    <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 24px; font-weight: bold; color: #2196f3;">${externos.length}</div>
+                        <div style="font-size: 12px; color: #666; margin-top: 5px;">Externos</div>
+                    </div>
+                </div>
+                
+                <h2 style="font-size: 13px; font-weight: bold; margin-bottom: 10px;">Detalle de proyectos</h2>
+                
+                <div style="overflow-x: auto; border: 1px solid #ddd; border-radius: 8px;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: #667eea; color: white;">
+                                <th style="padding: 10px; text-align: left; border: 1px solid #667eea;">Profesor</th>
+                                <th style="padding: 10px; text-align: left; border: 1px solid #667eea;">Título</th>
+                                <th style="padding: 10px; text-align: left; border: 1px solid #667eea;">Fuente de financiamiento</th>
+                                <th style="padding: 10px; text-align: left; border: 1px solid #667eea;">Año adjudicación</th>
+                                <th style="padding: 10px; text-align: left; border: 1px solid #667eea;">Período ejecución</th>
+                                <th style="padding: 10px; text-align: left; border: 1px solid #667eea;">Rol</th>
+                                <th style="padding: 10px; text-align: center; border: 1px solid #667eea;">Clasificación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+        `;
+        
+        // Agregar filas
+        for (const proyecto of proyectosVigentes) {
+            const bgColor = proyecto.clasificacion === 'INTERNO' ? '#e8f5e9' : '#e3f2fd';
+            const colorClasif = proyecto.clasificacion === 'INTERNO' ? '#4caf50' : '#2196f3';
+            
+            html += `
+                            <tr style="background: ${bgColor};">
+                                <td style="padding: 8px; border: 1px solid #ddd;">${proyecto.profesor}</td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">${proyecto.titulo}</td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">${proyecto.fuente}</td>
+                                <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">${proyecto.anoAdjudicacion}</td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">${proyecto.periodo}</td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">${proyecto.rol}</td>
+                                <td style="padding: 8px; border: 1px solid #ddd; text-align: center; font-weight: bold; color: ${colorClasif};">${proyecto.clasificacion}</td>
+                            </tr>
+            `;
+        }
+        
+        html += `
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        `;
+        
+        // Mostrar
+        const preview = document.getElementById('proyectos-vigentes-preview');
+        preview.innerHTML = html;
+        
+        // Mostrar botón de descarga
+        document.getElementById('btn-descargar-proyectos-excel').style.display = 'inline-block';
+        
+        // Guardar datos para descarga
+        window.datosProyectosVigentes = {
+            total: proyectosVigentes.length,
+            internos: internos.length,
+            externos: externos.length,
+            proyectos: proyectosVigentes
+        };
+        
+        console.log('=== Reporte generado exitosamente ===');
+        
+    } catch (error) {
+        console.error('❌ Error:', error);
+        alert('Error: ' + error.message);
+    }
+}
+
+function obtenerProyectosVigentes() {
+    const proyectos = [];
+    
+    // Recorrer todos los profesores
+    for (const nombreProfesor of Object.keys(datosProduccion)) {
+        const produccion = datosProduccion[nombreProfesor];
+        const base = datosBase[nombreProfesor];
+        
+        if (!produccion || !produccion.secciones || !produccion.secciones.proyectos) {
+            continue;
+        }
+        
+        const seccion = produccion.secciones.proyectos;
+        const filas = seccion.filas || [];
+        const headers = seccion.headers || [];
+        
+        // Recorrer proyectos
+        for (const fila of filas) {
+            const periodo = fila['Período de ejecución'] || '';
+            
+            // Verificar vigencia
+            if (!esProyectoVigente(periodo)) {
+                continue;
+            }
+            
+            // Clasificar
+            const titulo = fila['Título'] || '';
+            const fuente = fila['Fuente de financiamiento'] || '';
+            const clasificacion = clasificarProyecto(titulo, fuente);
+            
+            proyectos.push({
+                profesor: base.nombre_visual || nombreProfesor,
+                titulo: titulo,
+                fuente: fuente,
+                anoAdjudicacion: fila['Año de adjudicación'] || '',
+                periodo: periodo,
+                rol: fila['Rol en el proyecto'] || '',
+                clasificacion: clasificacion
+            });
+        }
+    }
+    
+    return proyectos;
+}
+
+function esProyectoVigente(periodo) {
+    if (!periodo) return false;
+    
+    periodo = String(periodo).trim();
+    
+    // Caso 1: Año único (ej: 2026)
+    if (/^\d{4}$/.test(periodo)) {
+        return periodo === '2026';
+    }
+    
+    // Caso 2: Rango de años (ej: 2022-2026 o 2024–2026)
+    const rangoMatch = periodo.match(/(\d{4})\s*[-–]\s*(\d{4})/);
+    if (rangoMatch) {
+        const anoTermino = rangoMatch[2];
+        return anoTermino === '2026';
+    }
+    
+    // Caso 3: Fechas exactas (ej: 01/03/2024 – 20/12/2026)
+    const fechasMatch = periodo.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})\s*[-–]\s*(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+    if (fechasMatch) {
+        const diaTermino = parseInt(fechasMatch[4]);
+        const mesTermino = parseInt(fechasMatch[5]);
+        const anoTermino = parseInt(fechasMatch[6]);
+        
+        // Verificar si está en 2026
+        if (anoTermino !== 2026) return false;
+        
+        // Verificar si es igual o anterior al 29 de diciembre de 2026
+        const fechaTermino = new Date(anoTermino, mesTermino - 1, diaTermino);
+        const limite = new Date(2026, 11, 29); // 29 de diciembre de 2026
+        
+        return fechaTermino <= limite;
+    }
+    
+    return false;
+}
+
+function clasificarProyecto(titulo, fuente) {
+    titulo = String(titulo || '').toUpperCase();
+    fuente = String(fuente || '').toUpperCase();
+    
+    const esInterno = titulo.includes('FAI') || titulo.includes('UNIVERSIDAD DE LOS ANDES') ||
+                      fuente.includes('FAI') || fuente.includes('UNIVERSIDAD DE LOS ANDES');
+    
+    return esInterno ? 'INTERNO' : 'EXTERNO';
+}
+
+function descargarProyectosVigentesExcel() {
+    console.log('=== descargarProyectosVigentesExcel INICIADO ===');
+    
+    if (typeof XLSX === 'undefined') {
+        alert('Error: Librería XLSX no disponible.');
+        return;
+    }
+    
+    if (!window.datosProyectosVigentes) {
+        alert('Primero genera el reporte antes de descargar.');
+        return;
+    }
+    
+    try {
+        const datos = window.datosProyectosVigentes;
+        const filas = [];
+        
+        // Título
+        filas.push(['Proyectos vigentes del claustro - 2026']);
+        filas.push([]);
+        
+        // Resumen
+        filas.push(['RESUMEN']);
+        filas.push(['Total proyectos vigentes', datos.total]);
+        filas.push(['Proyectos internos', datos.internos]);
+        filas.push(['Proyectos externos', datos.externos]);
+        filas.push([]);
+        filas.push([]);
+        
+        // Detalle
+        filas.push(['DETALLE DE PROYECTOS']);
+        filas.push([
+            'Profesor',
+            'Título',
+            'Fuente de financiamiento',
+            'Año adjudicación',
+            'Período ejecución',
+            'Rol',
+            'Clasificación'
+        ]);
+        
+        // Proyectos
+        for (const proyecto of datos.proyectos) {
+            filas.push([
+                proyecto.profesor,
+                proyecto.titulo,
+                proyecto.fuente,
+                proyecto.anoAdjudicacion,
+                proyecto.periodo,
+                proyecto.rol,
+                proyecto.clasificacion
+            ]);
+        }
+        
+        // Crear hoja
+        const worksheet = XLSX.utils.aoa_to_sheet(filas);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Proyectos Vigentes');
+        
+        // Ajustar columnas
+        const colWidths = [
+            { wch: 20 },  // Profesor
+            { wch: 40 },  // Título
+            { wch: 25 },  // Fuente
+            { wch: 15 },  // Año
+            { wch: 20 },  // Período
+            { wch: 20 },  // Rol
+            { wch: 15 }   // Clasificación
+        ];
+        worksheet['!cols'] = colWidths;
+        
+        // Descargar
+        XLSX.writeFile(workbook, 'ReporteVSC_ProyectosVigentes.xlsx');
+        console.log('✅ DESCARGADO: ReporteVSC_ProyectosVigentes.xlsx');
+        
+    } catch (error) {
+        console.error('❌ Error:', error);
+        alert('Error: ' + error.message);
+    }
+}
+
+// Hacer funciones disponibles globalmente
+window.generarReporteProyectosVigentes = generarReporteProyectosVigentes;
+window.descargarProyectosVigentesExcel = descargarProyectosVigentesExcel;
+
+console.log('✓ Reporte Proyectos vigentes disponible');
+
