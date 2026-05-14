@@ -6,6 +6,7 @@
     <title>Productividad Académica - UANDES Doctorado</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.min.js"></script>
 </head>
 <body>
     <div class="wrapper">
@@ -76,6 +77,11 @@
                             <p class="control-subtitle">Estado de normalización de todas las tablas</p>
                         </div>
                         
+                        <div class="control-actions">
+                            <button class="btn-primary" onclick="descargarControlExcel()">📥 Descargar Excel</button>
+                            <button class="btn-secondary" onclick="descargarControlPDF()">📥 Descargar PDF</button>
+                        </div>
+                        
                         <div class="control-body">
                             <div id="control-tabla" class="control-tabla"></div>
                         </div>
@@ -87,6 +93,7 @@
     
     <div id="modales-container"></div>
     <div id="ficha-pdf-container" style="display: none;"></div>
+    <div id="control-pdf-container" style="display: none;"></div>
     
     <script src="script.js"></script>
 </body>

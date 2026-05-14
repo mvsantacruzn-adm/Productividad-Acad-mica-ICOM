@@ -315,9 +315,7 @@ function validarHeadersNormalizados(tipo, headersActuales) {
     return { estado: 'OK', razon: 'Normalizado correctamente' };
 }
 
-function generarControlEstructura() {
-    const container = document.getElementById('control-tabla');
-    
+function obtenerDatosControl() {
     const tipos_tabla = [
         'publicaciones_indexadas',
         'publicaciones_no_indexadas',
@@ -336,6 +334,7 @@ function generarControlEstructura() {
     // Recopilar información de todas las tablas
     for (const nombreProfesor of Object.keys(datosProduccion)) {
         const profesor = datosProduccion[nombreProfesor];
+        const base = datosBase[nombreProfesor] || {};
         
         if (!profesor.secciones) continue;
         
@@ -348,10 +347,15 @@ function generarControlEstructura() {
                 const validacion = validarHeadersNormalizados(tipo, headers);
                 
                 tablasData.push({
+                    rut: base.rut || 'N/D',
+                    apellido_paterno: base.apellido_paterno || 'N/D',
+                    apellido_materno: base.apellido_materno || 'N/D',
+                    nombres: base.nombres || 'N/D',
+                    nombre_visual: base.nombre_visual || nombreProfesor,
                     profesor: nombreProfesor,
                     tipo: tipo,
                     titulo: titulosOficiales[tipo],
-                    headers: headers,
+                    headers: headers.join(' | '),
                     numColumnas: headers.length,
                     numRegistros: filas.length,
                     validacion: validacion
@@ -360,14 +364,25 @@ function generarControlEstructura() {
         }
     }
     
-    // Generar tabla HTML
+    return tablasData;
+}
+
+function generarControlEstructura() {
+    const container = document.getElementById('control-tabla');
+    const tablasData = obtenerDatosControl();
+    
     let html = `
         <table>
             <thead>
                 <tr>
-                    <th>Profesor</th>
-                    <th>Tipo de tabla</th>
-                    <th>Título visual</th>
+                    <th>RUT</th>
+                    <th>Apellido Paterno</th>
+                    <th>Apellido Materno</th>
+                    <th>Nombres</th>
+                    <th>Nombre Visual</th>
+                    <th>Categoría Interna</th>
+                    <th>Título Visual</th>
+                    <th>Headers Detectados</th>
                     <th>Columnas</th>
                     <th>Registros</th>
                     <th>Estado</th>
@@ -377,35 +392,27 @@ function generarControlEstructura() {
             <tbody>
     `;
     
-    // Agrupar por tipo para facilitar comparación
-    const agrupado = {};
+    // Generar filas ordenadas
     for (const tabla of tablasData) {
-        if (!agrupado[tabla.tipo]) {
-            agrupado[tabla.tipo] = [];
-        }
-        agrupado[tabla.tipo].push(tabla);
-    }
-    
-    // Generar filas ordenadas por tipo
-    for (const tipo of tipos_tabla) {
-        if (!agrupado[tipo]) continue;
+        const estadoClass = tabla.validacion.estado === 'OK' ? 'estado-ok' : 'estado-revisar';
+        const estadoTexto = tabla.validacion.estado === 'OK' ? '✓ OK' : '⚠ REVISAR';
         
-        for (const tabla of agrupado[tipo]) {
-            const estadoClass = tabla.validacion.estado === 'OK' ? 'estado-ok' : 'estado-revisar';
-            const estadoTexto = tabla.validacion.estado === 'OK' ? '✓ OK' : '⚠ REVISAR';
-            
-            html += `
-                <tr>
-                    <td>${tabla.profesor}</td>
-                    <td style="font-family: monospace; font-size: 10px;">${tabla.tipo}</td>
-                    <td>${tabla.titulo}</td>
-                    <td style="text-align: center;">${tabla.numColumnas}</td>
-                    <td style="text-align: center;">${tabla.numRegistros}</td>
-                    <td><span class="${estadoClass}">${estadoTexto}</span></td>
-                    <td style="font-size: 10px;">${tabla.validacion.razon}</td>
-                </tr>
-            `;
-        }
+        html += `
+            <tr>
+                <td>${tabla.rut}</td>
+                <td>${tabla.apellido_paterno}</td>
+                <td>${tabla.apellido_materno}</td>
+                <td>${tabla.nombres}</td>
+                <td>${tabla.nombre_visual}</td>
+                <td style="font-family: monospace; font-size: 9px;">${tabla.tipo}</td>
+                <td>${tabla.titulo}</td>
+                <td style="font-family: monospace; font-size: 8px; white-space: normal;">${tabla.headers}</td>
+                <td style="text-align: center;">${tabla.numColumnas}</td>
+                <td style="text-align: center;">${tabla.numRegistros}</td>
+                <td><span class="${estadoClass}">${estadoTexto}</span></td>
+                <td style="font-size: 10px;">${tabla.validacion.razon}</td>
+            </tr>
+        `;
     }
     
     html += `
@@ -416,118 +423,107 @@ function generarControlEstructura() {
     container.innerHTML = html;
 }
 
-function generarModales(profesores) {
-    const container = document.getElementById('modales-container');
-    container.innerHTML = profesores.map(p => {
-        const nombre = p.nombre;
-        const base = datosBase[nombre];
-        const produccion = datosProduccion[nombre];
-        const secciones = produccion?.secciones || {};
-        
-        let seccionesHTML = '';
-        const ordenSecciones = [
-            'publicaciones_indexadas', 'publicaciones_no_indexadas', 
-            'libros', 'capitulos', 'proyectos',
-            'tesis_doctorado_guia', 'tesis_doctorado_coguia',
-            'tesis_magister_guia', 'tesis_magister_coguia'
-        ];
-        
-        for (const tipo of ordenSecciones) {
-            const seccion = secciones[tipo];
-            if (!seccion || !seccion.filas || seccion.filas.length === 0) continue;
-            
-            const titulo = traducirTipo(tipo);
-            const headers = seccion.headers;
-            
-            seccionesHTML += `
-                <div class="info-section">
-                    <div class="section-title">${titulo} (${seccion.filas.length} registros)</div>
-                    <div class="table-container">
-                        <table>
-                            <thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>
-                            <tbody>${seccion.filas.map(fila => `
-                                <tr>${headers.map(h => `<td>${fila[h] || 'N/A'}</td>`).join('')}</tr>
-                            `).join('')}</tbody>
-                        </table>
-                    </div>
-                </div>
-            `;
-        }
-        
-        return `
-            <div id="modal-${p.id}" class="modal">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <div>
-                            <h2>${base.nombre}</h2>
-                            <p>Vínculo: ${base.vinculo}</p>
-                        </div>
-                        <button class="close-btn" onclick="cerrarModal('${p.id}')">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="info-section">
-                            <div class="section-title">Perfil Académico</div>
-                            <div class="info-grid">
-                                <div class="info-item">
-                                    <div class="info-label">Título Profesional</div>
-                                    <div class="info-value">${base.titulo}</div>
-                                </div>
-                                <div class="info-item">
-                                    <div class="info-label">Grado Académico</div>
-                                    <div class="info-value">${base.grado}</div>
-                                </div>
-                                <div class="info-item">
-                                    <div class="info-label">Líneas de Investigación</div>
-                                    <div class="info-value">${base.lineas}</div>
-                                </div>
-                            </div>
-                        </div>
-                        ${seccionesHTML}
-                    </div>
-                </div>
-            </div>
-        `;
-    }).join('');
+function descargarControlExcel() {
+    const tablasData = obtenerDatosControl();
+    
+    // Convertir a formato para Excel
+    const datos = tablasData.map(tabla => ({
+        'RUT': tabla.rut,
+        'Apellido Paterno': tabla.apellido_paterno,
+        'Apellido Materno': tabla.apellido_materno,
+        'Nombres': tabla.nombres,
+        'Nombre Visual': tabla.nombre_visual,
+        'Categoría Interna': tabla.tipo,
+        'Título Visual': tabla.titulo,
+        'Headers Detectados': tabla.headers,
+        'Cantidad Columnas': tabla.numColumnas,
+        'Cantidad Registros': tabla.numRegistros,
+        'Estado': tabla.validacion.estado,
+        'Detalle': tabla.validacion.razon
+    }));
+    
+    // Crear workbook
+    const ws = XLSX.utils.json_to_sheet(datos);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Control Estructura');
+    
+    // Ajustar ancho de columnas
+    const colWidths = [
+        { wch: 12 },  // RUT
+        { wch: 15 },  // Apellido Paterno
+        { wch: 15 },  // Apellido Materno
+        { wch: 15 },  // Nombres
+        { wch: 25 },  // Nombre Visual
+        { wch: 25 },  // Categoría Interna
+        { wch: 25 },  // Título Visual
+        { wch: 40 },  // Headers Detectados
+        { wch: 12 },  // Cantidad Columnas
+        { wch: 12 },  // Cantidad Registros
+        { wch: 12 },  // Estado
+        { wch: 30 }   // Detalle
+    ];
+    ws['!cols'] = colWidths;
+    
+    // Descargar
+    XLSX.writeFile(wb, 'Control_Estructura_UANDES.xlsx');
 }
 
-function traducirTipo(tipo) {
-    const t = {
-        'publicaciones_indexadas': 'Publicaciones Indexadas',
-        'publicaciones_no_indexadas': 'Publicaciones No Indexadas',
-        'libros': 'Libros',
-        'capitulos': 'Capítulos de Libro',
-        'proyectos': 'Proyectos de Investigación',
-        'tesis_doctorado_guia': 'Tesis Doctorado (Profesor Guía)',
-        'tesis_doctorado_coguia': 'Tesis Doctorado (Profesor Co-guía)',
-        'tesis_magister_guia': 'Tesis Magister (Profesor Guía)',
-        'tesis_magister_coguia': 'Tesis Magister (Profesor Co-guía)'
-    };
-    return t[tipo] || tipo;
-}
-
-function abrirModal(id) {
-    document.getElementById(`modal-${id}`).classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function cerrarModal(id) {
-    document.getElementById(`modal-${id}`).classList.remove('active');
-    document.body.style.overflow = 'auto';
-}
-
-window.onclick = function(event) {
-    if (event.target.classList.contains('modal')) {
-        event.target.classList.remove('active');
-        document.body.style.overflow = 'auto';
+function descargarControlPDF() {
+    const container = document.getElementById('control-tabla');
+    const clone = container.cloneNode(true);
+    
+    const element = document.createElement('div');
+    element.id = 'control-pdf-content';
+    element.style.cssText = 'background: white; padding: 20px; font-family: Arial, sans-serif; font-size: 9px; color: #333;';
+    
+    // Agregar título
+    const titulo = document.createElement('h1');
+    titulo.textContent = 'Control de Estructura - Auditoría Técnica';
+    titulo.style.cssText = 'font-size: 16px; font-weight: bold; text-align: center; margin-bottom: 15px; border-bottom: 2px solid #667eea; padding-bottom: 10px;';
+    
+    const subtitulo = document.createElement('p');
+    subtitulo.textContent = 'Normalización de Tablas Académicas - UANDES Doctorado';
+    subtitulo.style.cssText = 'text-align: center; color: #666; margin-bottom: 20px; font-size: 10px;';
+    
+    element.appendChild(titulo);
+    element.appendChild(subtitulo);
+    
+    // Agregar tabla
+    const tabla = clone.querySelector('table');
+    if (tabla) {
+        tabla.style.cssText = 'width: 100%; border-collapse: collapse; margin-bottom: 20px; border: 1px solid #ddd; font-size: 8px;';
+        // Estilo para headers
+        const headers = tabla.querySelectorAll('th');
+        headers.forEach(h => {
+            h.style.cssText = 'padding: 8px; background: #667eea; color: white; font-weight: bold; border: 1px solid #667eea; text-align: left;';
+        });
+        // Estilo para celdas
+        const celdas = tabla.querySelectorAll('td');
+        celdas.forEach(c => {
+            c.style.cssText = 'padding: 6px; border: 1px solid #ddd;';
+        });
+        element.appendChild(tabla);
     }
+    
+    // Agregar pie
+    const pie = document.createElement('p');
+    pie.textContent = 'Reporte generado automáticamente desde el Sistema de Productividad Académica - UANDES';
+    pie.style.cssText = 'margin-top: 20px; padding-top: 15px; border-top: 1px solid #ddd; text-align: center; color: #999; font-size: 8px;';
+    element.appendChild(pie);
+    
+    document.body.appendChild(element);
+    
+    const opt = {
+        margin: 6,
+        filename: 'Control_Estructura_UANDES.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
+    };
+    
+    html2pdf().set(opt).from(element).save().then(() => {
+        document.body.removeChild(element);
+    });
 }
-
-function cambiarPagina(pagina) {
-    document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
-    document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
-    document.getElementById(`page-${pagina}`).classList.add('active');
-    event.target.classList.add('active');
-}
-
 // Cargar datos al iniciar
 cargarDatos();
