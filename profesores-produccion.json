@@ -798,7 +798,7 @@
             "Nombre revista": "Review of Finance",
             "Estado": "Publicado",
             "ISSN": "1572-3097",
-            "Factor de impacto": "2026-04-08 00:00:00"
+            "Factor de impacto": "8.4"
           },
           {
             "N°": "4",
@@ -828,7 +828,7 @@
             "Nombre revista": "Economic Theory",
             "Estado": "Publicado",
             "ISSN": "0938-2259",
-            "Factor de impacto": "2026-01-01 00:00:00"
+            "Factor de impacto": "1.1"
           },
           {
             "N°": "7",
@@ -848,7 +848,7 @@
             "Nombre revista": "Journal of Economic Theory",
             "Estado": "Publicado",
             "ISSN": "0022-0531",
-            "Factor de impacto": "2026-02-01 00:00:00"
+            "Factor de impacto": "1.2"
           },
           {
             "N°": "9",
@@ -859,70 +859,10 @@
             "Estado": "Publicado",
             "ISSN": "0102-2148",
             "Factor de impacto": "0.18 (SJR)"
-          },
-          {
-            "N°": "N°",
-            "Autor(es)": "Autor(es)",
-            "Año": "Año",
-            "Título de la publicación": "Título de la publicación",
-            "Nombre revista": "Nombre revista",
-            "Estado": "Estado",
-            "ISSN": "ISSN",
-            "Factor de impacto": "N/D"
-          },
-          {
-            "N°": "1",
-            "Autor(es)": "Ahnert, T., Machado, C. & Goncalves Pereira, A. E.",
-            "Año": "2023",
-            "Título de la publicación": "Trading for Bailouts",
-            "Nombre revista": "Bank of Canada (Working Paper)",
-            "Estado": "En preparación",
-            "ISSN": "N/A",
-            "Factor de impacto": "N/D"
-          },
-          {
-            "N°": "2",
-            "Autor(es)": "Machado, C. & Goncalves Pereira, A. E.",
-            "Año": "2021",
-            "Título de la publicación": "Competing for Stock Market Feedback",
-            "Nombre revista": "Working Paper",
-            "Estado": "En preparación",
-            "ISSN": "N/A",
-            "Factor de impacto": "N/D"
-          },
-          {
-            "N°": "N°",
-            "Autor(es)": "Título",
-            "Año": "Fuente de financiamiento",
-            "Título de la publicación": "Año de adjudicación",
-            "Nombre revista": "Período de ejecución",
-            "Estado": "Rol en el proyecto",
-            "ISSN": "N/D",
-            "Factor de impacto": "N/D"
-          },
-          {
-            "N°": "1",
-            "Autor(es)": "FONDECYT Regular N°1240859: Learning in Primary and Secondary Financial Markets",
-            "Año": "Agencia Nacional de Investigación y Desarrollo (ANID) – FONDECYT Regular",
-            "Título de la publicación": "2024",
-            "Nombre revista": "01/04/2024 – 31/03/2028",
-            "Estado": "Investigador Responsable (Principal Investigator)",
-            "ISSN": "N/D",
-            "Factor de impacto": "N/D"
-          },
-          {
-            "N°": "2",
-            "Autor(es)": "FONDECYT Iniciación N°11190202: Information Flows in Financial Markets",
-            "Año": "Agencia Nacional de Investigación y Desarrollo (ANID) – FONDECYT Iniciación",
-            "Título de la publicación": "2019",
-            "Nombre revista": "01/11/2019 – 31/10/2022",
-            "Estado": "Investigador Responsable (Principal Investigator)",
-            "ISSN": "N/D",
-            "Factor de impacto": "N/D"
           }
         ]
       },
-      "publicaciones_no_indexadas": {
+      "proyectos": {
         "headers": [
           "N°",
           "Título",
@@ -949,6 +889,37 @@
             "Rol en el proyecto": "Investigador Responsable (Principal Investigator)"
           }
         ]
+      },
+      "publicaciones_no_indexadas": {
+        "headers": [
+          "N°",
+          "Autor(es)",
+          "Año",
+          "Título de la publicación",
+          "Nombre revista",
+          "Estado",
+          "ISSN"
+        ],
+        "filas": [
+          {
+            "N°": "1",
+            "Autor(es)": "Ahnert, T., Machado, C. & Goncalves Pereira, A. E.",
+            "Año": "2023",
+            "Título de la publicación": "Trading for Bailouts",
+            "Nombre revista": "Bank of Canada (Working Paper)",
+            "Estado": "En preparación",
+            "ISSN": "N/A"
+          },
+          {
+            "N°": "2",
+            "Autor(es)": "Machado, C. & Goncalves Pereira, A. E.",
+            "Año": "2021",
+            "Título de la publicación": "Competing for Stock Market Feedback",
+            "Nombre revista": "Working Paper",
+            "Estado": "En preparación",
+            "ISSN": "N/A"
+          }
+        ]
       }
     }
   },
@@ -956,7 +927,6 @@
     "secciones": {
       "publicaciones_indexadas": {
         "headers": [
-          "Publicaciones Indexadas",
           "N°",
           "Autor(es)",
           "Año",
@@ -969,7 +939,6 @@
         "filas": [
           {
             "N°": "1",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Eslava, M.; García-Marín, Á.; Messina, J.",
             "Año": "2025",
             "Título de la publicación": "Inequality and market power in Latin America and the Caribbean",
@@ -980,7 +949,6 @@
           },
           {
             "N°": "2",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Álvarez, R.; García-Marín, Á.; Ilabaca, S.",
             "Año": "2021",
             "Título de la publicación": "Commodity price shocks and poverty reduction in Chile",
@@ -991,7 +959,6 @@
           },
           {
             "N°": "3",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Garcia Marin, Á. F.; Canales, M.",
             "Año": "2019",
             "Título de la publicación": "Empresas de crecimiento acelerado y productividad: evidencia microeconómica para Chile",
@@ -1002,7 +969,6 @@
           },
           {
             "N°": "4",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Garcia-Marin, A.; Voigtländer, N.",
             "Año": "2019",
             "Título de la publicación": "Exporting and plant-level efficiency gains: It’s in the measure",
@@ -1013,7 +979,6 @@
           },
           {
             "N°": "5",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Edwards, S.; Garcia Marin, A.",
             "Año": "2015",
             "Título de la publicación": "Constitutional rights and education: An international comparative study",
@@ -1024,7 +989,6 @@
           },
           {
             "N°": "6",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Garcia Marin, Á. F.; Edwards, S.",
             "Año": "2015",
             "Título de la publicación": "Educación y derechos constitucionales",
@@ -1035,7 +999,6 @@
           },
           {
             "N°": "7",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Garcia Marin, Á. F.; Pincheira, P.",
             "Año": "2012",
             "Título de la publicación": "En busca de un buen marco de referencia predictivo para la inflación en Chile",
@@ -1046,7 +1009,6 @@
           },
           {
             "N°": "8",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Bravo-Ortega, C.; García Marín, Á.",
             "Año": "2011",
             "Título de la publicación": "R&D and Productivity: A Two Way Avenue?",
@@ -1057,7 +1019,6 @@
           },
           {
             "N°": "9",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Garcia Marin, Á. F.; Álvarez, R.",
             "Año": "2010",
             "Título de la publicación": "Productividad, innovación y exportaciones en la industria manufacturera chilena",
@@ -1068,7 +1029,6 @@
           },
           {
             "N°": "10",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Garcia Marin, Á. F.; Cusolito, A.; Maloney, W.",
             "Año": "2023",
             "Título de la publicación": "Proximity to the frontier, markups, and the response of innovation to foreign competition: Evidence from matched production-innovation surveys in Chile",
@@ -1111,7 +1071,7 @@
       },
       "publicaciones_no_indexadas": {
         "headers": [
-          "Publicaciones No Indexadas",
+          "N°",
           "N°",
           "Autor(es)",
           "Año",
@@ -1123,13 +1083,48 @@
         "filas": [
           {
             "N°": "2",
-            "Publicaciones No Indexadas": "N/D",
             "Autor(es)": "Garcia-Marin, A.; Hoegler, P.",
             "Año": "2017",
             "Título de la publicación": "Road bumps for electric cars",
             "Nombre revista": "Economist",
             "Estado": "Publicado",
             "ISSN": "1476-1386"
+          }
+        ]
+      },
+      "tesis_magister_guia": {
+        "headers": [
+          "N°",
+          "Año",
+          "Autor",
+          "Título de la tesis",
+          "Nombre del programa",
+          "Institución"
+        ],
+        "filas": [
+          {
+            "N°": "1",
+            "Año": "2017",
+            "Autor": "Minsi Chen",
+            "Título de la tesis": "El Poder de la Paridad de Género",
+            "Nombre del programa": "Magíster en Análisis Económico",
+            "Institución": "Universidad de Chile"
+          },
+          {
+            "N°": "2",
+            "Año": "2017",
+            "Autor": "César Felipe Martínez Rodríguez",
+            "Título de la tesis": "Efectos de la Competencia en la Innovación Realizada por las Firmas en América Latina",
+            "Nombre del programa": "Magíster en Economía",
+            "Institución": "Universidad de Chile"
+          },
+          {
+            "N°": "3",
+            "Año": "2018",
+            "Autor": "Eduardo Salas Valenzuela",
+            "Título de la tesis": "Evolución del Poder de Mercado en la Industria Manufacturera Chilena",
+            "Nombre del programa": "Magíster en Análisis Económico",
+            "Institución": "Universidad de Chile"
           }
         ]
       }
@@ -1139,7 +1134,6 @@
     "secciones": {
       "publicaciones_indexadas": {
         "headers": [
-          "Publicaciones Indexadas",
           "N°",
           "Autor(es)",
           "Año",
@@ -1152,7 +1146,6 @@
         "filas": [
           {
             "N°": "1",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Andrés Barrios-Fernández; Christopher Neilson; Seth Zimmerman",
             "Año": "2026",
             "Título de la publicación": "Elite Universities and the Intergenerational Transmission of Human and Social Capital",
@@ -1163,7 +1156,6 @@
           },
           {
             "N°": "2",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Barrios-Fernández, A.; García-Hombrados, J.",
             "Año": "2025",
             "Título de la publicación": "Recidivism and Neighborhood Institutions: Evidence from the Rise of the Evangelical Church in Chile",
@@ -1174,7 +1166,6 @@
           },
           {
             "N°": "3",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Barrios-Fernández, A.; Riudavets-Barcons, M.",
             "Año": "2024",
             "Título de la publicación": "Teacher value-added and gender gaps in educational outcomes",
@@ -1185,7 +1176,6 @@
           },
           {
             "N°": "4",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Barrios-Fernández, A.",
             "Año": "2022",
             "Título de la publicación": "Neighbors’ Effects on University Enrollment",
@@ -1196,7 +1186,6 @@
           },
           {
             "N°": "5",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Barrios-Fernández, A.; Bovini, G.",
             "Año": "2021",
             "Título de la publicación": "It's time to learn: School institutions and returns to instruction time",
@@ -1207,7 +1196,6 @@
           },
           {
             "N°": "6",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Altmejd, A.; Barrios-Fernández, A.; Drlje, M.; Goodman, J.; Hurwitz, M.; Kovac, D.; Mulhern, C.; Neilson, C.; Smith, J.",
             "Año": "2021",
             "Título de la publicación": "O Brother, Where Start Thou? Sibling Spillovers on College and Major Choice in Four Countries",
@@ -1247,6 +1235,54 @@
             "Rol en el proyecto": "Investigador Responsable (PI)"
           }
         ]
+      },
+      "tesis_magister_guia": {
+        "headers": [
+          "N°",
+          "Año",
+          "Autor",
+          "Título de la tesis",
+          "Nombre del programa",
+          "Institución"
+        ],
+        "filas": [
+          {
+            "N°": "1",
+            "Año": "2025",
+            "Autor": "Maria Emilia Meier Herrera",
+            "Título de la tesis": "¿Cómo afectan los estudiantes con necesidades especiales el rendimiento escolar de sus compañeros?",
+            "Nombre del programa": "Magíster en Economía",
+            "Institución": "Universidad de los Andes"
+          },
+          {
+            "N°": "2",
+            "Año": "2025",
+            "Autor": "Jose Ignacio Godoy Reyes",
+            "Título de la tesis": "Transporte público y elección escolar: evidencia de la extensión de la Línea 3 del Metro de Santiago",
+            "Nombre del programa": "Magíster en Economía",
+            "Institución": "Universidad de los Andes"
+          }
+        ]
+      },
+      "tesis_doctorado_guia": {
+        "headers": [
+          "N°",
+          "Año",
+          "Autor",
+          "Título de la tesis",
+          "Nombre del programa",
+          "Institución"
+        ],
+        "filas": [
+          {
+            "N°": "1",
+            "Año": "2025",
+            "Autor": "Marc Riudavets Barcons",
+            "Título de la tesis": "Essays on Economics of Education and the Labor Market",
+            "Nombre del programa": "PhD in Economics",
+            "Institución": "University of Helsinki"
+          }
+        ]
       }
     }
   },
@@ -1254,7 +1290,6 @@
     "secciones": {
       "publicaciones_indexadas": {
         "headers": [
-          "Publicaciones Indexadas",
           "N°",
           "Autor(es)",
           "Año",
@@ -1262,183 +1297,231 @@
           "Nombre revista",
           "Estado",
           "ISSN",
-          "Factor de impacto"
+          "Factor de impacto",
+          "Link de Acceso o Verificación"
         ],
         "filas": [
           {
             "N°": "1",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Guzman, F.A.; Bulger, C.A.; Vanhove, A.J.",
             "Año": "2026",
             "Título de la publicación": "The Role of Developmental Reviewing and the Pursuit of Good Science",
             "Nombre revista": "Industrial and Organizational Psychology",
             "Estado": "Publicado",
             "ISSN": "1754-9426",
-            "Factor de impacto": "1900-01-03 02:24:00"
+            "Factor de impacto": "1900-01-03 02:24:00",
+            "Link de Acceso o Verificación": "https://www.cambridge.org/core/journals/industrial-and-organizational-psychology"
           },
           {
             "N°": "2",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Mehmood, Q.; Hamstra, M.R.W.; Guzman, F.A.; De Boek, G.",
             "Año": "2026",
             "Título de la publicación": "Job Autonomy as a Double-Edged Sword: Good for Work Performance, But Bad for Psychological Detachment",
             "Nombre revista": "Journal of Occupational and Organizational Psychology",
             "Estado": "Publicado",
             "ISSN": "0963-1798",
-            "Factor de impacto": "1900-01-03 14:24:00"
+            "Factor de impacto": "1900-01-03 14:24:00",
+            "Link de Acceso o Verificación": "https://bpspsychub.onlinelibrary.wiley.com/journal/20448325"
           },
           {
             "N°": "3",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Qian, S.; Hamstra, M.R.W.; Jawahar, I.M.; Schreurs, B.; Guzman, F.A.",
             "Año": "2025",
             "Título de la publicación": "Disagreeing with Employees’ Constructive Disagreement: On Giving (Non-)Specific Explanations for Rejecting Employees’ Voiced Suggestions",
             "Nombre revista": "Negotiation and Conflict Management Research",
             "Estado": "Publicado",
             "ISSN": "1750-4708",
-            "Factor de impacto": "1900-01-01 12:00:00"
+            "Factor de impacto": "1900-01-01 12:00:00",
+            "Link de Acceso o Verificación": "https://onlinelibrary.wiley.com/journal/17504716"
           },
           {
             "N°": "4",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Guzman, F.A.; Tempesta Fernández, A.; Hamstra, M.R.W.",
             "Año": "2025",
             "Título de la publicación": "Endorsing voice behavior can be as devastating as rejecting it when the endorsement is laced with a hint of anger",
             "Nombre revista": "Scientific Reports",
             "Estado": "Publicado",
             "ISSN": "2045-2322",
-            "Factor de impacto": "1900-01-04 14:24:00"
+            "Factor de impacto": "1900-01-04 14:24:00",
+            "Link de Acceso o Verificación": "https://www.nature.com/srep/"
           },
           {
             "N°": "5",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Hamstra, M.R.W.; Guzman, F.A.; Qian, S.; Schreurs, B.; Jawahar, I.M.",
             "Año": "2024",
             "Título de la publicación": "Turning Down Employee Voice with Humor: A Mixed Blessing for Employee Voice Resilience?",
             "Nombre revista": "Journal of Occupational and Organizational Psychology",
             "Estado": "Publicado",
             "ISSN": "0963-1798",
-            "Factor de impacto": "1900-01-03 04:48:00"
+            "Factor de impacto": "1900-01-03 04:48:00",
+            "Link de Acceso o Verificación": "https://bpspsychub.onlinelibrary.wiley.com/journal/20448325"
           },
           {
             "N°": "6",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Guzman, F.A.; Hamstra, M.R.W.; Escribano, P.I.; Fu, X.",
             "Año": "2024",
             "Título de la publicación": "Employees’ Attitudinal Reactions to Supervisors’ Weekly Taking Charge Behavior",
             "Nombre revista": "Journal of Managerial Psychology",
             "Estado": "Publicado",
             "ISSN": "0268-3946",
-            "Factor de impacto": "1900-01-03 21:36:00"
+            "Factor de impacto": "1900-01-03 21:36:00",
+            "Link de Acceso o Verificación": "https://www.emerald.com/insight/publication/issn/0268-3946"
           },
           {
             "N°": "7",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Guzman, F.A.; Reiche, B.S.",
             "Año": "2024",
             "Título de la publicación": "A Chorus of Different Tongues: Foreign Language Fluency and Informal Influence in Multinational Teams",
             "Nombre revista": "Organizational Behavior and Human Decision Processes",
             "Estado": "Publicado",
             "ISSN": "0749-5978",
-            "Factor de impacto": "1900-01-06 21:36:00"
+            "Factor de impacto": "1900-01-06 21:36:00",
+            "Link de Acceso o Verificación": "https://www.sciencedirect.com/journal/organizational-behavior-and-human-decision-processes"
           },
           {
             "N°": "8",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Guzman, F.A.; Tempesta Fernández, A.",
             "Año": "2024",
             "Título de la publicación": "The language of blame: Exploring the effects of non-native accents on post-accident blame attributions",
             "Nombre revista": "Acta Psychologica",
             "Estado": "Publicado",
             "ISSN": "0001-6918",
-            "Factor de impacto": "1900-01-02 14:24:00"
+            "Factor de impacto": "1900-01-02 14:24:00",
+            "Link de Acceso o Verificación": "https://www.sciencedirect.com/journal/acta-psychologica"
           },
           {
             "N°": "9",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Mehmood, Q.; Hamstra, M.R.W.; Guzman, F.A.",
             "Año": "2023",
             "Título de la publicación": "Supervisors’ Achievement Goal Orientations and Employees’ Mindfulness",
             "Nombre revista": "Applied Psychology",
             "Estado": "Publicado",
             "ISSN": "0003-066X",
-            "Factor de impacto": "1900-01-04 00:00:00"
+            "Factor de impacto": "1900-01-04 00:00:00",
+            "Link de Acceso o Verificación": "https://www.apa.org/pubs/journals/amp"
           },
           {
             "N°": "10",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Akkan, E.; Guzman, F.A.",
             "Año": "2022",
             "Título de la publicación": "When discordant work selves yield workplace creativity",
             "Nombre revista": "Journal of Occupational and Organizational Psychology",
             "Estado": "Publicado",
             "ISSN": "0963-1798",
-            "Factor de impacto": "1900-01-03 02:24:00"
+            "Factor de impacto": "1900-01-03 02:24:00",
+            "Link de Acceso o Verificación": "https://bpspsychub.onlinelibrary.wiley.com/journal/20448325"
           },
           {
             "N°": "11",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Ramírez-Marín, J.Y.; Barragán-Díaz, A.; Guzman, F.A.",
             "Año": "2022",
             "Título de la publicación": "When anger and happiness generate concessions",
             "Nombre revista": "International Journal of Conflict Management",
             "Estado": "Publicado",
             "ISSN": "1044-4068",
-            "Factor de impacto": "1900-01-02 07:12:00"
+            "Factor de impacto": "1900-01-02 07:12:00",
+            "Link de Acceso o Verificación": "https://www.emerald.com/insight/publication/issn/1044-4068"
           },
           {
             "N°": "12",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Guzman, F.A.; Fu, X.",
             "Año": "2022",
             "Título de la publicación": "Leader-subordinate congruence in power distance values and voice behavior",
             "Nombre revista": "Applied Psychology",
             "Estado": "Publicado",
             "ISSN": "0003-066X",
-            "Factor de impacto": "3.8"
+            "Factor de impacto": "3.8",
+            "Link de Acceso o Verificación": "https://www.apa.org/pubs/journals/amp"
           },
           {
             "N°": "13",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Guzman, F.A.; Espejo, A.",
             "Año": "2019",
             "Título de la publicación": "Introducing changes at work: How voice behavior relates to management innovation",
             "Nombre revista": "Journal of Organizational Behavior",
             "Estado": "Publicado",
             "ISSN": "0894-3796",
-            "Factor de impacto": "5"
+            "Factor de impacto": "5",
+            "Link de Acceso o Verificación": "https://onlinelibrary.wiley.com/journal/10991379"
           },
           {
             "N°": "14",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Guzman, F.A.; Espejo, A.",
             "Año": "2015",
             "Título de la publicación": "Dispositional and situational differences in motives to engage in citizenship behavior",
             "Nombre revista": "Journal of Business Research",
             "Estado": "Publicado",
             "ISSN": "0148-2963",
-            "Factor de impacto": "5.2"
+            "Factor de impacto": "5.2",
+            "Link de Acceso o Verificación": "https://www.sciencedirect.com/journal/journal-of-business-research"
           }
         ]
       },
       "proyectos": {
         "headers": [
-          "6",
-          "LEM-CNRS 2019 Call for Projects for data collection",
-          "LEM-CNRS",
-          "2019",
-          "2019",
-          "Investigador Responsable (PI)"
+          "N°",
+          "Título",
+          "Fuente de financiamiento",
+          "Año de adjudicación",
+          "Período de ejecución",
+          "Rol en el proyecto"
         ],
         "filas": [
           {
             "N°": "1",
-            "Listado de proyectos de investigación en los últimos 10 años": "Listado de proyectos de investigación en los últimos 10 años",
-            "6": "7",
-            "LEM-CNRS 2019 Call for Projects for data collection": "IESE internal research grant for dissertation data collection",
-            "LEM-CNRS": "IESE Business School",
-            "2019": "2016–2017",
-            "Investigador Responsable (PI)": "Investigador Responsable"
+            "Título": "FONDECYT Iniciación 11260901 - Leadership emergence in multinational teams",
+            "Fuente de financiamiento": "ANID - FONDECYT de Iniciación",
+            "Año de adjudicación": "2026",
+            "Período de ejecución": "2026–2029",
+            "Rol en el proyecto": "Investigador Responsable (PI)"
+          },
+          {
+            "N°": "2",
+            "Título": "Grant to hire a post-doctoral research fellow (in collaboration with A. Giangreco) to fund a two-year junior postdoctoral position",
+            "Fuente de financiamiento": "IESEG School of Management (Francia)",
+            "Año de adjudicación": "2023",
+            "Período de ejecución": "2023–2025",
+            "Rol en el proyecto": "Investigador Responsable (PI)"
+          },
+          {
+            "N°": "3",
+            "Título": "LEM-CNRS 2022 Call for Projects (in collaboration with M.R.W. Hamstra) for data collection",
+            "Fuente de financiamiento": "LEM-CNRS",
+            "Año de adjudicación": "2022",
+            "Período de ejecución": "2022",
+            "Rol en el proyecto": "Investigador Responsable (PI)"
+          },
+          {
+            "N°": "4",
+            "Título": "Grant to hire a post-doctoral research fellow (in collaboration with J. Claeys) to fund a one-year senior postdoctoral position",
+            "Fuente de financiamiento": "CNRS (Francia)",
+            "Año de adjudicación": "2022",
+            "Período de ejecución": "2022–2023",
+            "Rol en el proyecto": "Investigador Responsable (PI)"
+          },
+          {
+            "N°": "5",
+            "Título": "LEM-CNRS 2021 Call for Projects (with E. Marescaux and T. Tessitore) for data collection",
+            "Fuente de financiamiento": "LEM-CNRS",
+            "Año de adjudicación": "2021",
+            "Período de ejecución": "2021",
+            "Rol en el proyecto": "Investigador Colaborador"
+          },
+          {
+            "N°": "6",
+            "Título": "LEM-CNRS 2019 Call for Projects for data collection",
+            "Fuente de financiamiento": "LEM-CNRS",
+            "Año de adjudicación": "2019",
+            "Período de ejecución": "2019",
+            "Rol en el proyecto": "Investigador Responsable (PI)"
+          },
+          {
+            "N°": "7",
+            "Título": "IESE internal research grant for dissertation data collection",
+            "Fuente de financiamiento": "IESE Business School",
+            "Año de adjudicación": "2016",
+            "Período de ejecución": "2016–2017",
+            "Rol en el proyecto": "Investigador Responsable"
           }
         ]
       },
@@ -1450,19 +1533,156 @@
           "Año",
           "Título de la publicación",
           "Lugar",
-          "Editorial",
-          "Estado"
+          "Editorial"
         ],
         "filas": [
           {
-            "N°": "1",
             "Capítulo de Libro con Referato Externo": "1",
             "Autor(es)": "Guzman, F.A.",
             "Año": "Inprogress",
             "Título de la publicación": "Human failures in cross-cultural leadership research",
             "Lugar": "N/A",
-            "Editorial": "Edward Elgar Publishing",
-            "Estado": "Capítulo"
+            "Editorial": "Edward Elgar Publishing"
+          }
+        ]
+      },
+      "tesis_magister_guia": {
+        "headers": [
+          "N°",
+          "Año",
+          "Autor",
+          "Título de la tesis",
+          "Nombre del programa",
+          "Institución"
+        ],
+        "filas": [
+          {
+            "N°": "1",
+            "Año": "2019",
+            "Autor": "Pauline Peru",
+            "Título de la tesis": "Study of the impact of teleworking on work performance through job satisfaction and team identity",
+            "Nombre del programa": "Master in Management Grande École Program",
+            "Institución": "IESEG School of Management, France"
+          },
+          {
+            "N°": "2",
+            "Año": "2019",
+            "Autor": "Aline Larchet",
+            "Título de la tesis": "Impact of training effectiveness on Organizational Citizenship Behavior toward Customers (OCBC) through employee motivation in the hospitality industry",
+            "Nombre del programa": "Master in Management Grande École Program",
+            "Institución": "IESEG School of Management, France"
+          },
+          {
+            "N°": "3",
+            "Año": "2019",
+            "Autor": "Perrine Jouve",
+            "Título de la tesis": "The relationship between Meaning and Performance: Does experiencing meaning foster work performance? The mediating roles of engagement and satisfaction",
+            "Nombre del programa": "Master in Management Grande École Program",
+            "Institución": "IESEG School of Management, France"
+          },
+          {
+            "N°": "4",
+            "Año": "2020",
+            "Autor": "Florine Dori",
+            "Título de la tesis": "Wellbeing and Performance: A Relationship Impacting the Organization and its Employees",
+            "Nombre del programa": "Master in Management Grande École Program",
+            "Institución": "IESEG School of Management, France"
+          },
+          {
+            "N°": "5",
+            "Año": "2021",
+            "Autor": "Romane Guillermain",
+            "Título de la tesis": "How does pay secrecy impact motivation?",
+            "Nombre del programa": "Master in Management Grande École Program",
+            "Institución": "IESEG School of Management, France"
+          },
+          {
+            "N°": "6",
+            "Año": "2021",
+            "Autor": "Lucas Veyrines",
+            "Título de la tesis": "Can Sport Wellness Programs Have An Impact On Employees' And Companies' Productivity?",
+            "Nombre del programa": "Master in Management Grande École Program",
+            "Institución": "IESEG School of Management, France"
+          },
+          {
+            "N°": "7",
+            "Año": "2021",
+            "Autor": "Anaëlle Hart",
+            "Título de la tesis": "What are the conditions in which autocratic leadership can positively impact employee performance?",
+            "Nombre del programa": "Master in Management Grande École Program",
+            "Institución": "IESEG School of Management, France"
+          },
+          {
+            "N°": "8",
+            "Año": "2021",
+            "Autor": "Noémi Capliez",
+            "Título de la tesis": "What is the impact of mindfulness on psychological wellbeing depending on the level of job demands and its consequences on the employees' work engagement?",
+            "Nombre del programa": "Master in Management Grande École Program",
+            "Institución": "IESEG School of Management, France"
+          },
+          {
+            "N°": "9",
+            "Año": "2022",
+            "Autor": "Aubane Bunouf",
+            "Título de la tesis": "How does the level of environmental awareness of individuals impact their intentions to use the plane to go on vacation? The mediating role of Individuals' attitude towards responsible tourism",
+            "Nombre del programa": "Master in Management Grande École Program",
+            "Institución": "IESEG School of Management, France"
+          },
+          {
+            "N°": "10",
+            "Año": "2022",
+            "Autor": "Chengbin Deng",
+            "Título de la tesis": "The impact of Different stimuli on Ad slogan's efficiency",
+            "Nombre del programa": "Master in Management Grande École Program",
+            "Institución": "IESEG School of Management, France"
+          },
+          {
+            "N°": "11",
+            "Año": "2023",
+            "Autor": "Anne-Victoire de Lantivy",
+            "Título de la tesis": "The impact of infinite scroll on online users' psychology and behaviours",
+            "Nombre del programa": "Master in Management Grande École Program",
+            "Institución": "IESEG School of Management, France"
+          },
+          {
+            "N°": "12",
+            "Año": "2023",
+            "Autor": "Molka Farhat",
+            "Título de la tesis": "What is the influence of the employee's burnout on their team leader's organizational citizenship behavior?",
+            "Nombre del programa": "Master in Management Grande École Program",
+            "Institución": "IESEG School of Management, France"
+          },
+          {
+            "N°": "13",
+            "Año": "2023",
+            "Autor": "Nicolle Valderrama",
+            "Título de la tesis": "Could SR-HRM practices effectively contribute to addressing the challenge of implementing CSR strategies and improving wellbeing in the Colombian tourism industry",
+            "Nombre del programa": "Master in Management Grande École Program",
+            "Institución": "IESEG School of Management, France"
+          },
+          {
+            "N°": "14",
+            "Año": "2024",
+            "Autor": "Noé Upellini",
+            "Título de la tesis": "How do multinational enterprises manage internal conflicts in a diverse international environment, and what are the best practices for effective intercultural conflict management?",
+            "Nombre del programa": "Master in Management Grande École Program",
+            "Institución": "IESEG School of Management, France"
+          },
+          {
+            "N°": "15",
+            "Año": "2024",
+            "Autor": "Mai Linh Pham",
+            "Título de la tesis": "Language, Confidence, and Voice: How English proficiency shapes the confidence to speak",
+            "Nombre del programa": "Master in Management Grande École Program",
+            "Institución": "IESEG School of Management, France"
+          },
+          {
+            "N°": "16",
+            "Año": "2025",
+            "Autor": "Hugo Devemy",
+            "Título de la tesis": "Can you get onboard with telework?",
+            "Nombre del programa": "Master in Management Grande École Program",
+            "Institución": "IESEG School of Management, France"
           }
         ]
       }
