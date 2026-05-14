@@ -10,7 +10,8 @@
           "Nombre revista",
           "Estado",
           "ISSN",
-          "Factor de impacto"
+          "Factor de impacto",
+          "Link de verificación electrónica"
         ],
         "filas": [
           {
@@ -21,7 +22,8 @@
             "Nombre revista": "Journal of Political Economy",
             "Estado": "Publicado",
             "ISSN": "0022-3808",
-            "Factor de impacto": "9,7 JIF"
+            "Factor de impacto": "9,7 JIF",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "2",
@@ -31,7 +33,8 @@
             "Nombre revista": "Journal of International Economics",
             "Estado": "Publicado",
             "ISSN": "0022-1996",
-            "Factor de impacto": "3,9 JIF"
+            "Factor de impacto": "3,9 JIF",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "3",
@@ -41,7 +44,8 @@
             "Nombre revista": "Estudios Públicos",
             "Estado": "Publicado",
             "ISSN": "0716-1115",
-            "Factor de impacto": "0,2 SJR"
+            "Factor de impacto": "0,2 SJR",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "4",
@@ -51,7 +55,8 @@
             "Nombre revista": "American Economic Review: Insights",
             "Estado": "Publicado",
             "ISSN": "2640-205X",
-            "Factor de impacto": "4,7 JIF"
+            "Factor de impacto": "4,7 JIF",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "5",
@@ -61,7 +66,8 @@
             "Nombre revista": "Journal of Financial Economics",
             "Estado": "Publicado",
             "ISSN": "0304-405X",
-            "Factor de impacto": "7,5 JIF"
+            "Factor de impacto": "7,5 JIF",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "6",
@@ -71,7 +77,8 @@
             "Nombre revista": "American Economic Journal: Macroeconomics",
             "Estado": "Publicado",
             "ISSN": "1945-7707",
-            "Factor de impacto": "4,0 JIF"
+            "Factor de impacto": "4,0 JIF",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "7",
@@ -81,7 +88,8 @@
             "Nombre revista": "American Economic Review",
             "Estado": "Publicado",
             "ISSN": "0002-8282",
-            "Factor de impacto": "3,1 JIF"
+            "Factor de impacto": "3,1 JIF",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "8",
@@ -91,7 +99,8 @@
             "Nombre revista": "Applied Economics",
             "Estado": "Publicado",
             "ISSN": "0003-6846",
-            "Factor de impacto": "1.9 JIF"
+            "Factor de impacto": "1.9 JIF",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "9",
@@ -101,7 +110,8 @@
             "Nombre revista": "Review of International Economics",
             "Estado": "Publicado",
             "ISSN": "0965-7576",
-            "Factor de impacto": "1.4 JIF"
+            "Factor de impacto": "1.4 JIF",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "10",
@@ -111,7 +121,8 @@
             "Nombre revista": "Journal of International Economics",
             "Estado": "Publicado",
             "ISSN": "0022-1996",
-            "Factor de impacto": "2,5 JIF"
+            "Factor de impacto": "2,5 JIF",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "11",
@@ -121,7 +132,8 @@
             "Nombre revista": "Review of Development Economics",
             "Estado": "Publicado",
             "ISSN": "1467-9361",
-            "Factor de impacto": "0,8 JIF"
+            "Factor de impacto": "0,8 JIF",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "12",
@@ -131,7 +143,8 @@
             "Nombre revista": "World Development",
             "Estado": "Publicado",
             "ISSN": "0305-750X",
-            "Factor de impacto": "1,8 JIF"
+            "Factor de impacto": "1,8 JIF",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "13",
@@ -141,7 +154,8 @@
             "Nombre revista": "Journal of Comparative Economics",
             "Estado": "Publicado",
             "ISSN": "0147-5967",
-            "Factor de impacto": "1,2 JIF"
+            "Factor de impacto": "1,2 JIF",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "14",
@@ -151,7 +165,8 @@
             "Nombre revista": "Economics of Transition",
             "Estado": "Publicado",
             "ISSN": "0967-0750",
-            "Factor de impacto": "0,7 JIF"
+            "Factor de impacto": "0,7 JIF",
+            "Link de verificación electrónica": ""
           }
         ]
       },
@@ -469,7 +484,8 @@
           "Nombre revista",
           "Estado",
           "ISSN",
-          "Factor de impacto + tipo de medición"
+          "Factor de impacto",
+          "Link de verificación electrónica"
         ],
         "filas": [
           {
@@ -480,7 +496,8 @@
             "Nombre revista": "Journal of Law, Economics, and Organization",
             "Estado": "Publicado online (issue 2025)",
             "ISSN": "8756-6222",
-            "Factor de impacto + tipo de medición": "1,8 JIF"
+            "Factor de impacto": "1,8 JIF",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "2",
@@ -490,7 +507,8 @@
             "Nombre revista": "Journal of International Economics",
             "Estado": "Publicado",
             "ISSN": "0022-1996",
-            "Factor de impacto + tipo de medición": "3,9 JIF"
+            "Factor de impacto": "3,9 JIF",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "3",
@@ -500,7 +518,8 @@
             "Nombre revista": "Journal of Corporate Finance",
             "Estado": "Publicado",
             "ISSN": "0929-1199",
-            "Factor de impacto + tipo de medición": "6,5 JIF"
+            "Factor de impacto": "6,5 JIF",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "4",
@@ -510,7 +529,8 @@
             "Nombre revista": "Journal of Financial Stability",
             "Estado": "Publicado",
             "ISSN": "1572-3089",
-            "Factor de impacto + tipo de medición": "5,5 JIF"
+            "Factor de impacto": "5,5 JIF",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "5",
@@ -520,7 +540,8 @@
             "Nombre revista": "Journal of Financial Intermediation",
             "Estado": "Publicado",
             "ISSN": "1042-9573",
-            "Factor de impacto + tipo de medición": "4,3 JIF"
+            "Factor de impacto": "4,3 JIF",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "6",
@@ -530,7 +551,8 @@
             "Nombre revista": "Journal of Finance",
             "Estado": "Publicado",
             "ISSN": "0022-1082",
-            "Factor de impacto + tipo de medición": "6,0 JIF"
+            "Factor de impacto": "6,0 JIF",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "7",
@@ -540,7 +562,8 @@
             "Nombre revista": "Journal of Financial Economics",
             "Estado": "Publicado",
             "ISSN": "0304-405X",
-            "Factor de impacto + tipo de medición": "7,5 JIF"
+            "Factor de impacto": "7,5 JIF",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "8",
@@ -550,7 +573,8 @@
             "Nombre revista": "Review of Financial Studies",
             "Estado": "Publicado",
             "ISSN": "0893-9454",
-            "Factor de impacto + tipo de medición": "5,8 JIF"
+            "Factor de impacto": "5,8 JIF",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "9",
@@ -560,7 +584,8 @@
             "Nombre revista": "Journal of Applied Corporate Finance",
             "Estado": "Publicado",
             "ISSN": "N/D",
-            "Factor de impacto + tipo de medición": "N/D"
+            "Factor de impacto": "N/D",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "10",
@@ -570,7 +595,8 @@
             "Nombre revista": "Journal of Development Economics",
             "Estado": "Publicado",
             "ISSN": "0304-3878",
-            "Factor de impacto + tipo de medición": "2,4 JIF"
+            "Factor de impacto": "2,4 JIF",
+            "Link de verificación electrónica": ""
           }
         ]
       },
@@ -935,7 +961,8 @@
           "Nombre revista",
           "Estado",
           "ISSN",
-          "Factor de impacto + tipo de medición"
+          "Factor de impacto",
+          "Link de verificación electrónica"
         ],
         "filas": [
           {
@@ -946,7 +973,8 @@
             "Nombre revista": "Oxford Open Economics",
             "Estado": "Publicación (early access)",
             "ISSN": "2752-572X",
-            "Factor de impacto + tipo de medición": "N/A"
+            "Factor de impacto": "N/A",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "2",
@@ -956,7 +984,8 @@
             "Nombre revista": "American Economic Review: Insights",
             "Estado": "Publicado",
             "ISSN": "2640-205X",
-            "Factor de impacto + tipo de medición": "~4,7 JIF"
+            "Factor de impacto": "~4,7 JIF",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "3",
@@ -966,7 +995,8 @@
             "Nombre revista": "Resources Policy",
             "Estado": "Publicado",
             "ISSN": "0301-4207",
-            "Factor de impacto + tipo de medición": "5,4 JIF"
+            "Factor de impacto": "5,4 JIF",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "4",
@@ -976,7 +1006,8 @@
             "Nombre revista": "Revista de Estudios Públicos (CEP)",
             "Estado": "Publicado",
             "ISSN": "0716-1115",
-            "Factor de impacto + tipo de medición": "0,2 SJR"
+            "Factor de impacto": "0,2 SJR",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "5",
@@ -986,7 +1017,8 @@
             "Nombre revista": "Journal of Political Economy",
             "Estado": "Publicado",
             "ISSN": "0022-3808",
-            "Factor de impacto + tipo de medición": "7,0 JIF"
+            "Factor de impacto": "7,0 JIF",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "6",
@@ -996,7 +1028,8 @@
             "Nombre revista": "Journal of Comparative Economics",
             "Estado": "Publicado",
             "ISSN": "0147-5967",
-            "Factor de impacto + tipo de medición": "2,1 JIF"
+            "Factor de impacto": "2,1 JIF",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "7",
@@ -1006,7 +1039,8 @@
             "Nombre revista": "Revista de Estudios Públicos (CEP)",
             "Estado": "Publicado",
             "ISSN": "0716-1115",
-            "Factor de impacto + tipo de medición": "0,15 SJR"
+            "Factor de impacto": "0,15 SJR",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "8",
@@ -1016,7 +1050,8 @@
             "Nombre revista": "Trimestre Económico",
             "Estado": "Publicado",
             "ISSN": "0041-3011",
-            "Factor de impacto + tipo de medición": "0,2 SJR"
+            "Factor de impacto": "0,2 SJR",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "9",
@@ -1026,7 +1061,8 @@
             "Nombre revista": "World Development",
             "Estado": "Publicado",
             "ISSN": "0305-750X",
-            "Factor de impacto + tipo de medición": "3,7 JIF"
+            "Factor de impacto": "3,7 JIF",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "10",
@@ -1036,7 +1072,8 @@
             "Nombre revista": "Trimestre Económico",
             "Estado": "Publicado",
             "ISSN": "0041-3011",
-            "Factor de impacto + tipo de medición": "0,15 SJR"
+            "Factor de impacto": "0,15 SJR",
+            "Link de verificación electrónica": ""
           }
         ]
       },
@@ -1141,7 +1178,8 @@
           "Nombre revista",
           "Estado",
           "ISSN",
-          "Factor de impacto + tipo"
+          "Factor de impacto",
+          "Link de verificación electrónica"
         ],
         "filas": [
           {
@@ -1152,7 +1190,8 @@
             "Nombre revista": "American Economic Review",
             "Estado": "Forthcoming / Accepted",
             "ISSN": "0002-8282",
-            "Factor de impacto + tipo": "9,4 JIF"
+            "Factor de impacto": "9,4 JIF",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "2",
@@ -1162,7 +1201,8 @@
             "Nombre revista": "Journal of Labor Economics",
             "Estado": "Publicado",
             "ISSN": "0734-306X",
-            "Factor de impacto + tipo": "6,5 JIF"
+            "Factor de impacto": "6,5 JIF",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "3",
@@ -1172,7 +1212,8 @@
             "Nombre revista": "Economics of Education Review",
             "Estado": "Publicado",
             "ISSN": "0272-7757",
-            "Factor de impacto + tipo": "3,0 SJR"
+            "Factor de impacto": "3,0 SJR",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "4",
@@ -1182,7 +1223,8 @@
             "Nombre revista": "American Economic Journal: Applied Economics",
             "Estado": "Publicado",
             "ISSN": "1945-7782",
-            "Factor de impacto + tipo": "5,2 JIF"
+            "Factor de impacto": "5,2 JIF",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "5",
@@ -1192,7 +1234,8 @@
             "Nombre revista": "Economics of Education Review",
             "Estado": "Publicado",
             "ISSN": "0272-7757",
-            "Factor de impacto + tipo": "2,7 SJR"
+            "Factor de impacto": "2,7 SJR",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "6",
@@ -1202,7 +1245,8 @@
             "Nombre revista": "Quarterly Journal of Economics",
             "Estado": "Publicado",
             "ISSN": "0033-5533",
-            "Factor de impacto + tipo": "11,0 JIF"
+            "Factor de impacto": "11,0 JIF",
+            "Link de verificación electrónica": ""
           }
         ]
       },
@@ -1298,7 +1342,7 @@
           "Estado",
           "ISSN",
           "Factor de impacto",
-          "Link de Acceso o Verificación"
+          "Link de verificación electrónica"
         ],
         "filas": [
           {
@@ -1310,7 +1354,7 @@
             "Estado": "Publicado",
             "ISSN": "1754-9426",
             "Factor de impacto": "1900-01-03 02:24:00",
-            "Link de Acceso o Verificación": "https://www.cambridge.org/core/journals/industrial-and-organizational-psychology"
+            "Link de verificación electrónica": "https://www.cambridge.org/core/journals/industrial-and-organizational-psychology"
           },
           {
             "N°": "2",
@@ -1321,7 +1365,7 @@
             "Estado": "Publicado",
             "ISSN": "0963-1798",
             "Factor de impacto": "1900-01-03 14:24:00",
-            "Link de Acceso o Verificación": "https://bpspsychub.onlinelibrary.wiley.com/journal/20448325"
+            "Link de verificación electrónica": "https://bpspsychub.onlinelibrary.wiley.com/journal/20448325"
           },
           {
             "N°": "3",
@@ -1332,7 +1376,7 @@
             "Estado": "Publicado",
             "ISSN": "1750-4708",
             "Factor de impacto": "1900-01-01 12:00:00",
-            "Link de Acceso o Verificación": "https://onlinelibrary.wiley.com/journal/17504716"
+            "Link de verificación electrónica": "https://onlinelibrary.wiley.com/journal/17504716"
           },
           {
             "N°": "4",
@@ -1343,7 +1387,7 @@
             "Estado": "Publicado",
             "ISSN": "2045-2322",
             "Factor de impacto": "1900-01-04 14:24:00",
-            "Link de Acceso o Verificación": "https://www.nature.com/srep/"
+            "Link de verificación electrónica": "https://www.nature.com/srep/"
           },
           {
             "N°": "5",
@@ -1354,7 +1398,7 @@
             "Estado": "Publicado",
             "ISSN": "0963-1798",
             "Factor de impacto": "1900-01-03 04:48:00",
-            "Link de Acceso o Verificación": "https://bpspsychub.onlinelibrary.wiley.com/journal/20448325"
+            "Link de verificación electrónica": "https://bpspsychub.onlinelibrary.wiley.com/journal/20448325"
           },
           {
             "N°": "6",
@@ -1365,7 +1409,7 @@
             "Estado": "Publicado",
             "ISSN": "0268-3946",
             "Factor de impacto": "1900-01-03 21:36:00",
-            "Link de Acceso o Verificación": "https://www.emerald.com/insight/publication/issn/0268-3946"
+            "Link de verificación electrónica": "https://www.emerald.com/insight/publication/issn/0268-3946"
           },
           {
             "N°": "7",
@@ -1376,7 +1420,7 @@
             "Estado": "Publicado",
             "ISSN": "0749-5978",
             "Factor de impacto": "1900-01-06 21:36:00",
-            "Link de Acceso o Verificación": "https://www.sciencedirect.com/journal/organizational-behavior-and-human-decision-processes"
+            "Link de verificación electrónica": "https://www.sciencedirect.com/journal/organizational-behavior-and-human-decision-processes"
           },
           {
             "N°": "8",
@@ -1387,7 +1431,7 @@
             "Estado": "Publicado",
             "ISSN": "0001-6918",
             "Factor de impacto": "1900-01-02 14:24:00",
-            "Link de Acceso o Verificación": "https://www.sciencedirect.com/journal/acta-psychologica"
+            "Link de verificación electrónica": "https://www.sciencedirect.com/journal/acta-psychologica"
           },
           {
             "N°": "9",
@@ -1398,7 +1442,7 @@
             "Estado": "Publicado",
             "ISSN": "0003-066X",
             "Factor de impacto": "1900-01-04 00:00:00",
-            "Link de Acceso o Verificación": "https://www.apa.org/pubs/journals/amp"
+            "Link de verificación electrónica": "https://www.apa.org/pubs/journals/amp"
           },
           {
             "N°": "10",
@@ -1409,7 +1453,7 @@
             "Estado": "Publicado",
             "ISSN": "0963-1798",
             "Factor de impacto": "1900-01-03 02:24:00",
-            "Link de Acceso o Verificación": "https://bpspsychub.onlinelibrary.wiley.com/journal/20448325"
+            "Link de verificación electrónica": "https://bpspsychub.onlinelibrary.wiley.com/journal/20448325"
           },
           {
             "N°": "11",
@@ -1420,7 +1464,7 @@
             "Estado": "Publicado",
             "ISSN": "1044-4068",
             "Factor de impacto": "1900-01-02 07:12:00",
-            "Link de Acceso o Verificación": "https://www.emerald.com/insight/publication/issn/1044-4068"
+            "Link de verificación electrónica": "https://www.emerald.com/insight/publication/issn/1044-4068"
           },
           {
             "N°": "12",
@@ -1431,7 +1475,7 @@
             "Estado": "Publicado",
             "ISSN": "0003-066X",
             "Factor de impacto": "3.8",
-            "Link de Acceso o Verificación": "https://www.apa.org/pubs/journals/amp"
+            "Link de verificación electrónica": "https://www.apa.org/pubs/journals/amp"
           },
           {
             "N°": "13",
@@ -1442,7 +1486,7 @@
             "Estado": "Publicado",
             "ISSN": "0894-3796",
             "Factor de impacto": "5",
-            "Link de Acceso o Verificación": "https://onlinelibrary.wiley.com/journal/10991379"
+            "Link de verificación electrónica": "https://onlinelibrary.wiley.com/journal/10991379"
           },
           {
             "N°": "14",
@@ -1453,7 +1497,7 @@
             "Estado": "Publicado",
             "ISSN": "0148-2963",
             "Factor de impacto": "5.2",
-            "Link de Acceso o Verificación": "https://www.sciencedirect.com/journal/journal-of-business-research"
+            "Link de verificación electrónica": "https://www.sciencedirect.com/journal/journal-of-business-research"
           }
         ]
       },
@@ -1707,7 +1751,7 @@
           "Estado",
           "ISSN",
           "Factor de impacto",
-          "Link de verificación electrónico"
+          "Link de verificación electrónica"
         ],
         "filas": [
           {
@@ -1719,7 +1763,7 @@
             "Estado": "Publicado",
             "ISSN": "0025-1909",
             "Factor de impacto": "4,8*",
-            "Link de verificación electrónico": "https://pubsonline.informs.org/journal/mnsc"
+            "Link de verificación electrónica": "https://pubsonline.informs.org/journal/mnsc"
           },
           {
             "N°": "2",
@@ -1730,7 +1774,7 @@
             "Estado": "Publicado",
             "ISSN": "2041-1723",
             "Factor de impacto": "1900-01-14 16:48:00",
-            "Link de verificación electrónico": "https://journals.sagepub.com/home/joc"
+            "Link de verificación electrónica": "https://journals.sagepub.com/home/joc"
           },
           {
             "N°": "3",
@@ -1741,7 +1785,7 @@
             "Estado": "Publicado",
             "ISSN": "0969-5931",
             "Factor de impacto": "1900-01-08 04:48:00",
-            "Link de verificación electrónico": "https://www.journals.elsevier.com/international-business-review"
+            "Link de verificación electrónica": "https://www.journals.elsevier.com/international-business-review"
           },
           {
             "N°": "4",
@@ -1752,7 +1796,7 @@
             "Estado": "Publicado",
             "ISSN": "1090-9516",
             "Factor de impacto": "5.7",
-            "Link de verificación electrónico": "https://www.sciencedirect.com/journal/journal-of-world-business"
+            "Link de verificación electrónica": "https://www.sciencedirect.com/journal/journal-of-world-business"
           },
           {
             "N°": "5",
@@ -1763,7 +1807,7 @@
             "Estado": "Publicado",
             "ISSN": "0047-2506",
             "Factor de impacto": "7.7",
-            "Link de verificación electrónico": "https://link.springer.com/journal/41267"
+            "Link de verificación electrónica": "https://link.springer.com/journal/41267"
           }
         ]
       },
@@ -1914,16 +1958,19 @@
     "secciones": {
       "publicaciones_indexadas": {
         "headers": [
+          "N°",
           "Autor(es)",
           "Año",
           "Título de la publicación",
           "Nombre revista",
           "Estado",
           "ISSN",
-          "Factor de impacto"
+          "Factor de impacto",
+          "Link de verificación electrónica"
         ],
         "filas": [
           {
+            "N°": "N/D",
             "Autor(es)": "Gargano, A.; Sotes-Paladino, J.; Verwijmeren, P.",
             "Año": "2025",
             "Título de la publicación": "Short of capital: Stock Market Implications of Short Sellers’ Losses",
@@ -1931,9 +1978,10 @@
             "Estado": "Publicado",
             "ISSN": "0025-1909",
             "Factor de impacto": "4,9 JIF",
-            "N°": "1"
+            "Link de verificación electrónica": ""
           },
           {
+            "N°": "N/D",
             "Autor(es)": "Lim, B.; Sotes-Paladino, J.; Wang, G. J.; Yao, Y.",
             "Año": "2024",
             "Título de la publicación": "The Value of Growth: Changes in Profitability and Future Stock Returns",
@@ -1941,9 +1989,10 @@
             "Estado": "Publicado",
             "ISSN": "0378-4266",
             "Factor de impacto": "3,9 JIF",
-            "N°": "2"
+            "Link de verificación electrónica": ""
           },
           {
+            "N°": "N/D",
             "Autor(es)": "Gargano, A.; Sotes-Paladino, J.; Verwijmeren, P.",
             "Año": "2023",
             "Título de la publicación": "Out of Sync: Dispersed Short Selling and the Correction of Mispricing",
@@ -1951,9 +2000,10 @@
             "Estado": "Publicado",
             "ISSN": "0022-1090",
             "Factor de impacto": "5,5 JIF",
-            "N°": "3"
+            "Link de verificación electrónica": ""
           },
           {
+            "N°": "N/D",
             "Autor(es)": "Sotes-Paladino, J.; Zapatero, F.",
             "Año": "2022",
             "Título de la publicación": "Carrot and Stick: A Role for Benchmark-Adjusted Compensation in Active Fund Management",
@@ -1961,9 +2011,10 @@
             "Estado": "Publicado",
             "ISSN": "1042-9573",
             "Factor de impacto": "5,2 JIF",
-            "N°": "4"
+            "Link de verificación electrónica": ""
           },
           {
+            "N°": "N/D",
             "Autor(es)": "Sotes-Paladino, J.; Zapatero, F.",
             "Año": "2019",
             "Título de la publicación": "Riding the Bubble with Convex Incentives",
@@ -1971,9 +2022,10 @@
             "Estado": "Publicado",
             "ISSN": "0893-9454",
             "Factor de impacto": "5,8 JIF",
-            "N°": "5"
+            "Link de verificación electrónica": ""
           },
           {
+            "N°": "N/D",
             "Autor(es)": "Goncalves-Pinto, L.; Sotes-Paladino, J.; Xu, J.",
             "Año": "2018",
             "Título de la publicación": "The Invisible Hand of Internal Markets in Mutual Fund Families",
@@ -1981,9 +2033,10 @@
             "Estado": "Publicado",
             "ISSN": "0378-4266",
             "Factor de impacto": "4,1 JIF",
-            "N°": "6"
+            "Link de verificación electrónica": ""
           },
           {
+            "N°": "N/D",
             "Autor(es)": "Brown, S. J.; Sotes-Paladino, J.; Wang, J.; Yao, Y.",
             "Año": "2017",
             "Título de la publicación": "Starting on the Wrong Foot: Seasonality in Mutual Fund Performance",
@@ -1991,7 +2044,7 @@
             "Estado": "Publicado",
             "ISSN": "0378-4266",
             "Factor de impacto": "3,8 JIF",
-            "N°": "7"
+            "Link de verificación electrónica": ""
           }
         ]
       },
@@ -2120,6 +2173,7 @@
     "secciones": {
       "publicaciones_indexadas": {
         "headers": [
+          "N°",
           "Autor(es)",
           "Año",
           "Título de la publicación",
@@ -2127,11 +2181,11 @@
           "Estado",
           "ISSN",
           "Factor de impacto",
-          "Link de verificación",
-          "Link de verificación"
+          "Link de verificación electrónica"
         ],
         "filas": [
           {
+            "N°": "N/D",
             "Autor(es)": "Ma, Z.; Riquelme, N.",
             "Año": "2026",
             "Título de la publicación": "Competitive limit of competing auctions",
@@ -2139,10 +2193,10 @@
             "Estado": "Publicado",
             "ISSN": "0899-8256",
             "Factor de impacto": "1,8 JIF",
-            "Link de verificación": "https://www.sciencedirect.com/journal/games-and-economic-behavior",
-            "N°": "1"
+            "Link de verificación electrónica": "https://www.sciencedirect.com/journal/games-and-economic-behavior"
           },
           {
+            "N°": "N/D",
             "Autor(es)": "Awad, E.; Judd, G.; Riquelme, N.",
             "Año": "2025",
             "Título de la publicación": "Learning by lobbying",
@@ -2150,10 +2204,10 @@
             "Estado": "Publicado",
             "ISSN": "0092-5853",
             "Factor de impacto": "4,3 JIF",
-            "Link de verificación": "https://www.cambridge.org/core/journals/american-journal-of-political-science",
-            "N°": "2"
+            "Link de verificación electrónica": "https://www.cambridge.org/core/journals/american-journal-of-political-science"
           },
           {
+            "N°": "N/D",
             "Autor(es)": "Do, J.; Riquelme, N.",
             "Año": "2024",
             "Título de la publicación": "Information exchange through secret vertical contracts",
@@ -2161,10 +2215,10 @@
             "Estado": "Publicado",
             "ISSN": "0938-2259",
             "Factor de impacto": "1,6 JIF",
-            "Link de verificación": "https://www.sciencedirect.com/journal/economic-theory",
-            "N°": "3"
+            "Link de verificación electrónica": "https://www.sciencedirect.com/journal/economic-theory"
           },
           {
+            "N°": "N/D",
             "Autor(es)": "Awad, E.; Riquelme, N.",
             "Año": "2024",
             "Título de la publicación": "International Cooperation, Information Transmission, and Delegation",
@@ -2172,8 +2226,7 @@
             "Estado": "Publicado",
             "ISSN": "1554-0626",
             "Factor de impacto": "1,5 JIF",
-            "Link de verificación": "https://www.cambridge.org/core/journals/quarterly-journal-of-political-science",
-            "N°": "4"
+            "Link de verificación electrónica": "https://www.cambridge.org/core/journals/quarterly-journal-of-political-science"
           }
         ]
       },
@@ -2282,7 +2335,8 @@
           "Nombre revista",
           "Estado",
           "ISSN",
-          "Factor de impacto"
+          "Factor de impacto",
+          "Link de verificación electrónica"
         ],
         "filas": [
           {
@@ -2293,7 +2347,8 @@
             "Nombre revista": "Review of Economic Studies",
             "Estado": "Publicado",
             "ISSN": "0034-6527",
-            "Factor de impacto": "~7,0 JIF"
+            "Factor de impacto": "~7,0 JIF",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "2",
@@ -2303,7 +2358,8 @@
             "Nombre revista": "Marketing Science",
             "Estado": "Publicado",
             "ISSN": "0732-2399",
-            "Factor de impacto": "5,1 JIF"
+            "Factor de impacto": "5,1 JIF",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "3",
@@ -2313,7 +2369,8 @@
             "Nombre revista": "AEA Papers and Proceedings",
             "Estado": "Publicado",
             "ISSN": "2574-0768",
-            "Factor de impacto": "1,1 SJR"
+            "Factor de impacto": "1,1 SJR",
+            "Link de verificación electrónica": ""
           },
           {
             "N°": "4",
@@ -2323,7 +2380,8 @@
             "Nombre revista": "RAND Journal of Economics",
             "Estado": "Publicado",
             "ISSN": "0741-6261",
-            "Factor de impacto": "1,99 JIF"
+            "Factor de impacto": "1,99 JIF",
+            "Link de verificación electrónica": ""
           }
         ]
       },

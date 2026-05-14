@@ -49,6 +49,12 @@ function inicializar() {
     generarListado(profesores);
     generarModales(profesoresConDatos);
     poblarSelectorProfesores();
+    
+    // Mostrar/ocultar Control según MODO_ADMIN
+    const menuControl = document.querySelector('.menu-control');
+    if (menuControl) {
+        menuControl.style.display = MODO_ADMIN ? 'block' : 'none';
+    }
 }
 
 function generarListado(profesores) {

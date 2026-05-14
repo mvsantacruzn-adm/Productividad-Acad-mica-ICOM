@@ -14,6 +14,7 @@
             <div class="logo">📊 Productividad<br>UANDES</div>
             <div class="menu-item active" onclick="cambiarPagina('profesores')">👥 Profesores</div>
             <div class="menu-item" onclick="cambiarPagina('reporteria')">📋 Reportería</div>
+            <div class="menu-item menu-control" style="display: none;" onclick="cambiarPagina('control')">🔧 Control</div>
         </div>
         
         <div class="main-content">
@@ -62,12 +63,24 @@
                     </div>
                 </div>
             </div>
+
+            <div id="page-control" class="page" style="display: none;">
+                <div class="header">
+                    <h1>Control de Estructura</h1>
+                    <p>Auditoría técnica de normalización de tablas</p>
+                </div>
+                <p style="padding: 20px; text-align: center; color: #999;">Control de Estructura (requiere acceso administrativo)</p>
+            </div>
         </div>
     </div>
     
     <div id="modales-container"></div>
     <div id="ficha-pdf-container" style="display: none;"></div>
     
+    <script>
+        // Variable de modo administrador
+        const MODO_ADMIN = false;
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
