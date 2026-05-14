@@ -14,19 +14,6 @@
             <div class="logo">📊 Productividad<br>UANDES</div>
             <div class="menu-item active" onclick="cambiarPagina('profesores')">👥 Profesores</div>
             <div class="menu-item" onclick="cambiarPagina('reporteria')">📋 Reportería</div>
-            
-            <div class="menu-item menu-parent" onclick="toggleSubmenu(event)">
-                🔧 Control
-                <span class="submenu-toggle">▼</span>
-            </div>
-            <div class="submenu" style="display: none;">
-                <div class="submenu-item" onclick="cambiarPagina('control-validacion')">
-                    📊 Validación de Headers
-                </div>
-                <div class="submenu-item" onclick="cambiarPagina('control-normalizacion')">
-                    ✏️ Corrección y Normalización
-                </div>
-            </div>
         </div>
         
         <div class="main-content">
@@ -75,69 +62,11 @@
                     </div>
                 </div>
             </div>
-
-            <div id="page-control-validacion" class="page">
-                <div class="header">
-                    <h1>Control de Estructura</h1>
-                    <p>Auditoría técnica de normalización de tablas</p>
-                </div>
-                
-                <div class="control-grid">
-                    <div class="control-card">
-                        <div class="control-header">
-                            <h2 class="control-title">📋 Validación de Headers</h2>
-                            <p class="control-subtitle">Estado de normalización de todas las tablas</p>
-                        </div>
-                        
-                        <div class="control-actions">
-                            <button class="btn-primary" onclick="descargarControlExcel()">📥 Descargar Excel</button>
-                            <button class="btn-secondary" onclick="descargarControlPDF()">📥 Descargar PDF</button>
-                        </div>
-                        
-                        <div class="control-body">
-                            <div id="control-tabla" class="control-tabla"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="page-control-normalizacion" class="page">
-                <div class="header">
-                    <h1>Corrección y Normalización de Tablas</h1>
-                    <p>Herramienta de corrección de inconsistencias estructurales</p>
-                </div>
-                
-                <div class="control-grid">
-                    <div class="control-card">
-                        <div class="control-header">
-                            <h2 class="control-title">🔍 Inconsistencias Detectadas</h2>
-                            <p class="control-subtitle">Tablas que requieren normalización</p>
-                        </div>
-                        
-                        <div class="control-actions">
-                            <button class="btn-primary" onclick="seleccionarTodasCorrecciones()">✓ Seleccionar todas</button>
-                            <button class="btn-secondary" onclick="limpiarSeleccionCorrecciones()">✗ Limpiar selección</button>
-                            <button class="btn-primary" onclick="descargarNormalizado()" style="background: #28a745;">📥 Descargar JSON Normalizado</button>
-                        </div>
-                        
-                        <div class="control-body">
-                            <div id="normalizacion-container" class="normalizacion-container"></div>
-                        </div>
-                        
-                        <div class="control-footer">
-                            <p class="instruccion-importante">
-                                ⚠️ <strong>INSTRUCCIÓN IMPORTANTE:</strong> Después de descargar el archivo normalizado, reemplaza manualmente <code>profesores-produccion.json</code> en GitHub por el nuevo archivo descargado.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     
     <div id="modales-container"></div>
     <div id="ficha-pdf-container" style="display: none;"></div>
-    <div id="control-pdf-container" style="display: none;"></div>
     
     <script src="script.js"></script>
 </body>

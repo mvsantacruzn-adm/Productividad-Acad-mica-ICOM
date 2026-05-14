@@ -1073,7 +1073,6 @@
       "publicaciones_no_indexadas": {
         "headers": [
           "N°",
-          "N°",
           "Autor(es)",
           "Año",
           "Título de la publicación",
@@ -1083,7 +1082,7 @@
         ],
         "filas": [
           {
-            "N°": "2",
+            "N°": "1",
             "Autor(es)": "Garcia-Marin, A.; Hoegler, P.",
             "Año": "2017",
             "Título de la publicación": "Road bumps for electric cars",
