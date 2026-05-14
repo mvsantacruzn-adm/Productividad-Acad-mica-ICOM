@@ -134,6 +134,7 @@ function generarFichaCNA() {
     const nombreProfesor = select.value;
     const preview = document.getElementById('ficha-cna-preview');
     const btnDescargaPDF = document.getElementById('btn-descargar-pdf');
+    const btnDescargaExcel = document.getElementById('btn-descargar-ficha-excel-cna');
     
     if (!nombreProfesor) {
         preview.innerHTML = `
@@ -142,6 +143,7 @@ function generarFichaCNA() {
             </div>
         `;
         btnDescargaPDF.style.display = 'none';
+        btnDescargaExcel.style.display = 'none';
         return;
     }
     
@@ -155,6 +157,7 @@ function generarFichaCNA() {
             </div>
         `;
         btnDescargaPDF.style.display = 'none';
+        btnDescargaExcel.style.display = 'none';
         return;
     }
     
@@ -162,6 +165,7 @@ function generarFichaCNA() {
     const fichaHTML = construirFichaCNA(nombreProfesor, base, produccion);
     preview.innerHTML = fichaHTML;
     btnDescargaPDF.style.display = 'inline-block';
+    btnDescargaExcel.style.display = 'inline-block';
 }
 
 function construirFichaCNA(nombreProfesor, base, produccion) {
@@ -201,46 +205,51 @@ function construirFichaCNA(nombreProfesor, base, produccion) {
             <div style="margin-bottom: 20px;"></div>
     `;
     
-    // Títulos oficiales de secciones
+    // Mapeo de nombres normalizados
     const titulosOficiales = {
-        'tesis_magister_guia': '2.1. Tesis de Magister Dirigidas (Como Guía)',
-        'tesis_magister_coguia': '2.2. Tesis de Magister Dirigidas (Como Co-guía)',
-        'tesis_doctorado_guia': '3.1. Tesis de Doctorado Dirigidas (Como Guía)',
-        'tesis_doctorado_coguia': '3.2. Tesis de Doctorado Dirigidas (Como Co-guía)',
-        'publicaciones_indexadas': '4.1. Publicaciones Indexadas',
-        'publicaciones_no_indexadas': '4.2. Publicaciones No Indexadas',
-        'libros': '4.3. Libros',
-        'capitulos': '4.4. Capítulos de Libro',
-        'patentes': '4.5. Patentes',
-        'proyectos': '5. Proyectos de Investigación'
+        'tesis_magister_guia': 'Tesis Magíster (Profesor Guía)',
+        'tesis_magister_coguia': 'Tesis Magíster (Profesor Co-Guía)',
+        'tesis_doctorado_guia': 'Tesis Doctorado (Profesor Guía)',
+        'tesis_doctorado_coguia': 'Tesis Doctorado (Profesor Co-Guía)',
+        'publicaciones_indexadas': 'Publicaciones Indexadas',
+        'libros': 'Libros',
+        'capitulos': 'Capítulos de Libro',
+        'patentes': 'Patentes',
+        'proyectos': 'Proyectos de Investigación'
     };
     
-    // Orden definido de todas las secciones posibles
+    // Orden definido de secciones (SIN publicaciones_no_indexadas)
     const ordenSecciones = [
-        'tesis_magister_guia', 'tesis_magister_coguia',
-        'tesis_doctorado_guia', 'tesis_doctorado_coguia',
-        'publicaciones_indexadas', 'publicaciones_no_indexadas',
-        'libros', 'capitulos', 'patentes', 'proyectos'
+        'tesis_magister_guia',
+        'tesis_magister_coguia',
+        'tesis_doctorado_guia',
+        'tesis_doctorado_coguia',
+        'publicaciones_indexadas',
+        'libros',
+        'capitulos',
+        'patentes',
+        'proyectos'
     ];
     
-    // Recorrer TODAS las secciones en orden
+    // Procesar secciones en orden
     for (const tipo of ordenSecciones) {
         const seccion = secciones[tipo];
         
-        // REGLA: Publicaciones No Indexadas NO se muestran en Ficha CNA
+        // Omitir Publicaciones No Indexadas
         if (tipo === 'publicaciones_no_indexadas') continue;
         
-        // Incluir tabla SI existe la sección Y tiene filas
+        // Procesar si existe y tiene filas
         if (seccion && seccion.filas && seccion.filas.length > 0) {
-            // REGLA: Filtrar desde año 2020 para todas las otras tablas
+            // Filtrar desde 2020
             const filasFiltradas = filtrarDesde2020(seccion.filas);
             
-            // Si no hay registros después del filtro, no mostrar tabla
+            // Si no hay registros desde 2020, omitir tabla
             if (filasFiltradas.length === 0) continue;
             
-            // Aplicar orden visual por Año (descendente) y reenumerar
+            // Ordenar por año descendente y reenumerar
             const filasOrdenadas = ordenarPorAnoYRenumerar(filasFiltradas, seccion.headers);
             
+            // Agregar tabla
             html += construirTabla(titulosOficiales[tipo], seccion.headers, filasOrdenadas);
         }
     }
@@ -1508,4 +1517,153 @@ console.log('║  • descargarDatosExcel()                          ║');
 console.log('║  • descargarValidacionExcel()                     ║');
 console.log('╚═══════════════════════════════════════════════════╝');
 console.log('');
+
+
+// ============================================
+// DESCARGAR FICHA CNA EN EXCEL
+// ============================================
+
+function descargarFichaCNAExcel() {
+    console.log('=== descargarFichaCNAExcel INICIADO ===');
+    
+    // Verificar XLSX disponible
+    if (typeof XLSX === 'undefined') {
+        console.error('❌ XLSX no está disponible');
+        alert('Error: Librería XLSX no cargó correctamente. Recarga la página.');
+        return;
+    }
+    
+    // Validar profesor
+    if (!profesorActualFicha) {
+        console.warn('❌ No hay profesor seleccionado');
+        alert('Primero genera la Ficha CNA antes de descargar.');
+        return;
+    }
+    
+    console.log('✓ Profesor:', profesorActualFicha);
+    
+    const base = datosBase[profesorActualFicha];
+    const produccion = datosProduccion[profesorActualFicha];
+    
+    if (!base || !produccion) {
+        console.warn('❌ Datos incompletos');
+        alert('Primero genera la Ficha CNA antes de descargar.');
+        return;
+    }
+    
+    try {
+        const secciones = produccion.secciones || {};
+        
+        // Crear workbook
+        const workbook = XLSX.utils.book_new();
+        
+        // Crear filas para la hoja
+        const filas = [];
+        
+        // Título
+        filas.push(['Ficha Académica CNA']);
+        filas.push([]);
+        filas.push([profesorActualFicha]);
+        filas.push([]);
+        
+        // Datos base
+        filas.push(['INFORMACIÓN PERSONAL']);
+        filas.push(['Nombre', base.nombre || '']);
+        filas.push(['Vínculo', base.vinculo || '']);
+        filas.push(['Título Profesional', base.titulo || '']);
+        filas.push(['Grado Académico Máximo', base.grado || '']);
+        filas.push(['Líneas de Investigación', base.lineas || '']);
+        filas.push([]);
+        filas.push([]);
+        
+        // Mapeo de nombres normalizados
+        const titulosOficiales = {
+            'tesis_magister_guia': 'Tesis Magíster (Profesor Guía)',
+            'tesis_magister_coguia': 'Tesis Magíster (Profesor Co-Guía)',
+            'tesis_doctorado_guia': 'Tesis Doctorado (Profesor Guía)',
+            'tesis_doctorado_coguia': 'Tesis Doctorado (Profesor Co-Guía)',
+            'publicaciones_indexadas': 'Publicaciones Indexadas',
+            'libros': 'Libros',
+            'capitulos': 'Capítulos de Libro',
+            'patentes': 'Patentes',
+            'proyectos': 'Proyectos de Investigación'
+        };
+        
+        // Orden de secciones (SIN publicaciones_no_indexadas)
+        const ordenSecciones = [
+            'tesis_magister_guia',
+            'tesis_magister_coguia',
+            'tesis_doctorado_guia',
+            'tesis_doctorado_coguia',
+            'publicaciones_indexadas',
+            'libros',
+            'capitulos',
+            'patentes',
+            'proyectos'
+        ];
+        
+        // Procesar secciones
+        for (const tipo of ordenSecciones) {
+            const seccion = secciones[tipo];
+            
+            if (tipo === 'publicaciones_no_indexadas') continue;
+            
+            if (seccion && seccion.filas && seccion.filas.length > 0) {
+                // Filtrar desde 2020
+                const filasFiltradas = filtrarDesde2020(seccion.filas);
+                if (filasFiltradas.length === 0) continue;
+                
+                // Ordenar
+                const filasOrdenadas = ordenarPorAnoYRenumerar(filasFiltradas, seccion.headers);
+                
+                // Agregar título de sección
+                filas.push([titulosOficiales[tipo]]);
+                filas.push(seccion.headers);
+                
+                // Agregar datos
+                for (const fila of filasOrdenadas) {
+                    const fila_array = seccion.headers.map(h => fila[h] || '');
+                    filas.push(fila_array);
+                }
+                
+                filas.push([]);
+                filas.push([]);
+            }
+        }
+        
+        // Crear hoja
+        console.log('→ Creando hoja...');
+        const worksheet = XLSX.utils.aoa_to_sheet(filas);
+        console.log('✓ Hoja creada');
+        
+        // Agregar al workbook
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Ficha CNA');
+        console.log('✓ Hoja agregada');
+        
+        // Formatear columnas
+        const colWidths = [];
+        colWidths.push({ wch: 30 });
+        colWidths.push({ wch: 50 });
+        for (let i = 2; i < 20; i++) {
+            colWidths.push({ wch: 25 });
+        }
+        worksheet['!cols'] = colWidths;
+        console.log('✓ Columnas formateadas');
+        
+        // Descargar
+        console.log('→ Descargando...');
+        XLSX.writeFile(workbook, 'ReporteVSC_FichaCNA.xlsx');
+        console.log('✅ DESCARGADO: ReporteVSC_FichaCNA.xlsx');
+        console.log('=== descargarFichaCNAExcel COMPLETADO ✓ ===');
+        
+    } catch (error) {
+        console.error('❌ Error en descargarFichaCNAExcel:', error);
+        alert('Error: ' + error.message);
+    }
+}
+
+// Hacer disponible globalmente
+window.descargarFichaCNAExcel = descargarFichaCNAExcel;
+
+console.log('✓ Función descargarFichaCNAExcel disponible globalmente');
 
