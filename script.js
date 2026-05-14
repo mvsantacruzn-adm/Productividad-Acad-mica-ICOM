@@ -25,6 +25,33 @@ const sinFicha = [
     { nombre: 'Natalia Yankovic', resumen: 'Investigación de Operaciones. Por completar datos.' }
 ];
 
+// Headers oficiales normalizados
+const headersOficiales = {
+    'publicaciones_indexadas': ['N°', 'Autor(es)', 'Año', 'Título de la publicación', 'Nombre revista', 'Factor de impacto', 'Link de verificación electrónica'],
+    'publicaciones_no_indexadas': ['N°', 'Autor(es)', 'Año', 'Título de la publicación', 'Nombre revista', 'Estado', 'ISSN'],
+    'libros': ['N°', 'Autor(es)', 'Año', 'Título de la publicación', 'Lugar', 'Editorial'],
+    'capitulos': ['N°', 'Autor(es)', 'Año', 'Título de la publicación', 'Lugar', 'Editorial'],
+    'proyectos': ['N°', 'Título', 'Fuente de financiamiento', 'Año de adjudicación', 'Período de ejecución', 'Rol en el proyecto'],
+    'tesis_magister_guia': ['N°', 'Año', 'Autor', 'Título de la tesis', 'Nombre del programa', 'Institución'],
+    'tesis_magister_coguia': ['N°', 'Año', 'Autor', 'Título de la tesis', 'Nombre del programa', 'Institución'],
+    'tesis_doctorado_guia': ['N°', 'Año', 'Autor', 'Título de la tesis', 'Nombre del programa', 'Institución'],
+    'tesis_doctorado_coguia': ['N°', 'Año', 'Autor', 'Título de la tesis', 'Nombre del programa', 'Institución'],
+    'patentes': ['N°', 'Año', 'Título', 'Estado', 'Institución / Registro']
+};
+
+const titulosOficiales = {
+    'publicaciones_indexadas': 'Publicaciones Indexadas',
+    'publicaciones_no_indexadas': 'Publicaciones No Indexadas',
+    'libros': 'Libros',
+    'capitulos': 'Capítulos de Libro',
+    'proyectos': 'Proyectos de Investigación',
+    'tesis_magister_guia': 'Tesis Magíster (Profesor Guía)',
+    'tesis_magister_coguia': 'Tesis Magíster (Profesor Co-Guía)',
+    'tesis_doctorado_guia': 'Tesis Doctorado (Profesor Guía)',
+    'tesis_doctorado_coguia': 'Tesis Doctorado (Profesor Co-Guía)',
+    'patentes': 'Patentes'
+};
+
 function inicializar() {
     const profesoresConDatos = Object.keys(datosBase).map((nombre, idx) => ({
         id: `prof${String(idx + 1).padStart(2, '0')}`,
@@ -49,6 +76,7 @@ function inicializar() {
     generarListado(profesores);
     generarModales(profesoresConDatos);
     poblarSelectorProfesores();
+    generarControlEstructura();
 }
 
 function generarListado(profesores) {
@@ -173,19 +201,6 @@ function construirFichaCNA(nombreProfesor, base, produccion) {
         'libros', 'capitulos', 'patentes', 'proyectos'
     ];
     
-    const mapeoTitulos = {
-        'tesis_magister_guia': '2.1. Tesis de Magister Dirigidas (Como Guía)',
-        'tesis_magister_coguia': '2.2. Tesis de Magister Dirigidas (Como Co-guía)',
-        'tesis_doctorado_guia': '3.1. Tesis de Doctorado Dirigidas (Como Guía)',
-        'tesis_doctorado_coguia': '3.2. Tesis de Doctorado Dirigidas (Como Co-guía)',
-        'publicaciones_indexadas': '4.1. Publicaciones Indexadas',
-        'publicaciones_no_indexadas': '4.2. Publicaciones No Indexadas',
-        'libros': '4.3. Libros',
-        'capitulos': '4.4. Capítulos de Libro',
-        'patentes': '4.5. Patentes',
-        'proyectos': '5. Proyectos de Investigación'
-    };
-    
     // Recorrer TODAS las secciones en orden
     for (const tipo of ordenSecciones) {
         const seccion = secciones[tipo];
@@ -193,7 +208,7 @@ function construirFichaCNA(nombreProfesor, base, produccion) {
         // Incluir tabla SI existe la sección Y tiene filas
         if (seccion && seccion.filas && seccion.filas.length > 0) {
             if (seccion.filas.length > 0) {
-                html += construirTabla(mapeoTitulos[tipo], seccion.headers, seccion.filas);
+                html += construirTabla(titulosOficiales[tipo], seccion.headers, seccion.filas);
             }
         }
     }
@@ -270,6 +285,135 @@ function descargarPDF() {
     };
     
     html2pdf().set(opt).from(element).save();
+}
+
+// ============================================
+// CONTROL DE ESTRUCTURA - AUDITORÍA
+// ============================================
+
+function validarHeadersNormalizados(tipo, headersActuales) {
+    const headersOficial = headersOficiales[tipo] || [];
+    
+    // Verificar duplicados
+    if (new Set(headersActuales).size !== headersActuales.length) {
+        return { estado: 'REVISAR', razon: 'Headers duplicados detectados' };
+    }
+    
+    // Verificar cantidad de columnas
+    if (headersActuales.length !== headersOficial.length) {
+        return { 
+            estado: 'REVISAR', 
+            razon: `Columnas: ${headersActuales.length} (esperadas ${headersOficial.length})`
+        };
+    }
+    
+    // Verificar headers exactos
+    if (JSON.stringify(headersActuales) !== JSON.stringify(headersOficial)) {
+        return { estado: 'REVISAR', razon: 'Headers no coinciden exactamente' };
+    }
+    
+    return { estado: 'OK', razon: 'Normalizado correctamente' };
+}
+
+function generarControlEstructura() {
+    const container = document.getElementById('control-tabla');
+    
+    const tipos_tabla = [
+        'publicaciones_indexadas',
+        'publicaciones_no_indexadas',
+        'libros',
+        'capitulos',
+        'proyectos',
+        'tesis_magister_guia',
+        'tesis_magister_coguia',
+        'tesis_doctorado_guia',
+        'tesis_doctorado_coguia',
+        'patentes'
+    ];
+    
+    let tablasData = [];
+    
+    // Recopilar información de todas las tablas
+    for (const nombreProfesor of Object.keys(datosProduccion)) {
+        const profesor = datosProduccion[nombreProfesor];
+        
+        if (!profesor.secciones) continue;
+        
+        for (const tipo of tipos_tabla) {
+            if (tipo in profesor.secciones) {
+                const seccion = profesor.secciones[tipo];
+                const headers = seccion.headers || [];
+                const filas = seccion.filas || [];
+                
+                const validacion = validarHeadersNormalizados(tipo, headers);
+                
+                tablasData.push({
+                    profesor: nombreProfesor,
+                    tipo: tipo,
+                    titulo: titulosOficiales[tipo],
+                    headers: headers,
+                    numColumnas: headers.length,
+                    numRegistros: filas.length,
+                    validacion: validacion
+                });
+            }
+        }
+    }
+    
+    // Generar tabla HTML
+    let html = `
+        <table>
+            <thead>
+                <tr>
+                    <th>Profesor</th>
+                    <th>Tipo de tabla</th>
+                    <th>Título visual</th>
+                    <th>Columnas</th>
+                    <th>Registros</th>
+                    <th>Estado</th>
+                    <th>Detalle</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+    
+    // Agrupar por tipo para facilitar comparación
+    const agrupado = {};
+    for (const tabla of tablasData) {
+        if (!agrupado[tabla.tipo]) {
+            agrupado[tabla.tipo] = [];
+        }
+        agrupado[tabla.tipo].push(tabla);
+    }
+    
+    // Generar filas ordenadas por tipo
+    for (const tipo of tipos_tabla) {
+        if (!agrupado[tipo]) continue;
+        
+        for (const tabla of agrupado[tipo]) {
+            const estadoClass = tabla.validacion.estado === 'OK' ? 'estado-ok' : 'estado-revisar';
+            const estadoTexto = tabla.validacion.estado === 'OK' ? '✓ OK' : '⚠ REVISAR';
+            
+            html += `
+                <tr>
+                    <td>${tabla.profesor}</td>
+                    <td style="font-family: monospace; font-size: 10px;">${tabla.tipo}</td>
+                    <td>${tabla.titulo}</td>
+                    <td style="text-align: center;">${tabla.numColumnas}</td>
+                    <td style="text-align: center;">${tabla.numRegistros}</td>
+                    <td><span class="${estadoClass}">${estadoTexto}</span></td>
+                    <td style="font-size: 10px;">${tabla.validacion.razon}</td>
+                </tr>
+            `;
+        }
+    }
+    
+    html += `
+            </tbody>
+        </table>
+    `;
+    
+    container.innerHTML = html;
 }
 
 function generarModales(profesores) {

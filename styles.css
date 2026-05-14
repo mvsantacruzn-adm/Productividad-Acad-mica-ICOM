@@ -467,3 +467,104 @@ tbody tr:hover {
         page-break-inside: avoid;
     }
 }
+
+/* SECCIÓN CONTROL DE ESTRUCTURA */
+
+.control-grid {
+    display: grid;
+    gap: 20px;
+}
+
+.control-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.control-header {
+    padding: 25px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.control-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.control-subtitle {
+    font-size: 13px;
+    color: #999;
+    margin: 0;
+}
+
+.control-body {
+    padding: 25px;
+    overflow-x: auto;
+}
+
+.control-tabla {
+    width: 100%;
+}
+
+.control-tabla table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border: 1px solid #d0d0d0;
+    font-size: 11px;
+}
+
+.control-tabla th {
+    padding: 10px;
+    text-align: left;
+    font-weight: 600;
+    border: 1px solid #667eea;
+    background: #667eea;
+    color: white;
+}
+
+.control-tabla td {
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    color: #333;
+}
+
+.control-tabla tbody tr:nth-child(even) {
+    background: #f8f9fa;
+}
+
+.control-tabla tbody tr:hover {
+    background: #f0f0f0;
+}
+
+.estado-ok {
+    background: #d4edda;
+    color: #155724;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.estado-revisar {
+    background: #fff3cd;
+    color: #856404;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.estado-error {
+    background: #f8d7da;
+    color: #721c24;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-align: center;
+}
