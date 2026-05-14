@@ -247,8 +247,7 @@
           "Año",
           "Título de la publicación",
           "Lugar",
-          "Editorial",
-          "Estado"
+          "Editorial"
         ],
         "filas": [
           {
@@ -257,8 +256,7 @@
             "Año": "2022",
             "Título de la publicación": "Sostenibilidad y Participación en la Constitución",
             "Lugar": "(No especificado en el texto)",
-            "Editorial": "Ediciones El Mercurio",
-            "Estado": "Book"
+            "Editorial": "Ediciones El Mercurio"
           },
           {
             "N°": "2",
@@ -266,8 +264,7 @@
             "Año": "2013",
             "Título de la publicación": "Cueste lo que Cueste: La batalla por salvar el Euro y Europa",
             "Lugar": "Santiago, Chile",
-            "Editorial": "Ediciones UC",
-            "Estado": "Book"
+            "Editorial": "Ediciones UC"
           },
           {
             "N°": "3",
@@ -275,8 +272,7 @@
             "Año": "2010",
             "Título de la publicación": "La Pregunta de la Reina: lecciones de la primera crisis económica del Siglo XX",
             "Lugar": "Santiago, Chile",
-            "Editorial": "Pearson",
-            "Estado": "Book"
+            "Editorial": "Pearson"
           }
         ]
       },
@@ -287,8 +283,7 @@
           "Año",
           "Título de la publicación",
           "Lugar",
-          "Editorial",
-          "Estado"
+          "Editorial"
         ],
         "filas": [
           {
@@ -297,8 +292,7 @@
             "Año": "2022",
             "Título de la publicación": "“Introducción: Sostenibilidad y participación en la Constitución” en Sostenibilidad y Participación en la Constitución",
             "Lugar": "Santiago de Chile, Chile",
-            "Editorial": "Ediciones El Mercurio",
-            "Estado": "Capítulo"
+            "Editorial": "Ediciones El Mercurio"
           },
           {
             "N°": "2",
@@ -306,8 +300,7 @@
             "Año": "2020",
             "Título de la publicación": "“Banco Central de Chile” en Aspectos Económicos de la Constitución: Alternativas y propuestas para Chile",
             "Lugar": "Ciudad de México, México",
-            "Editorial": "Fondo de Cultura Económica",
-            "Estado": "Capítulo"
+            "Editorial": "Fondo de Cultura Económica"
           },
           {
             "N°": "3",
@@ -315,8 +308,7 @@
             "Año": "2020",
             "Título de la publicación": "“Proceso Presupuestario” en Aspectos Económicos de la Constitución: Alternativas y propuestas para Chile",
             "Lugar": "Ciudad de México, México",
-            "Editorial": "Fondo de Cultura Económica",
-            "Estado": "Capítulo"
+            "Editorial": "Fondo de Cultura Económica"
           },
           {
             "N°": "4",
@@ -324,8 +316,7 @@
             "Año": "2018",
             "Título de la publicación": "“Trade Costs and the Role of International Trade Intermediaries” en Handbook of International Trade and Transportation",
             "Lugar": "Cheltenham, Reino Unido",
-            "Editorial": "Edward Elgar Publishers",
-            "Estado": "Capítulo"
+            "Editorial": "Edward Elgar Publishers"
           },
           {
             "N°": "5",
@@ -333,8 +324,7 @@
             "Año": "2017",
             "Título de la publicación": "“Macroeconomic and Financial Volatility in Chile” en Macroprudential frameworks, implementation and relationship with other policies",
             "Lugar": "Basilea, Suiza",
-            "Editorial": "Bank for International Settlements",
-            "Estado": "Capítulo"
+            "Editorial": "Bank for International Settlements"
           },
           {
             "N°": "6",
@@ -342,8 +332,7 @@
             "Año": "2015",
             "Título de la publicación": "“Long-term rates and the term premium: evidence from Chile” en What do new forms of finance mean for EM central banks?",
             "Lugar": "Basilea, Suiza",
-            "Editorial": "Bank for International Settlements",
-            "Estado": "Capítulo"
+            "Editorial": "Bank for International Settlements"
           },
           {
             "N°": "7",
@@ -351,8 +340,7 @@
             "Año": "2015",
             "Título de la publicación": "“Friedman y la política cambiaria” en Milton Friedman: la vigencia de sus contribuciones. Metodología, Teoría y Política Económica",
             "Lugar": "Santiago de Chile, Chile",
-            "Editorial": "Ediciones Universidad Católica de Chile",
-            "Estado": "Capítulo"
+            "Editorial": "Ediciones Universidad Católica de Chile"
           },
           {
             "N°": "8",
@@ -360,8 +348,7 @@
             "Año": "2014",
             "Título de la publicación": "“Monetary Policy Independence in Chile” en The transmission of unconventional monetary policy to the emerging markets",
             "Lugar": "Basilea, Suiza",
-            "Editorial": "Bank for International Settlements",
-            "Estado": "Capítulo"
+            "Editorial": "Bank for International Settlements"
           },
           {
             "N°": "9",
@@ -369,8 +356,7 @@
             "Año": "2013",
             "Título de la publicación": "“Diversificación y crecimiento del comercio exterior chileno” en Recursos Naturales y Diversificación Exportadora: una mirada de futuro para América Latina",
             "Lugar": "Santiago de Chile, Chile",
-            "Editorial": "CIEPLAN",
-            "Estado": "Capítulo"
+            "Editorial": "CIEPLAN"
           },
           {
             "N°": "10",
@@ -378,8 +364,7 @@
             "Año": "2013",
             "Título de la publicación": "“Exchange rate policy and exchange rate interventions: The Chilean experience” en Market volatility and foreign exchange intervention in EMEs: what has changed?",
             "Lugar": "Basilea, Suiza",
-            "Editorial": "Bank for International Settlements",
-            "Estado": "Capítulo"
+            "Editorial": "Bank for International Settlements"
           },
           {
             "N°": "11",
@@ -387,8 +372,7 @@
             "Año": "2012",
             "Título de la publicación": "“Macro policies and Public Debt in Chile” en Fiscal policy, public debt and monetary policy in emerging market economies",
             "Lugar": "Basilea, Suiza",
-            "Editorial": "Bank for International Settlements",
-            "Estado": "Capítulo"
+            "Editorial": "Bank for International Settlements"
           },
           {
             "N°": "12",
@@ -396,8 +380,7 @@
             "Año": "2009",
             "Título de la publicación": "“Sources of China’s Export Growth” en China, India and Beyond: Development Drivers and Limitations",
             "Lugar": "Cheltenham, Reino Unido",
-            "Editorial": "Edward Elgar",
-            "Estado": "Capítulo"
+            "Editorial": "Edward Elgar"
           },
           {
             "N°": "13",
@@ -405,8 +388,7 @@
             "Año": "2006",
             "Título de la publicación": "“Algunas Reflexiones sobre Globalización, Desarrollo y Desigualdad” en Crecimiento Sostenible y Desarrollo Sostenible",
             "Lugar": "Ciudad de México, México",
-            "Editorial": "Fondo de Cultura Económica",
-            "Estado": "Capítulo"
+            "Editorial": "Fondo de Cultura Económica"
           }
         ]
       },
@@ -433,7 +415,44 @@
             "Título": "Fondecyt Regular 1080109 - On the Quality and Composition of a Nation’s Exports",
             "Fuente de financiamiento": "Agencia Nacional de Investigación y Desarrollo (ANID) – FONDECYT Regular",
             "Año de adjudicación": "2008",
-            "Período de ejecución": "2008 – 2009"
+            "Período de ejecución": "2008 – 2009",
+            "Rol en el proyecto": "Investigador Responsable (PI)"
+          }
+        ]
+      },
+      "tesis_magister_guia": {
+        "headers": [
+          "N°",
+          "Año",
+          "Autor",
+          "Título de la tesis",
+          "Nombre del programa",
+          "Institución"
+        ],
+        "filas": [
+          {
+            "N°": "1",
+            "Año": "2024",
+            "Autor": "Francisco Gerardo Ignacio Gonzalez Cousiño",
+            "Título de la tesis": "Análisis del RMLB y su Influencia en el Financiamiento Hipotecario: Propuesta para una Nueva Normativa",
+            "Nombre del programa": "Magíster en Economía",
+            "Institución": "Universidad de los Andes"
+          },
+          {
+            "N°": "2",
+            "Año": "2024",
+            "Autor": "Ignacio Frixone Naranjo",
+            "Título de la tesis": "Los efectos del Quantitative Easing realizados por la FED durante la Crisis Subprime y durante la Crisis del Covid-19 en Chile",
+            "Nombre del programa": "Magíster en Economía",
+            "Institución": "Universidad de los Andes"
+          },
+          {
+            "N°": "3",
+            "Año": "2025",
+            "Autor": "Valeria Muñoz Barrios",
+            "Título de la tesis": "El Potencial Rol Procíclico de las AFP en Chile en Períodos de Incertidumbre",
+            "Nombre del programa": "Magíster en Economía",
+            "Institución": "Universidad de los Andes"
           }
         ]
       }
@@ -702,7 +721,7 @@
           {
             "N°": "2",
             "Título": "Leadership emergence in multinational teams",
-            "Fuente de financiamiento": "FONDECYT de Iniciación",
+            "Fuente de financiamiento": "Agencia Nacional de Investigación y Desarrollo (ANID) FONDECYT de Iniciación",
             "Año de adjudicación": "2026",
             "Período de ejecución": "2026–2029",
             "Rol en el proyecto": "Investigador Responsable (PI)"
@@ -726,7 +745,7 @@
           {
             "N°": "4",
             "Título": "IESEG’s Research Excellence Grant (REG)",
-            "Fuente de financiamiento": "IESEG",
+            "Fuente de financiamiento": "IESEG, France",
             "Año de adjudicación": "2022",
             "Período de ejecución": "2022–2027",
             "Rol en el proyecto": "Investigador Responsable (PI)"
@@ -736,16 +755,15 @@
       "tesis_doctorado_guia": {
         "headers": [
           "N°",
-          "Año",
           "Autor",
-          "Nombre de la Tesis",
-          "Programa",
-          "Universidad"
+          "Año",
+          "Título de la Tesis",
+          "Nombre del programa",
+          "Institución"
         ],
         "filas": [
           {
             "N°": "1",
-            "Calidad": "Profesor Guía",
             "Autor": "Pablo Slutzky",
             "Año": "2017",
             "Título de la Tesis": "Essays in Empirical Corporate Finance",
@@ -767,7 +785,8 @@
           "Nombre revista",
           "Estado",
           "ISSN",
-          "Factor de impacto"
+          "Factor de impacto",
+          "Link de verificación electrónica"
         ],
         "filas": [
           {
@@ -778,7 +797,8 @@
             "Nombre revista": "Journal of Banking and Finance",
             "Estado": "Publicado",
             "ISSN": "0378-4266",
-            "Factor de impacto": "3.9*"
+            "Factor de impacto": "3,8 JIF",
+            "Link de verificación electrónica": "https://www.sciencedirect.com/journal/journal-of-banking-and-finance"
           },
           {
             "N°": "2",
@@ -788,7 +808,8 @@
             "Nombre revista": "Review of Development Economics",
             "Estado": "Publicado",
             "ISSN": "1363-6669",
-            "Factor de impacto": "2.3"
+            "Factor de impacto": "2,0 JIF",
+            "Link de verificación electrónica": "https://onlinelibrary.wiley.com/journal/14679361"
           },
           {
             "N°": "3",
@@ -798,7 +819,8 @@
             "Nombre revista": "Review of Finance",
             "Estado": "Publicado",
             "ISSN": "1572-3097",
-            "Factor de impacto": "8.4"
+            "Factor de impacto": "8,4 JIF",
+            "Link de verificación electrónica": "https://link.springer.com/journal/11127"
           },
           {
             "N°": "4",
@@ -808,7 +830,8 @@
             "Nombre revista": "Games and Economic Behavior",
             "Estado": "Publicado",
             "ISSN": "0899-8256",
-            "Factor de impacto": "1.6"
+            "Factor de impacto": "1,6 JIF",
+            "Link de verificación electrónica": "https://www.sciencedirect.com/journal/games-and-economic-behavior"
           },
           {
             "N°": "5",
@@ -818,7 +841,8 @@
             "Nombre revista": "Journal of Public Economic Theory",
             "Estado": "Publicado",
             "ISSN": "1097-3923",
-            "Factor de impacto": "1.0"
+            "Factor de impacto": "1,0 JIF",
+            "Link de verificación electrónica": "https://onlinelibrary.wiley.com/journal/10991258"
           },
           {
             "N°": "6",
@@ -828,7 +852,8 @@
             "Nombre revista": "Economic Theory",
             "Estado": "Publicado",
             "ISSN": "0938-2259",
-            "Factor de impacto": "1.1"
+            "Factor de impacto": "1,1 JIF",
+            "Link de verificación electrónica": "https://link.springer.com/journal/938"
           },
           {
             "N°": "7",
@@ -838,7 +863,8 @@
             "Nombre revista": "Journal of Mathematical Economics",
             "Estado": "Publicado",
             "ISSN": "0304-4068",
-            "Factor de impacto": "0.7"
+            "Factor de impacto": "0,7 JIF",
+            "Link de verificación electrónica": "https://www.sciencedirect.com/journal/journal-of-development-economics"
           },
           {
             "N°": "8",
@@ -848,7 +874,8 @@
             "Nombre revista": "Journal of Economic Theory",
             "Estado": "Publicado",
             "ISSN": "0022-0531",
-            "Factor de impacto": "1.2"
+            "Factor de impacto": "1,2 JIF",
+            "Link de verificación electrónica": "https://academic.oup.com/jeea"
           },
           {
             "N°": "9",
@@ -858,7 +885,8 @@
             "Nombre revista": "Análise Econômica",
             "Estado": "Publicado",
             "ISSN": "0102-2148",
-            "Factor de impacto": "0.18 (SJR)"
+            "Factor de impacto": "0.18 SJR",
+            "Link de verificación electrónica": "https://www.scimagojr.com/journalsearch.php?q=21100223806&tip=sid"
           }
         ]
       },
@@ -1692,7 +1720,6 @@
     "secciones": {
       "publicaciones_indexadas": {
         "headers": [
-          "Publicaciones Indexadas",
           "N°",
           "Autor(es)",
           "Año",
@@ -1700,63 +1727,64 @@
           "Nombre revista",
           "Estado",
           "ISSN",
-          "Factor de impacto"
+          "Factor de impacto",
+          "Link de verificación electrónico"
         ],
         "filas": [
           {
             "N°": "1",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Glennon, B.; Morales, F.; Carnahan, S.; Hernández, E.",
             "Año": "2025",
             "Título de la publicación": "Does Employing Skilled Immigrants Enhance Competitive Performance? Evidence from European Football Clubs",
             "Nombre revista": "Management Science",
             "Estado": "Publicado",
             "ISSN": "0025-1909",
-            "Factor de impacto": "4,8*"
+            "Factor de impacto": "4,8*",
+            "Link de verificación electrónico": "https://pubsonline.informs.org/journal/mnsc"
           },
           {
             "N°": "2",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Andrighetto, G.; Szekely, A.; Guido, A.; Gelfand, M.; Abernathy, J.; Arikan, G.; Aycan, Z.; Bankar, S.; Barrera, D.; Basnight-Brown, D.; Belaus, A.; Berezina, E.; Blumen, S.; Boski, P.; Bui, H. T. T.; Cárdenas, J. C.; Čekrlija, Đ.; de Barra, M.; de Zoysa, P.; Dorrough, A.; et al.",
             "Año": "2024",
             "Título de la publicación": "Changes in social norms during the early stages of the COVID-19 pandemic across 43 countries",
             "Nombre revista": "Nature Communications",
             "Estado": "Publicado",
             "ISSN": "2041-1723",
-            "Factor de impacto": "1900-01-14 16:48:00"
+            "Factor de impacto": "1900-01-14 16:48:00",
+            "Link de verificación electrónico": "https://journals.sagepub.com/home/joc"
           },
           {
             "N°": "3",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Mingo, S.; Ciravegna, L.; Morales, F.",
             "Año": "2024",
             "Título de la publicación": "The impact of experience on the agglomeration of cross-border investments within a region: the case of private equity in emerging markets",
             "Nombre revista": "International Business Review",
             "Estado": "Publicado",
             "ISSN": "0969-5931",
-            "Factor de impacto": "1900-01-08 04:48:00"
+            "Factor de impacto": "1900-01-08 04:48:00",
+            "Link de verificación electrónico": "https://www.journals.elsevier.com/international-business-review"
           },
           {
             "N°": "4",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Mingo, S.; Junkunc, M.; Morales, F.",
             "Año": "2018",
             "Título de la publicación": "The interplay between home and host country institutions in an emerging market context: Private equity in Latin America",
             "Nombre revista": "Journal of World Business",
             "Estado": "Publicado",
             "ISSN": "1090-9516",
-            "Factor de impacto": "5.7"
+            "Factor de impacto": "5.7",
+            "Link de verificación electrónico": "https://www.sciencedirect.com/journal/journal-of-world-business"
           },
           {
             "N°": "5",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Mingo, S.; Morales, F.; Dau, L. A.",
             "Año": "2018",
             "Título de la publicación": "The interplay of national distances and regional networks: Private equity investments in emerging markets",
             "Nombre revista": "Journal of International Business Studies",
             "Estado": "Publicado",
             "ISSN": "0047-2506",
-            "Factor de impacto": "7.7"
+            "Factor de impacto": "7.7",
+            "Link de verificación electrónico": "https://link.springer.com/journal/41267"
           }
         ]
       },
@@ -1788,47 +1816,101 @@
           "Año",
           "Título de la publicación",
           "Lugar",
-          "Editorial",
-          "Estado"
+          "Editorial"
         ],
         "filas": [
           {
-            "N°": "1",
             "Capítulo de libro con referato externo": "N/D",
+            "N°": "1",
             "Autor(es)": "Jasa, N., Ta, A., & Morales, F. ",
             "Año": "2026",
             "Título de la publicación": "The Evolution and Impact of Data Analytics and Artificial Intelligence Use in Sports. En M. Fathi (Ed.), Handbook of AI-Driven Sports Analytics.",
             "Lugar": "Berlin",
-            "Editorial": "Springer Nature",
-            "Estado": "Capítulo"
+            "Editorial": "Springer Nature"
           },
           {
-            "N°": "2",
             "Capítulo de libro con referato externo": "N/D",
+            "N°": "2",
             "Autor(es)": "Zhang, K.; Reuer, J. J.; Morales, F.",
             "Año": "2020",
             "Título de la publicación": "Attracting knowledge workers to high-tech ventures: a signaling perspective on employee mobility",
             "Lugar": "Cheltenham, Reino Unido / Northampton, Estados Unidos",
-            "Editorial": "Edward Elgar Publishing Ltd.",
-            "Estado": "Capítulo"
+            "Editorial": "Edward Elgar Publishing Ltd."
           }
         ]
       },
       "tesis_magister_guia": {
         "headers": [
           "N°",
-          "Año",
+          "Rol",
           "Autor",
-          "Nombre de la Tesis",
-          "Programa",
-          "Universidad"
+          "Año",
+          "Título",
+          "Nombre del programa",
+          "Institución"
         ],
         "filas": [
           {
             "N°": "1",
-            "Tesis de Magister Dirigidas": "N/D",
-            "Número": "1",
-            "Calidad (guía o co-guía)": "Co-guía",
+            "Rol": "Guía",
+            "Autor": "Richard Abraham Ortúzar Neira",
+            "Año": "2022",
+            "Título": "Bienestar Subjetivo: Un Enfoque de la Economía en torno al Modelo Residencial del Servicio Nacional de Menores de Chile.",
+            "Nombre del programa": "Magíster en Empresa y Tecnología (MEET)",
+            "Institución": "Universidad Diego Portales"
+          },
+          {
+            "N°": "2",
+            "Rol": "Guía",
+            "Autor": "Patricio Salas",
+            "Año": "2022",
+            "Título": "Colaboración interna: lidiar con la ausencia de un integrante en una organización",
+            "Nombre del programa": "Ingeniero Comercial y Magíster de continuidad en Negocios Digitales",
+            "Institución": "Universidad Diego Portales"
+          },
+          {
+            "N°": "3",
+            "Rol": "Guía",
+            "Autor": "Catalina Campos Hernández",
+            "Año": "2021",
+            "Título": "Novelty as the Main Characteristic in Venture Capital Firm Investments",
+            "Nombre del programa": "Magíster en Empresa y Tecnología (MEET)",
+            "Institución": "Universidad Diego Portales"
+          },
+          {
+            "N°": "4",
+            "Rol": "Guía",
+            "Autor": "José Ignacio Malbrán Bastías",
+            "Año": "2021",
+            "Título": "Violencia en los estadios",
+            "Nombre del programa": "Magíster en Políticas Públicas (MPP)",
+            "Institución": "Universidad Diego Portales"
+          },
+          {
+            "N°": "5",
+            "Rol": "Guía",
+            "Autor": "Hugo Vallejos Silva",
+            "Año": "2020",
+            "Título": "Ley de Financiamiento Urbano Compartido: análisis y propuesta de modificaciones en el contexto comunal de Estación Central",
+            "Nombre del programa": "Magíster en Políticas Públicas (MPP)",
+            "Institución": "Universidad Diego Portales"
+          }
+        ]
+      },
+      "tesis_magister_coguia": {
+        "headers": [
+          "N°",
+          "Rol",
+          "Autor",
+          "Año",
+          "Título",
+          "Nombre del programa",
+          "Institución"
+        ],
+        "filas": [
+          {
+            "N°": "1",
+            "Rol": "Co-guía",
             "Autor": "José Ignacio Roa Palma",
             "Año": "2025",
             "Título": "Plataforma Informativa sobre el Impacto de la IA en el Mercado Laboral Chileno",
@@ -1837,9 +1919,7 @@
           },
           {
             "N°": "2",
-            "Tesis de Magister Dirigidas": "N/D",
-            "Número": "2",
-            "Calidad (guía o co-guía)": "Co-guía",
+            "Rol": "Co-guía",
             "Autor": "Agustín Domínguez Amenábar",
             "Año": "2025",
             "Título": "Plataforma Informativa sobre el Impacto de la IA en el Mercado Laboral Chileno",
@@ -1848,69 +1928,12 @@
           },
           {
             "N°": "3",
-            "Tesis de Magister Dirigidas": "N/D",
-            "Número": "3",
-            "Calidad (guía o co-guía)": "Guía",
-            "Autor": "Richard Abraham Ortúzar Neira",
-            "Año": "2022",
-            "Título": "Bienestar Subjetivo: Un Enfoque de la Economía en torno al Modelo Residencial del Servicio Nacional de Menores de Chile.",
-            "Nombre del programa": "Magíster en Empresa y Tecnología (MEET)",
-            "Institución": "Universidad Diego Portales"
-          },
-          {
-            "N°": "4",
-            "Tesis de Magister Dirigidas": "N/D",
-            "Número": "4",
-            "Calidad (guía o co-guía)": "Guía",
-            "Autor": "Patricio Salas",
-            "Año": "2022",
-            "Título": "Colaboración interna: lidiar con la ausencia de un integrante en una organización",
-            "Nombre del programa": "Ingeniero Comercial y Magíster de continuidad en Negocios Digitales",
-            "Institución": "Universidad Diego Portales"
-          },
-          {
-            "N°": "5",
-            "Tesis de Magister Dirigidas": "N/D",
-            "Número": "5",
-            "Calidad (guía o co-guía)": "Guía",
-            "Autor": "Catalina Campos Hernández",
-            "Año": "2021",
-            "Título": "Novelty as the Main Characteristic in Venture Capital Firm Investments",
-            "Nombre del programa": "Magíster en Empresa y Tecnología (MEET)",
-            "Institución": "Universidad Diego Portales"
-          },
-          {
-            "N°": "6",
-            "Tesis de Magister Dirigidas": "N/D",
-            "Número": "6",
-            "Calidad (guía o co-guía)": "Guía",
-            "Autor": "José Ignacio Malbrán Bastías",
-            "Año": "2021",
-            "Título": "Violencia en los estadios",
-            "Nombre del programa": "Magíster en Políticas Públicas (MPP)",
-            "Institución": "Universidad Diego Portales"
-          },
-          {
-            "N°": "7",
-            "Tesis de Magister Dirigidas": "N/D",
-            "Número": "7",
-            "Calidad (guía o co-guía)": "Co-guía",
+            "Rol": "Co-guía",
             "Autor": "Roxana González",
             "Año": "2021",
             "Título": "Top Management Team Diversity and Investments' Distance",
             "Nombre del programa": "Magíster en Management",
             "Institución": "Universidad Adolfo Ibáñez"
-          },
-          {
-            "N°": "8",
-            "Tesis de Magister Dirigidas": "N/D",
-            "Número": "8",
-            "Calidad (guía o co-guía)": "Guía",
-            "Autor": "Hugo Vallejos Silva",
-            "Año": "2020",
-            "Título": "Ley de Financiamiento Urbano Compartido: análisis y propuesta de modificaciones en el contexto comunal de Estación Central",
-            "Nombre del programa": "Magíster en Políticas Públicas (MPP)",
-            "Institución": "Universidad Diego Portales"
           }
         ]
       }
@@ -1920,8 +1943,6 @@
     "secciones": {
       "publicaciones_indexadas": {
         "headers": [
-          "Publicaciones Indexadas",
-          "N°",
           "Autor(es)",
           "Año",
           "Título de la publicación",
@@ -1932,8 +1953,6 @@
         ],
         "filas": [
           {
-            "N°": "1",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Gargano, A.; Sotes-Paladino, J.; Verwijmeren, P.",
             "Año": "2025",
             "Título de la publicación": "Short of capital: Stock Market Implications of Short Sellers’ Losses",
@@ -1943,8 +1962,6 @@
             "Factor de impacto": "4,9 JIF"
           },
           {
-            "N°": "2",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Lim, B.; Sotes-Paladino, J.; Wang, G. J.; Yao, Y.",
             "Año": "2024",
             "Título de la publicación": "The Value of Growth: Changes in Profitability and Future Stock Returns",
@@ -1954,8 +1971,6 @@
             "Factor de impacto": "3,9 JIF"
           },
           {
-            "N°": "3",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Sotes-Paladino, J.; Zapatero, F.",
             "Año": "2022",
             "Título de la publicación": "Carrot and Stick: A Role for Benchmark-Adjusted Compensation in Active Fund Management",
@@ -1965,8 +1980,6 @@
             "Factor de impacto": "5,2 JIF"
           },
           {
-            "N°": "4",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Gargano, A.; Sotes-Paladino, J.; Verwijmeren, P.",
             "Año": "2023",
             "Título de la publicación": "Out of Sync: Dispersed Short Selling and the Correction of Mispricing",
@@ -1976,8 +1989,6 @@
             "Factor de impacto": "5,5 JIF"
           },
           {
-            "N°": "5",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Sotes-Paladino, J.; Zapatero, F.",
             "Año": "2019",
             "Título de la publicación": "Riding the Bubble with Convex Incentives",
@@ -1987,8 +1998,6 @@
             "Factor de impacto": "5,8 JIF"
           },
           {
-            "N°": "6",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Goncalves-Pinto, L.; Sotes-Paladino, J.; Xu, J.",
             "Año": "2018",
             "Título de la publicación": "The Invisible Hand of Internal Markets in Mutual Fund Families",
@@ -1998,8 +2007,6 @@
             "Factor de impacto": "4,1 JIF"
           },
           {
-            "N°": "7",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Brown, S. J.; Sotes-Paladino, J.; Wang, J.; Yao, Y.",
             "Año": "2017",
             "Título de la publicación": "Starting on the Wrong Foot: Seasonality in Mutual Fund Performance",
@@ -2029,7 +2036,7 @@
             "Año": "2025",
             "Título de la publicación": "A Battle of Wills: The Joint Impact of Sentiment and Benchmarking on Volatility and Mispricing",
             "Nombre revista": "N/A",
-            "Estado": "Working paper",
+            "Estado": "En Preparación",
             "ISSN": "N/A"
           },
           {
@@ -2049,7 +2056,7 @@
             "Año": "2021",
             "Título de la publicación": "Double Bonus? Implicit Incentives for Money Managers with Explicit Incentives",
             "Nombre revista": "N/A",
-            "Estado": "Working paper",
+            "Estado": "En Preparación",
             "ISSN": "N/A"
           },
           {
@@ -2059,7 +2066,7 @@
             "Año": "S/I",
             "Título de la publicación": "Optimal Trading in Correlated Anomalies",
             "Nombre revista": "N/A",
-            "Estado": "Working paper",
+            "Estado": "En Preparación",
             "ISSN": "N/A"
           },
           {
@@ -2069,7 +2076,7 @@
             "Año": "S/I",
             "Título de la publicación": "(Dis)Incentive Effects of Fund Flows in Money Management",
             "Nombre revista": "N/A",
-            "Estado": "Working paper",
+            "Estado": "En Preparación",
             "ISSN": "N/A"
           }
         ]
@@ -2110,21 +2117,26 @@
           "N°",
           "Año",
           "Autor",
-          "Nombre de la Tesis",
-          "Programa",
-          "Universidad"
+          "Título de la tesis",
+          "Nombre del programa",
+          "Institución"
         ],
         "filas": [
           {
             "N°": "1",
-            "Tesis de Doctorado dirigidas y finalizadas": "N/D",
-            "1": "2",
-            "Profesor Co-Guía": "Profesor Co-Guía",
-            "2016": "2018",
-            "Yiqing Zu": "Bowei Li",
-            "The role of mutual funds in the real economy": "Sample selection bias, return moments, and the performance of optimal versus naive diversification",
-            "PhD Finance": "PhD Finance",
-            "University of Melbourne": "University of Melbourne"
+            "Año": "2016",
+            "Autor": "Yiqing Zu",
+            "Título de la tesis": "The role of mutual funds in the real economy",
+            "Nombre del programa": "PhD Finance",
+            "Institución": "University of Melbourne"
+          },
+          {
+            "N°": "2",
+            "Año": "2018",
+            "Autor": "Bowei Li",
+            "Título de la tesis": "Sample selection bias, return moments, and the performance of optimal versus naive diversification",
+            "Nombre del programa": "PhD Finance",
+            "Institución": "University of Melbourne"
           }
         ]
       }
@@ -2134,60 +2146,56 @@
     "secciones": {
       "publicaciones_indexadas": {
         "headers": [
-          "Publicaciones Indexadas",
-          "N°",
           "Autor(es)",
           "Año",
           "Título de la publicación",
           "Nombre revista",
           "Estado",
           "ISSN",
-          "Factor de impacto"
+          "Factor de impacto",
+          "Link de verificación",
+          "Link de verificación"
         ],
         "filas": [
           {
-            "N°": "1",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Ma, Z.; Riquelme, N.",
             "Año": "2026",
             "Título de la publicación": "Competitive limit of competing auctions",
             "Nombre revista": "Games and Economic Behavior",
             "Estado": "Publicado",
             "ISSN": "0899-8256",
-            "Factor de impacto": "~1,8*"
+            "Factor de impacto": "1,8 JIF",
+            "Link de verificación": "https://www.sciencedirect.com/journal/games-and-economic-behavior"
           },
           {
-            "N°": "2",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Awad, E.; Judd, G.; Riquelme, N.",
             "Año": "2025",
             "Título de la publicación": "Learning by lobbying",
             "Nombre revista": "American Journal of Political Science",
             "Estado": "Publicado",
             "ISSN": "0092-5853",
-            "Factor de impacto": "~4,3*"
+            "Factor de impacto": "4,3 JIF",
+            "Link de verificación": "https://www.cambridge.org/core/journals/american-journal-of-political-science"
           },
           {
-            "N°": "3",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Do, J.; Riquelme, N.",
             "Año": "2024",
             "Título de la publicación": "Information exchange through secret vertical contracts",
             "Nombre revista": "Economic Theory",
             "Estado": "Publicado",
             "ISSN": "0938-2259",
-            "Factor de impacto": "~1,6"
+            "Factor de impacto": "1,6 JIF",
+            "Link de verificación": "https://www.sciencedirect.com/journal/economic-theory"
           },
           {
-            "N°": "4",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Awad, E.; Riquelme, N.",
             "Año": "2024",
             "Título de la publicación": "International Cooperation, Information Transmission, and Delegation",
             "Nombre revista": "Quarterly Journal of Political Science",
             "Estado": "Publicado",
             "ISSN": "1554-0626",
-            "Factor de impacto": "~1,5"
+            "Factor de impacto": "1,5 JIF",
+            "Link de verificación": "https://www.cambridge.org/core/journals/quarterly-journal-of-political-science"
           }
         ]
       },
@@ -2238,6 +2246,50 @@
             "Rol en el proyecto": "Investigador Responsable (PI)"
           }
         ]
+      },
+      "tesis_magister_guia": {
+        "headers": [
+          "N°",
+          "Año",
+          "Autor",
+          "Título de la tesis",
+          "Nombre del programa",
+          "Institución"
+        ],
+        "filas": [
+          {
+            "N°": "1",
+            "Año": "2025",
+            "Autor": "Maria Ignacia Calderon Arancibia",
+            "Título de la tesis": "Diseño óptimo de Delación Compensada",
+            "Nombre del programa": "Magíster en Economía",
+            "Institución": "Universidad de los Andes"
+          },
+          {
+            "N°": "2",
+            "Año": "2025",
+            "Autor": "Joaquin Andres Valle Ramirez",
+            "Título de la tesis": "La importancia de los Activos Intangibles en el Ciclo de Vida de las Empresas",
+            "Nombre del programa": "Magíster en Economía",
+            "Institución": "Universidad de los Andes"
+          },
+          {
+            "N°": "3",
+            "Año": "2023",
+            "Autor": "Pablo Felipe Quezada O Connor",
+            "Título de la tesis": "Incentives or Enforcement? How to make countries work together for the climate change",
+            "Nombre del programa": "Magíster en Economía",
+            "Institución": "Universidad de los Andes"
+          },
+          {
+            "N°": "4",
+            "Año": "2021",
+            "Autor": "Patricio Antonio Romero Villalobos",
+            "Título de la tesis": "Compatibility effects in technologies and prices",
+            "Nombre del programa": "Magíster en Economía",
+            "Institución": "Universidad de los Andes"
+          }
+        ]
       }
     }
   },
@@ -2245,7 +2297,6 @@
     "secciones": {
       "publicaciones_indexadas": {
         "headers": [
-          "Publicaciones Indexadas",
           "N°",
           "Autor(es)",
           "Año",
@@ -2258,7 +2309,6 @@
         "filas": [
           {
             "N°": "1",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Jorge Alé-Chilet, Cuicui Chen, Jing Li, and Mathias Reynaert",
             "Año": "2026",
             "Título de la publicación": "Colluding against Environmental Regulation",
@@ -2269,7 +2319,6 @@
           },
           {
             "N°": "2",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Jorge Alé-Chilet and Sarah Moshary",
             "Año": "2022",
             "Título de la publicación": "Beyond Consumer Switching: Supply Responses to Food Packaging & Advertising Regulations",
@@ -2280,7 +2329,6 @@
           },
           {
             "N°": "3",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Alé-Chilet, J.; Atal, J. P.",
             "Año": "2020",
             "Título de la publicación": "Countervailing Market Power and Consumer Surplus: An Empirical Examination",
@@ -2291,7 +2339,6 @@
           },
           {
             "N°": "4",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Alé-Chilet, J.; Atal, J. P.",
             "Año": "2020",
             "Título de la publicación": "Trade associations and collusion among many agents: evidence from physicians",
@@ -2304,7 +2351,6 @@
       },
       "publicaciones_no_indexadas": {
         "headers": [
-          "Publicaciones No Indexadas",
           "N°",
           "Autor(es)",
           "Año",
@@ -2316,7 +2362,6 @@
         "filas": [
           {
             "N°": "1",
-            "Publicaciones No Indexadas": "N/D",
             "Autor(es)": "Jorge Alé Chilet, Cuicui Chen, Yusan Lin",
             "Año": "2016",
             "Título de la publicación": "Analyzing Social Media Marketing in the High-End Fashion Industry Using Named Entity Recognition",
@@ -2326,7 +2371,6 @@
           },
           {
             "N°": "2",
-            "Publicaciones No Indexadas": "N/D",
             "Autor(es)": "Jorge Alé-Chilet, Juan Pablo Atal, Naomi Friedman-Sokuler, and Hannah Trachtman",
             "Año": "S/I",
             "Título de la publicación": "Treating Surgeons: Evidence from a Field Experiment Working Papers on Cost Containment",
@@ -2336,7 +2380,6 @@
           },
           {
             "N°": "3",
-            "Publicaciones No Indexadas": "N/D",
             "Autor(es)": "Jorge Alé-Chilet, Juan Pablo Atal, Alejandra Benítez, and Martín González-Cabello",
             "Año": "S/I",
             "Título de la publicación": "The Impact of Recommendation Systems on Experts: Evidence from Physicians",
@@ -2346,7 +2389,6 @@
           },
           {
             "N°": "4",
-            "Publicaciones No Indexadas": "N/D",
             "Autor(es)": "Jorge Alé-Chilet and Pablo Varas",
             "Año": "S/I",
             "Título de la publicación": "Physician Experience and Learning by Doing in a New Hospital",
@@ -2356,7 +2398,6 @@
           },
           {
             "N°": "5",
-            "Publicaciones No Indexadas": "N/D",
             "Autor(es)": "Jorge Alé-Chilet, Juan Pablo Atal and Patricio Domínguez",
             "Año": "2020",
             "Título de la publicación": "Activity and the incidence of emergencies: Evidence from daily data at the onset of a pandemic",
@@ -2366,7 +2407,6 @@
           },
           {
             "N°": "6",
-            "Publicaciones No Indexadas": "N/D",
             "Autor(es)": "Jorge Alé Chilet",
             "Año": "S/I",
             "Título de la publicación": "Gradually Rebuilding a Relationship: The Emergence of Collusion in Retail Pharmacies in Chile",
@@ -2378,7 +2418,6 @@
       },
       "proyectos": {
         "headers": [
-          "Listado de proyectos de investigación en los últimos 10 años",
           "N°",
           "Título",
           "Fuente de financiamiento",
@@ -2389,7 +2428,6 @@
         "filas": [
           {
             "N°": "1",
-            "Listado de proyectos de investigación en los últimos 10 años": "N/D",
             "Título": "FONDECYT Iniciación N°11230007: Market Structure and Inequality: Welfare Implications of Products Bans",
             "Fuente de financiamiento": "Agencia Nacional de Investigación y Desarrollo (ANID) – FONDECYT Iniciación",
             "Año de adjudicación": "2023",
@@ -2398,7 +2436,6 @@
           },
           {
             "N°": "2",
-            "Listado de proyectos de investigación en los últimos 10 años": "N/D",
             "Título": "Do Private Hospitals Respond to Payments? Evidence from an Anti-Patient Dumping Law (1872/21)",
             "Fuente de financiamiento": "ISF – Israel Science Foundation",
             "Año de adjudicación": "2021",
@@ -2407,7 +2444,6 @@
           },
           {
             "N°": "3",
-            "Listado de proyectos de investigación en los últimos 10 años": "N/D",
             "Título": "Market Conduct in Technology Adoption in the Automobile Industry",
             "Fuente de financiamiento": "NSF-BSF – Joint Program with National Science Foundation",
             "Año de adjudicación": "2021",
@@ -2416,7 +2452,6 @@
           },
           {
             "N°": "4",
-            "Listado de proyectos de investigación en los últimos 10 años": "N/D",
             "Título": "Information Flows in Healthcare Teams: Evidence from a Field Experiment",
             "Fuente de financiamiento": "BSF – United States–Israel Binational Science Foundation",
             "Año de adjudicación": "2021",
@@ -2431,7 +2466,6 @@
     "secciones": {
       "publicaciones_indexadas": {
         "headers": [
-          "Publicaciones Indexadas",
           "N°",
           "Autor(es)",
           "Año",
@@ -2439,52 +2473,53 @@
           "Nombre revista",
           "Estado",
           "ISSN",
-          "Factor de impacto"
+          "Factor de impacto",
+          "Link de verificación electrónica"
         ],
         "filas": [
           {
             "N°": "1",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Contreras, D.; Rodríguez, J.; Urzúa, S.",
             "Año": "2024",
             "Título de la publicación": "Is private education worth it? Evidence from school-to-work transitions in Chile",
             "Nombre revista": "Labour Economics",
             "Estado": "Publicado",
             "ISSN": "0927-5371",
-            "Factor de impacto": "1900-01-03 21:36:00"
+            "Factor de impacto": "3,1 JIF",
+            "Link de verificación electrónica": "https://www.sciencedirect.com/journal/labour-economics"
           },
           {
             "N°": "2",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Rodríguez, J.",
             "Año": "2022",
             "Título de la publicación": "Understanding the Effects of Workfare Policies on Child Human Capital",
             "Nombre revista": "Journal of Labor Economics",
             "Estado": "Publicado",
             "ISSN": "0734-306X",
-            "Factor de impacto": "1900-01-07 00:00:00"
+            "Factor de impacto": "7,1 JIF",
+            "Link de verificación electrónica": "https://www.journals.uchicago.edu/journals/jole/about"
           },
           {
             "N°": "4",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Prieto, M.; Carocca, A.; Fullerton, C.; Hidalgo, A.; Diaz, J.; San Martin, P.; Godoy, M.; Nuño, M.; De Leon, A.; Rodriguez, J.; Sanchez, R.; Batiz, F.; Castillo, A.; Cuellar-Barboza, A.; Biernacka, J.; Frye, M.",
             "Año": "2022",
             "Título de la publicación": "Clinical Correlates of Cardiac Conduction in Bipolar Disorder",
             "Nombre revista": "European Psychiatry",
             "Estado": "Publicado - Artículo Conferencia",
             "ISSN": "0924-9338",
-            "Factor de impacto": "7.8"
+            "Factor de impacto": "7,8 JIF",
+            "Link de verificación electrónica": "https://www.cambridge.org/core/journals/european-psychiatry"
           },
           {
             "N°": "3",
-            "Publicaciones Indexadas": "N/D",
             "Autor(es)": "Rodríguez, J.; Saltiel, F.; Urzúa, S.",
             "Año": "2021",
             "Título de la publicación": "Dynamic treatment effects of job training",
             "Nombre revista": "Journal of Applied Econometrics",
             "Estado": "Publicado",
             "ISSN": "0883-7252",
-            "Factor de impacto": "1900-01-04 12:00:00"
+            "Factor de impacto": "4,1 JIF",
+            "Link de verificación electrónica": "https://onlinelibrary.wiley.com/journal/10991255"
           }
         ]
       },
