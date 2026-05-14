@@ -2,6 +2,43 @@ let datosBase = {};
 let datosProduccion = {};
 let profesorActualFicha = null;
 
+// ============================================
+// FUNCIONES DE ORDEN VISUAL Y FILTRO
+// ============================================
+
+function ordenarPorAnoYRenumerar(filas, headers) {
+    if (!filas || filas.length === 0) return filas;
+    
+    // Encontrar índice de columna Año
+    const indiceAno = headers.indexOf('Año');
+    if (indiceAno === -1) return filas;
+    
+    // Crear copia y ordenar
+    const filasOrdenadas = JSON.parse(JSON.stringify(filas));
+    
+    filasOrdenadas.sort((a, b) => {
+        const anoA = parseInt(a['Año'] || 0);
+        const anoB = parseInt(b['Año'] || 0);
+        return anoB - anoA;
+    });
+    
+    // Reenumerar N°
+    filasOrdenadas.forEach((fila, idx) => {
+        fila['N°'] = String(idx + 1);
+    });
+    
+    return filasOrdenadas;
+}
+
+function filtrarDesde2020(filas) {
+    if (!filas || filas.length === 0) return filas;
+    
+    return filas.filter(fila => {
+        const ano = parseInt(fila['Año'] || 0);
+        return ano >= 2020;
+    });
+}
+
 // Cargar datos desde los JSONs
 async function cargarDatos() {
     try {
@@ -295,13 +332,17 @@ function generarModales(profesores) {
             const titulo = traducirTipo(tipo);
             const headers = seccion.headers;
             
+            // Aplicar orden visual por Año
+            const filasOrdenadas = ordenarPorAnoYRenumerar(seccion.filas, headers);
+
+            
             seccionesHTML += `
                 <div class="info-section">
                     <div class="section-title">${titulo} (${seccion.filas.length} registros)</div>
                     <div class="table-container">
                         <table>
                             <thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>
-                            <tbody>${seccion.filas.map(fila => `
+                            <tbody>${filasOrdenadas.map(fila => `
                                 <tr>${headers.map(h => `<td>${fila[h] || 'N/A'}</td>`).join('')}</tr>
                             `).join('')}</tbody>
                         </table>
@@ -995,3 +1036,257 @@ function cambiarPaginaMejorada(pagina) {
 window.cambiarPagina = cambiarPaginaMejorada;
 window.toggleMenuReporteria = toggleMenuReporteria;
 window.toggleMenuControl = toggleMenuControl;
+
+// ============================================
+// TODAS LAS TABLAS - REPORTE PERSONALIZADO
+// ============================================
+
+function toggleTodasTablas() {
+    const checkboxTodas = document.getElementById('checkbox-todas-tablas');
+    const checkboxesTablas = document.querySelectorAll('#lista-tablas input[type="checkbox"]');
+    
+    checkboxesTablas.forEach(cb => {
+        cb.checked = checkboxTodas.checked;
+    });
+    
+    actualizarFiltros();
+}
+
+// ============================================
+// DESCARGAR FICHA CNA EN EXCEL
+// ============================================
+
+function descargarFichaExcel() {
+    if (!profesorActualFicha) {
+        alert('Por favor genera la ficha primero');
+        return;
+    }
+    
+    const base = datosBase[profesorActualFicha];
+    const produccion = datosProduccion[profesorActualFicha];
+    const secciones = produccion?.secciones || {};
+    
+    const datos = [];
+    
+    // Agregar info base
+    datos.push({
+        'Sección': 'Información Personal',
+        'Campo': 'Nombre',
+        'Valor': base.nombre || 'N/D'
+    });
+    
+    datos.push({
+        'Sección': 'Información Personal',
+        'Campo': 'Vínculo',
+        'Valor': base.vinculo || 'N/D'
+    });
+    
+    datos.push({
+        'Sección': 'Información Personal',
+        'Campo': 'Título Profesional',
+        'Valor': base.titulo || 'N/D'
+    });
+    
+    datos.push({
+        'Sección': 'Información Personal',
+        'Campo': 'Grado Académico',
+        'Valor': base.grado || 'N/D'
+    });
+    
+    datos.push({
+        'Sección': 'Información Personal',
+        'Campo': 'Líneas de Investigación',
+        'Valor': base.lineas || 'N/D'
+    });
+    
+    // Agregar datos de tablas
+    const ordenSecciones = [
+        'tesis_magister_guia', 'tesis_magister_coguia',
+        'tesis_doctorado_guia', 'tesis_doctorado_coguia',
+        'publicaciones_indexadas', 'publicaciones_no_indexadas',
+        'libros', 'capitulos', 'patentes', 'proyectos'
+    ];
+    
+    const mapeoTitulos = {
+        'tesis_magister_guia': 'Tesis Magister Guia',
+        'tesis_magister_coguia': 'Tesis Magister Co-guia',
+        'tesis_doctorado_guia': 'Tesis Doctorado Guia',
+        'tesis_doctorado_coguia': 'Tesis Doctorado Co-guia',
+        'publicaciones_indexadas': 'Publicaciones Indexadas',
+        'publicaciones_no_indexadas': 'Publicaciones No Indexadas',
+        'libros': 'Libros',
+        'capitulos': 'Capitulos',
+        'patentes': 'Patentes',
+        'proyectos': 'Proyectos'
+    };
+    
+    for (const tipo of ordenSecciones) {
+        const seccion = secciones[tipo];
+        
+        if (seccion && seccion.filas && seccion.filas.length > 0) {
+            const titulo = mapeoTitulos[tipo];
+            
+            for (let i = 0; i < seccion.filas.length; i++) {
+                const fila = seccion.filas[i];
+                const headers = seccion.headers || [];
+                
+                for (let j = 0; j < headers.length; j++) {
+                    const header = headers[j];
+                    const valor = fila[header] || '';
+                    
+                    datos.push({
+                        'Sección': titulo,
+                        'Registro': `${i + 1}`,
+                        'Campo': header,
+                        'Valor': valor
+                    });
+                }
+            }
+        }
+    }
+    
+    // Crear workbook
+    const ws = XLSX.utils.json_to_sheet(datos);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Ficha CNA');
+    
+    // Ajustar columnas
+    ws['!cols'] = [
+        { wch: 30 },
+        { wch: 20 },
+        { wch: 30 },
+        { wch: 50 }
+    ];
+    
+    // Descargar
+    const nombreArchivo = `Ficha_CNA_${profesorActualFicha.replace(/\s+/g, '_')}.xlsx`;
+    XLSX.writeFile(wb, nombreArchivo);
+}
+
+// ============================================
+// ASEGURAR OVERFLOW EN REPORTE
+// ============================================
+
+// Actualizar función construirReporteDatos para mostrar TODOS los datos
+const construirReporteDatosAnterior = construirReporteDatos;
+
+function construirReporteDatos() {
+    // Recopilar todos los headers únicos
+    const headersUnicos = new Set();
+    const headersPorTabla = {};
+    
+    // Fase 1: Identificar todos los headers
+    for (const nombreProfesor of filtrosSeleccionados.profesores) {
+        const produccion = datosProduccion[nombreProfesor];
+        if (!produccion || !produccion.secciones) continue;
+        
+        for (const tipoTabla of filtrosSeleccionados.tablas) {
+            if (produccion.secciones[tipoTabla]) {
+                const headers = produccion.secciones[tipoTabla].headers || [];
+                if (!headersPorTabla[tipoTabla]) {
+                    headersPorTabla[tipoTabla] = new Set();
+                }
+                headers.forEach(h => {
+                    headersPorTabla[tipoTabla].add(h);
+                    headersUnicos.add(h);
+                });
+            }
+        }
+    }
+    
+    // Fase 2: Construir filas del reporte
+    const filasReporte = [];
+    const columnasBase = ['RUT', 'Apellido paterno', 'Apellido materno', 'Nombres', 'Nombre visual', 'Vínculo'];
+    
+    for (const nombreProfesor of filtrosSeleccionados.profesores) {
+        const base = datosBase[nombreProfesor];
+        const produccion = datosProduccion[nombreProfesor];
+        
+        if (!base || !produccion || !produccion.secciones) continue;
+        
+        for (const tipoTabla of filtrosSeleccionados.tablas) {
+            if (!produccion.secciones[tipoTabla]) continue;
+            
+            const seccion = produccion.secciones[tipoTabla];
+            const headers = seccion.headers || [];
+            const filas = seccion.filas || [];
+            
+            for (const fila of filas) {
+                const filaReporte = {
+                    'RUT': base.rut || 'N/D',
+                    'Apellido paterno': base.apellido_paterno || 'N/D',
+                    'Apellido materno': base.apellido_materno || 'N/D',
+                    'Nombres': base.nombres || 'N/D',
+                    'Nombre visual': base.nombre_visual || nombreProfesor,
+                    'Vínculo': base.vinculo || 'N/D',
+                    'Tipo de tabla': mapeoTablas[tipoTabla] || tipoTabla
+                };
+                
+                // Agregar datos de la tabla
+                for (const header of headersUnicos) {
+                    if (headers.includes(header)) {
+                        filaReporte[header] = fila[header] || '';
+                    }
+                }
+                
+                filasReporte.push(filaReporte);
+            }
+        }
+    }
+    
+    // Fase 3: Construir HTML de la tabla con TODOS los datos visibles
+    let html = `<div class="reporte-tabla-container-completo">`;
+    
+    if (filasReporte.length === 0) {
+        html += `<div class="reporte-tabla-resumida">No se encontraron registros con los filtros seleccionados</div>`;
+    } else {
+        html += `<table class="reporte-tabla">`;
+        
+        // Headers
+        html += `<thead><tr>`;
+        columnasBase.forEach(col => {
+            html += `<th>${col}</th>`;
+        });
+        html += `<th class="reporte-tabla-columna-tipo">Tipo de tabla</th>`;
+        
+        // Headers dinámicos
+        Array.from(headersUnicos).sort().forEach(header => {
+            html += `<th>${header}</th>`;
+        });
+        
+        html += `</tr></thead>`;
+        
+        // Datos - SIN TRUNCAMIENTO
+        html += `<tbody>`;
+        filasReporte.forEach(fila => {
+            html += `<tr>`;
+            columnasBase.forEach(col => {
+                const valor = fila[col] || '';
+                html += `<td style="white-space: normal; word-break: break-word;">${valor}</td>`;
+            });
+            html += `<td class="reporte-tabla-columna-tipo" style="white-space: normal; word-break: break-word;">${fila['Tipo de tabla']}</td>`;
+            
+            Array.from(headersUnicos).sort().forEach(header => {
+                const valor = fila[header] || '';
+                html += `<td style="white-space: normal; word-break: break-word;">${valor}</td>`;
+            });
+            html += `</tr>`;
+        });
+        html += `</tbody>`;
+        
+        html += `</table>`;
+    }
+    
+    html += `</div>`;
+    
+    return {
+        html: html,
+        filas: filasReporte,
+        columnasBase: columnasBase,
+        headersUnicos: Array.from(headersUnicos).sort()
+    };
+}
+
+// Hacer descargarFichaExcel disponible globalmente
+window.descargarFichaExcel = descargarFichaExcel;
+window.toggleTodasTablas = toggleTodasTablas;
