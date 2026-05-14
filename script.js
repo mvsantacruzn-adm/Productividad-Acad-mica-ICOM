@@ -1668,26 +1668,119 @@ window.descargarFichaCNAExcel = descargarFichaCNAExcel;
 console.log('✓ Función descargarFichaCNAExcel disponible globalmente');
 
 
+
 // ============================================
 // REPORTE: PROYECTOS VIGENTES DEL CLAUSTRO
 // ============================================
 
 function generarReporteProyectosVigentes() {
-    console.log('=== generarReporteProyectosVigentes INICIADO ===');
+    console.log('');
+    console.log('╔════════════════════════════════════════════════════╗');
+    console.log('║ 🔵 CLICK DETECTADO: generarReporteProyectosVigentes║');
+    console.log('╚════════════════════════════════════════════════════╝');
     
     try {
-        // Obtener proyectos vigentes
-        const proyectosVigentes = obtenerProyectosVigentes();
-        console.log(`✓ Proyectos vigentes encontrados: ${proyectosVigentes.length}`);
+        console.log('→ Paso 1: Verificar datos cargados');
+        console.log('  datosProduccion:', typeof datosProduccion !== 'undefined' ? '✓' : '❌');
+        console.log('  datosBase:', typeof datosBase !== 'undefined' ? '✓' : '❌');
+        
+        if (!datosProduccion || !datosBase) {
+            console.error('❌ Datos no cargados');
+            alert('Error: Los datos no se han cargado correctamente. Recarga la página.');
+            return;
+        }
+        
+        console.log('→ Paso 2: Obtener proyectos vigentes');
+        const proyectosVigentes = [];
+        
+        // Recorrer todos los profesores
+        for (const nombreProfesor of Object.keys(datosProduccion)) {
+            console.log(`  Procesando profesor: ${nombreProfesor}`);
+            
+            const produccion = datosProduccion[nombreProfesor];
+            const base = datosBase[nombreProfesor];
+            
+            if (!produccion || !produccion.secciones) {
+                console.log(`    ⚠ Sin secciones`);
+                continue;
+            }
+            
+            const seccionProyectos = produccion.secciones.proyectos;
+            if (!seccionProyectos || !seccionProyectos.filas) {
+                console.log(`    ⚠ Sin tabla proyectos`);
+                continue;
+            }
+            
+            const filas = seccionProyectos.filas;
+            console.log(`    Proyectos en tabla: ${filas.length}`);
+            
+            // Recorrer proyectos
+            for (let i = 0; i < filas.length; i++) {
+                const fila = filas[i];
+                const periodo = fila['Período de ejecución'] || '';
+                
+                // Verificar vigencia
+                if (!esProyectoVigente(periodo)) {
+                    console.log(`      Fila ${i}: NO vigente (${periodo})`);
+                    continue;
+                }
+                
+                console.log(`      Fila ${i}: VIGENTE (${periodo}) ✓`);
+                
+                // Clasificar
+                const titulo = fila['Título'] || '';
+                const fuente = fila['Fuente de financiamiento'] || '';
+                const clasificacion = clasificarProyecto(titulo, fuente);
+                
+                console.log(`        Clasificación: ${clasificacion}`);
+                
+                proyectosVigentes.push({
+                    profesor: base?.nombre_visual || nombreProfesor,
+                    titulo: titulo,
+                    fuente: fuente,
+                    anoAdjudicacion: fila['Año de adjudicación'] || '',
+                    periodo: periodo,
+                    rol: fila['Rol en el proyecto'] || '',
+                    clasificacion: clasificacion
+                });
+            }
+        }
+        
+        console.log(`✓ Total proyectos vigentes encontrados: ${proyectosVigentes.length}`);
         
         // Clasificar
         const internos = proyectosVigentes.filter(p => p.clasificacion === 'INTERNO');
         const externos = proyectosVigentes.filter(p => p.clasificacion === 'EXTERNO');
         
-        console.log(`✓ Internos: ${internos.length}`);
-        console.log(`✓ Externos: ${externos.length}`);
+        console.log(`✓ Clasificados:`);
+        console.log(`  - Internos: ${internos.length}`);
+        console.log(`  - Externos: ${externos.length}`);
+        
+        // Obtener elemento preview
+        const preview = document.getElementById('proyectos-vigentes-preview');
+        console.log('→ Paso 3: Buscar elemento preview');
+        console.log('  proyectos-vigentes-preview:', preview ? '✓ encontrado' : '❌ NO encontrado');
+        
+        if (!preview) {
+            console.error('❌ No encontrado elemento proyectos-vigentes-preview');
+            return;
+        }
+        
+        // Validar que existan proyectos
+        if (proyectosVigentes.length === 0) {
+            console.warn('⚠️ Sin proyectos vigentes - mostrando mensaje');
+            preview.innerHTML = `
+                <div class="preview-placeholder" style="padding: 40px; text-align: center; background: white; border-radius: 8px;">
+                    <p style="font-size: 14px; color: #666;">No se encontraron proyectos vigentes según los filtros definidos.</p>
+                </div>
+            `;
+            document.getElementById('btn-descargar-proyectos-excel').style.display = 'none';
+            console.log('✅ Mensaje "sin proyectos" mostrado');
+            return;
+        }
         
         // Generar HTML
+        console.log('→ Paso 4: Generar HTML del reporte');
         let html = `
             <div style="background: white; padding: 20px; border-radius: 8px; font-family: Arial, sans-serif; font-size: 12px; color: #333;">
                 <h1 style="font-size: 16px; font-weight: bold; margin-bottom: 20px;">Proyectos vigentes del claustro - 2026</h1>
@@ -1751,11 +1844,16 @@ function generarReporteProyectosVigentes() {
         `;
         
         // Mostrar
-        const preview = document.getElementById('proyectos-vigentes-preview');
+        console.log('→ Paso 5: Renderizar HTML');
         preview.innerHTML = html;
+        console.log('✓ HTML renderizado en preview');
         
         // Mostrar botón de descarga
-        document.getElementById('btn-descargar-proyectos-excel').style.display = 'inline-block';
+        const btnDescargar = document.getElementById('btn-descargar-proyectos-excel');
+        if (btnDescargar) {
+            btnDescargar.style.display = 'inline-block';
+            console.log('✓ Botón descarga visible');
+        }
         
         // Guardar datos para descarga
         window.datosProyectosVigentes = {
@@ -1764,58 +1862,24 @@ function generarReporteProyectosVigentes() {
             externos: externos.length,
             proyectos: proyectosVigentes
         };
+        console.log('✓ Datos guardados para descarga');
         
-        console.log('=== Reporte generado exitosamente ===');
+        console.log('');
+        console.log('╔════════════════════════════════════════════════════╗');
+        console.log('║ ✅ REPORTE GENERADO EXITOSAMENTE                  ║');
+        console.log('╚════════════════════════════════════════════════════╝');
+        console.log('');
         
     } catch (error) {
-        console.error('❌ Error:', error);
+        console.error('');
+        console.error('╔════════════════════════════════════════════════════╗');
+        console.error('║ ❌ ERROR EN REPORTE                               ║');
+        console.error('╚════════════════════════════════════════════════════╝');
+        console.error('Mensaje:', error.message);
+        console.error('Stack:', error.stack);
+        console.error('');
         alert('Error: ' + error.message);
     }
-}
-
-function obtenerProyectosVigentes() {
-    const proyectos = [];
-    
-    // Recorrer todos los profesores
-    for (const nombreProfesor of Object.keys(datosProduccion)) {
-        const produccion = datosProduccion[nombreProfesor];
-        const base = datosBase[nombreProfesor];
-        
-        if (!produccion || !produccion.secciones || !produccion.secciones.proyectos) {
-            continue;
-        }
-        
-        const seccion = produccion.secciones.proyectos;
-        const filas = seccion.filas || [];
-        const headers = seccion.headers || [];
-        
-        // Recorrer proyectos
-        for (const fila of filas) {
-            const periodo = fila['Período de ejecución'] || '';
-            
-            // Verificar vigencia
-            if (!esProyectoVigente(periodo)) {
-                continue;
-            }
-            
-            // Clasificar
-            const titulo = fila['Título'] || '';
-            const fuente = fila['Fuente de financiamiento'] || '';
-            const clasificacion = clasificarProyecto(titulo, fuente);
-            
-            proyectos.push({
-                profesor: base.nombre_visual || nombreProfesor,
-                titulo: titulo,
-                fuente: fuente,
-                anoAdjudicacion: fila['Año de adjudicación'] || '',
-                periodo: periodo,
-                rol: fila['Rol en el proyecto'] || '',
-                clasificacion: clasificacion
-            });
-        }
-    }
-    
-    return proyectos;
 }
 
 function esProyectoVigente(periodo) {
@@ -1950,5 +2014,5 @@ function descargarProyectosVigentesExcel() {
 window.generarReporteProyectosVigentes = generarReporteProyectosVigentes;
 window.descargarProyectosVigentesExcel = descargarProyectosVigentesExcel;
 
-console.log('✓ Reporte Proyectos vigentes disponible');
+console.log('✓ Funciones Proyectos vigentes disponibles globalmente');
 
