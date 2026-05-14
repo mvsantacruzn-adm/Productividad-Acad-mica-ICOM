@@ -527,3 +527,321 @@ function descargarControlPDF() {
 }
 // Cargar datos al iniciar
 cargarDatos();
+
+// ============================================
+// MENÚ EXPANDIBLE
+// ============================================
+
+function toggleSubmenu(event) {
+    const parent = event.currentTarget;
+    const submenu = parent.nextElementSibling;
+    
+    if (submenu && submenu.classList.contains('submenu')) {
+        submenu.style.display = submenu.style.display === 'none' ? 'block' : 'none';
+        parent.classList.toggle('active');
+    }
+}
+
+// ============================================
+// CORRECCIÓN Y NORMALIZACIÓN
+// ============================================
+
+function obtenerInconsistencias() {
+    const tipos_tabla = [
+        'publicaciones_indexadas',
+        'publicaciones_no_indexadas',
+        'libros',
+        'capitulos',
+        'proyectos',
+        'tesis_magister_guia',
+        'tesis_magister_coguia',
+        'tesis_doctorado_guia',
+        'tesis_doctorado_coguia',
+        'patentes'
+    ];
+    
+    let inconsistencias = [];
+    
+    for (const nombreProfesor of Object.keys(datosProduccion)) {
+        const profesor = datosProduccion[nombreProfesor];
+        const base = datosBase[nombreProfesor] || {};
+        
+        if (!profesor.secciones) continue;
+        
+        for (const tipo of tipos_tabla) {
+            if (tipo in profesor.secciones) {
+                const seccion = profesor.secciones[tipo];
+                const headers = seccion.headers || [];
+                const filas = seccion.filas || [];
+                
+                const validacion = validarHeadersNormalizados(tipo, headers);
+                
+                if (validacion.estado === 'REVISAR') {
+                    const headersOficial = headersOficiales[tipo] || [];
+                    
+                    inconsistencias.push({
+                        id: `${nombreProfesor}-${tipo}`,
+                        profesor: nombreProfesor,
+                        nombre_visual: base.nombre_visual || nombreProfesor,
+                        tipo: tipo,
+                        titulo: titulosOficiales[tipo],
+                        headers_actuales: headers,
+                        headers_esperados: headersOficial,
+                        num_columnas_actual: headers.length,
+                        num_columnas_esperado: headersOficial.length,
+                        num_registros: filas.length,
+                        problema: validacion.razon,
+                        seleccionado: false,
+                        accion: determinarAccion(tipo, headers, headersOficial)
+                    });
+                }
+            }
+        }
+    }
+    
+    return inconsistencias;
+}
+
+function determinarAccion(tipo, headersActuales, headersOficial) {
+    // Analizar qué acción se puede tomar automáticamente
+    
+    // Si faltan/sobran columnas pero los nombres son identificables
+    if (headersActuales.length !== headersOficial.length) {
+        return {
+            tipo: 'reordenar_headers',
+            descripcion: 'Normalizar headers a estructura oficial',
+            automática: false
+        };
+    }
+    
+    // Si hay headers duplicados
+    if (new Set(headersActuales).size !== headersActuales.length) {
+        return {
+            tipo: 'eliminar_duplicados',
+            descripcion: 'Eliminar headers duplicados',
+            automática: false
+        };
+    }
+    
+    // Si headers no coinciden exactamente
+    if (JSON.stringify(headersActuales) !== JSON.stringify(headersOficial)) {
+        return {
+            tipo: 'reemplazar_headers',
+            descripcion: 'Reemplazar headers por estructura oficial',
+            automática: true
+        };
+    }
+    
+    return {
+        tipo: 'revisar_manual',
+        descripcion: 'Requiere revisión manual',
+        automática: false
+    };
+}
+
+function generarNormalizacion() {
+    const container = document.getElementById('normalizacion-container');
+    const inconsistencias = obtenerInconsistencias();
+    
+    if (inconsistencias.length === 0) {
+        container.innerHTML = `
+            <div style="padding: 30px; text-align: center; color: #666;">
+                <p style="font-size: 16px; font-weight: 600; margin-bottom: 10px;">✓ Todas las tablas están normalizadas</p>
+                <p style="font-size: 12px; color: #999;">No se detectaron inconsistencias de headers.</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Resumen
+    let html = `
+        <div class="resumen-normalizacion">
+            <strong>${inconsistencias.length} inconsistencias detectadas</strong> en ${new Set(inconsistencias.map(i => i.profesor)).size} profesor(es)
+        </div>
+    `;
+    
+    // Inconsistencias
+    for (const inc of inconsistencias) {
+        html += `
+            <div class="inconsistencia-card" data-id="${inc.id}">
+                <div class="inconsistencia-header">
+                    <input type="checkbox" class="inconsistencia-checkbox" 
+                        data-id="${inc.id}"
+                        onchange="toggleInconsistencia('${inc.id}')">
+                    <div class="inconsistencia-info">
+                        <div class="inconsistencia-titulo">${inc.nombre_visual}</div>
+                        <div class="inconsistencia-meta">
+                            <strong>${inc.titulo}</strong> • ${inc.num_registros} registro(s)
+                        </div>
+                        <div class="inconsistencia-meta">
+                            Categoría interna: <code>${inc.tipo}</code>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="inconsistencia-problema">
+                    ⚠️ <strong>Problema:</strong> ${inc.problema}
+                </div>
+                
+                <div class="comparacion">
+                    <div class="comparacion-columna">
+                        <div class="comparacion-titulo">❌ Headers Actuales (${inc.num_columnas_actual})</div>
+                        <div class="headers-antes">${inc.headers_actuales.join('\n')}</div>
+                    </div>
+                    <div class="comparacion-columna">
+                        <div class="comparacion-titulo">✓ Headers Esperados (${inc.num_columnas_esperado})</div>
+                        <div class="headers-despues">${inc.headers_esperados.join('\n')}</div>
+                    </div>
+                </div>
+                
+                <div class="accion-sugerida">
+                    ✓ <strong>Acción sugerida:</strong> ${inc.accion.descripcion}
+                </div>
+            </div>
+        `;
+    }
+    
+    container.innerHTML = html;
+}
+
+function toggleInconsistencia(id) {
+    const checkbox = document.querySelector(`input[data-id="${id}"]`);
+    const inconsistencias = obtenerInconsistencias();
+    const inc = inconsistencias.find(i => i.id === id);
+    
+    if (inc) {
+        inc.seleccionado = checkbox.checked;
+    }
+}
+
+function seleccionarTodasCorrecciones() {
+    const checkboxes = document.querySelectorAll('.inconsistencia-checkbox');
+    checkboxes.forEach(cb => {
+        cb.checked = true;
+        toggleInconsistencia(cb.getAttribute('data-id'));
+    });
+}
+
+function limpiarSeleccionCorrecciones() {
+    const checkboxes = document.querySelectorAll('.inconsistencia-checkbox');
+    checkboxes.forEach(cb => {
+        cb.checked = false;
+        toggleInconsistencia(cb.getAttribute('data-id'));
+    });
+}
+
+function aplicarNormalizaciones(datosOriginal, seleccionadas) {
+    // Crear copia profunda para no modificar el original
+    const datos = JSON.parse(JSON.stringify(datosOriginal));
+    
+    for (const seleccion of seleccionadas) {
+        const [profesor, tipo] = seleccion.split('-');
+        
+        if (profesor in datos && tipo in datos[profesor].secciones) {
+            const seccion = datos[profesor].secciones[tipo];
+            const headersOficial = headersOficiales[tipo];
+            
+            if (headersOficial) {
+                // Aplicar normalización de headers
+                seccion.headers = headersOficial;
+                
+                // Reconstruir filas con headers normalizados
+                const filasActuales = seccion.filas;
+                const filasNormalizadas = [];
+                
+                for (const fila of filasActuales) {
+                    const filaNormalizada = {};
+                    
+                    // Mantener datos existentes, mapeando a nuevos headers
+                    for (const header of headersOficial) {
+                        if (header in fila) {
+                            filaNormalizada[header] = fila[header];
+                        } else {
+                            filaNormalizada[header] = 'N/D';
+                        }
+                    }
+                    
+                    filasNormalizadas.push(filaNormalizada);
+                }
+                
+                seccion.filas = filasNormalizadas;
+            }
+        }
+    }
+    
+    return datos;
+}
+
+function descargarNormalizado() {
+    const checkboxes = document.querySelectorAll('.inconsistencia-checkbox:checked');
+    
+    if (checkboxes.length === 0) {
+        alert('Selecciona al menos una corrección para aplicar');
+        return;
+    }
+    
+    const seleccionadas = Array.from(checkboxes).map(cb => cb.getAttribute('data-id'));
+    const datosNormalizados = aplicarNormalizaciones(datosProduccion, seleccionadas);
+    
+    // Convertir a JSON
+    const jsonString = JSON.stringify(datosNormalizados, null, 2);
+    const blob = new Blob([jsonString], { type: 'application/json;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'profesores-produccion-normalizado.json';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    
+    alert(`✓ Descargado: profesores-produccion-normalizado.json\n\nRecuerda reemplazar el archivo original en GitHub.`);
+}
+
+// ============================================
+// INICIALIZACIÓN MEJORADA
+// ============================================
+
+function cambiarPaginaActualizado(pagina) {
+    // Cerrar todos los submenús excepto si vamos a una página de control
+    if (!pagina.startsWith('control')) {
+        document.querySelectorAll('.submenu').forEach(menu => {
+            menu.style.display = 'none';
+            menu.previousElementSibling.classList.remove('active');
+        });
+    }
+    
+    document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.menu-item:not(.menu-parent)').forEach(el => el.classList.remove('active'));
+    document.getElementById(`page-${pagina}`).classList.add('active');
+    
+    // Marcar item activo
+    const items = document.querySelectorAll('.menu-item, .submenu-item');
+    for (const item of items) {
+        if (item.getAttribute('onclick') && item.getAttribute('onclick').includes(pagina)) {
+            item.classList.add('active');
+        }
+    }
+    
+    // Generar contenido si es necesario
+    if (pagina === 'control-validacion') {
+        generarControlEstructura();
+    } else if (pagina === 'control-normalizacion') {
+        generarNormalizacion();
+    }
+}
+
+// Sobrescribir función cambiarPagina
+const cambiarPaginaOriginal = window.cambiarPagina;
+window.cambiarPagina = function(pagina) {
+    cambiarPaginaActualizado(pagina);
+};
+
+// Actualizar inicialización
+const inicializarOriginal = window.inicializar;
+function inicializarMejorado() {
+    inicializarOriginal();
+    generarNormalizacion();
+}
+
+
