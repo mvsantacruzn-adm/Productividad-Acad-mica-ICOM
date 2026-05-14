@@ -1182,22 +1182,22 @@ function exportarCSV(datos, nombreArchivo) {
 
 
 
+
 // ============================================
-// EXPORTACIÓN EXCEL - DIAGNÓSTICO Y CORRECCIÓN
+// EXPORTACIÓN XLSX REAL - USANDO LIBRERÍA XLSX
 // ============================================
 
 function descargarFichaExcel() {
-    console.log('=== INICIO: descargarFichaExcel ===');
-    console.log('1. Botón clickeado: ✓');
+    console.log('=== descargarFichaExcel INICIADO ===');
     
-    // Validar datos
+    // Validar profesor
     if (!profesorActualFicha) {
         console.warn('❌ No hay profesor seleccionado');
         alert('Primero genera el reporte antes de descargar.');
         return;
     }
     
-    console.log('2. Profesor encontrado:', profesorActualFicha);
+    console.log('✓ Profesor:', profesorActualFicha);
     
     const base = datosBase[profesorActualFicha];
     const produccion = datosProduccion[profesorActualFicha];
@@ -1208,13 +1208,13 @@ function descargarFichaExcel() {
         return;
     }
     
-    console.log('3. Datos académicos encontrados: ✓');
+    console.log('✓ Datos encontrados');
     
     try {
         const secciones = produccion.secciones || {};
         const datos = [];
         
-        // Datos personales
+        // Información personal
         datos.push({
             'Sección': 'Información Personal',
             'Campo': 'Nombre',
@@ -1227,12 +1227,12 @@ function descargarFichaExcel() {
         });
         datos.push({
             'Sección': 'Información Personal',
-            'Campo': 'Título',
+            'Campo': 'Título Profesional',
             'Valor': base.titulo || ''
         });
         datos.push({
             'Sección': 'Información Personal',
-            'Campo': 'Grado',
+            'Campo': 'Grado Académico',
             'Valor': base.grado || ''
         });
         datos.push({
@@ -1241,27 +1241,29 @@ function descargarFichaExcel() {
             'Valor': base.lineas || ''
         });
         
-        // Datos académicos
-        for (const tipo in secciones) {
-            const sec = secciones[tipo];
-            if (!sec || !sec.filas) continue;
+        // Datos de secciones académicas
+        for (const tipoSeccion in secciones) {
+            const seccion = secciones[tipoSeccion];
+            if (!seccion || !seccion.filas) continue;
             
-            for (let i = 0; i < sec.filas.length; i++) {
-                const fila = sec.filas[i];
-                const headers = sec.headers || [];
+            console.log(`✓ Procesando: ${tipoSeccion} (${seccion.filas.length} registros)`);
+            
+            for (let i = 0; i < seccion.filas.length; i++) {
+                const fila = seccion.filas[i];
+                const headers = seccion.headers || [];
                 
                 for (const header of headers) {
                     datos.push({
-                        'Sección': tipo,
-                        'Registro': i + 1,
+                        'Sección': tipoSeccion,
+                        'Registro': String(i + 1),
                         'Campo': header,
-                        'Valor': fila[header] || ''
+                        'Valor': String(fila[header] || '')
                     });
                 }
             }
         }
         
-        console.log('4. Datos preparados:', datos.length, 'filas');
+        console.log(`✓ Total de registros: ${datos.length}`);
         
         if (datos.length === 0) {
             console.warn('❌ Sin datos para exportar');
@@ -1269,10 +1271,9 @@ function descargarFichaExcel() {
             return;
         }
         
-        // Crear y descargar
-        console.log('5. XLSX disponible:', typeof XLSX !== 'undefined');
-        crearYDescargarExcel(datos, 'ReporteVSC_FichaCNA.xlsx');
-        console.log('=== FIN: descargarFichaExcel ✓ ===');
+        // Generar XLSX
+        generarXLSXReal(datos, 'ReporteVSC_FichaCNA.xlsx');
+        console.log('=== descargarFichaExcel COMPLETADO ✓ ===');
         
     } catch (error) {
         console.error('❌ Error en descargarFichaExcel:', error);
@@ -1281,13 +1282,12 @@ function descargarFichaExcel() {
 }
 
 function descargarDatosExcel() {
-    console.log('=== INICIO: descargarDatosExcel ===');
-    console.log('1. Botón clickeado: ✓');
+    console.log('=== descargarDatosExcel INICIADO ===');
     
     try {
         const reporte = construirReporteDatos();
-        console.log('2. Reporte construido');
-        console.log('3. Filas disponibles:', reporte.filas.length);
+        
+        console.log(`✓ Reporte construido con ${reporte.filas.length} filas`);
         
         if (!reporte.filas || reporte.filas.length === 0) {
             console.warn('❌ Sin datos en reporte');
@@ -1295,9 +1295,12 @@ function descargarDatosExcel() {
             return;
         }
         
-        console.log('4. XLSX disponible:', typeof XLSX !== 'undefined');
-        crearYDescargarExcel(reporte.filas, 'ReporteVSC_Personalizado.xlsx');
-        console.log('=== FIN: descargarDatosExcel ✓ ===');
+        console.log(`✓ Columnas base: ${reporte.columnasBase.length}`);
+        console.log(`✓ Headers dinámicos: ${reporte.headersUnicos.length}`);
+        
+        // Generar XLSX
+        generarXLSXReal(reporte.filas, 'ReporteVSC_Personalizado.xlsx');
+        console.log('=== descargarDatosExcel COMPLETADO ✓ ===');
         
     } catch (error) {
         console.error('❌ Error en descargarDatosExcel:', error);
@@ -1306,12 +1309,12 @@ function descargarDatosExcel() {
 }
 
 function descargarValidacionExcel() {
-    console.log('=== INICIO: descargarValidacionExcel ===');
-    console.log('1. Botón clickeado: ✓');
+    console.log('=== descargarValidacionExcel INICIADO ===');
     
     try {
         const tablasData = obtenerDatosValidacion();
-        console.log('2. Datos de validación obtenidos:', tablasData.length, 'tablas');
+        
+        console.log(`✓ Datos de validación: ${tablasData.length} tablas`);
         
         if (!tablasData || tablasData.length === 0) {
             console.warn('❌ Sin datos de validación');
@@ -1327,10 +1330,11 @@ function descargarValidacionExcel() {
             'Registros': tabla.numRegistros
         }));
         
-        console.log('3. Datos transformados: ✓');
-        console.log('4. XLSX disponible:', typeof XLSX !== 'undefined');
-        crearYDescargarExcel(datos, 'ReporteVSC_ControlEstructura.xlsx');
-        console.log('=== FIN: descargarValidacionExcel ✓ ===');
+        console.log(`✓ Datos transformados: ${datos.length} registros`);
+        
+        // Generar XLSX
+        generarXLSXReal(datos, 'ReporteVSC_ControlEstructura.xlsx');
+        console.log('=== descargarValidacionExcel COMPLETADO ✓ ===');
         
     } catch (error) {
         console.error('❌ Error en descargarValidacionExcel:', error);
@@ -1338,110 +1342,101 @@ function descargarValidacionExcel() {
     }
 }
 
-function crearYDescargarExcel(datos, nombreArchivo) {
-    console.log('→ crearYDescargarExcel llamado:', nombreArchivo);
-    console.log('→ Datos:', datos.length, 'registros');
+function generarXLSXReal(datos, nombreArchivo) {
+    console.log('→ generarXLSXReal:', nombreArchivo);
+    console.log('→ Registros a procesar:', datos.length);
     
     if (!datos || datos.length === 0) {
-        throw new Error('No hay datos para exportar');
+        throw new Error('No hay datos para generar XLSX');
     }
     
-    // OPCIÓN 1: Intentar XLSX
-    if (typeof XLSX !== 'undefined' && XLSX.utils && XLSX.writeFile) {
-        try {
-            console.log('→ Intentando XLSX...');
-            
-            const worksheet = XLSX.utils.json_to_sheet(datos);
-            console.log('✓ Hoja de cálculo creada');
-            
-            const workbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(workbook, worksheet, 'Reporte');
-            console.log('✓ Workbook creado');
-            
-            // Ajustar ancho de columnas
-            const maxWidth = 30;
-            const colWidths = [];
-            if (datos.length > 0) {
-                const keys = Object.keys(datos[0]);
-                for (let i = 0; i < keys.length; i++) {
-                    colWidths.push({ wch: maxWidth });
-                }
-            }
-            worksheet['!cols'] = colWidths;
-            console.log('✓ Ancho de columnas ajustado');
-            
-            // Descargar
-            XLSX.writeFile(workbook, nombreArchivo);
-            console.log('✅ XLSX DESCARGADO:', nombreArchivo);
-            
-            return; // Éxito con XLSX
-            
-        } catch (errorXLSX) {
-            console.warn('⚠ XLSX falló, probando CSV:', errorXLSX.message);
-        }
-    } else {
-        console.warn('⚠ XLSX no disponible, usando CSV');
+    // Verificar XLSX disponible
+    if (typeof XLSX === 'undefined') {
+        console.error('❌ XLSX no está cargado');
+        throw new Error('Librería XLSX no disponible');
     }
     
-    // OPCIÓN 2: Respaldo CSV
+    console.log('✓ XLSX disponible');
+    
+    if (!XLSX.utils || !XLSX.utils.json_to_sheet || !XLSX.utils.book_new) {
+        console.error('❌ XLSX.utils no está completo');
+        throw new Error('XLSX.utils no disponible');
+    }
+    
+    console.log('✓ XLSX.utils completo');
+    
     try {
-        console.log('→ Intentando CSV como respaldo...');
-        descargarCSV(datos, nombreArchivo.replace('.xlsx', '.csv'));
-    } catch (errorCSV) {
-        console.error('❌ CSV también falló:', errorCSV.message);
-        throw errorCSV;
+        // 1. Crear hoja de cálculo desde JSON
+        console.log('→ Creando hoja de cálculo...');
+        const worksheet = XLSX.utils.json_to_sheet(datos);
+        console.log('✓ Hoja creada');
+        
+        // 2. Crear workbook
+        console.log('→ Creando workbook...');
+        const workbook = XLSX.utils.book_new();
+        console.log('✓ Workbook creado');
+        
+        // 3. Agregar hoja al workbook
+        console.log('→ Agregando hoja al workbook...');
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Datos');
+        console.log('✓ Hoja agregada');
+        
+        // 4. Ajustar ancho de columnas
+        console.log('→ Ajustando columnas...');
+        const anchoColumas = calcularAnchoColumnas(datos);
+        worksheet['!cols'] = anchoColumas;
+        console.log('✓ Columnas ajustadas');
+        
+        // 5. Configurar altura de filas
+        const altura = {};
+        altura[1] = 25; // Header
+        worksheet['!rows'] = altura;
+        console.log('✓ Alturas configuradas');
+        
+        // 6. Descargar
+        console.log('→ Iniciando descarga...');
+        XLSX.writeFile(workbook, nombreArchivo);
+        console.log(`✅ XLSX DESCARGADO CORRECTAMENTE: ${nombreArchivo}`);
+        
+    } catch (error) {
+        console.error('❌ Error al generar XLSX:', error);
+        throw error;
     }
 }
 
-function descargarCSV(datos, nombreArchivo) {
-    console.log('→ descargarCSV:', nombreArchivo);
-    
+function calcularAnchoColumnas(datos) {
     if (!datos || datos.length === 0) {
-        throw new Error('No hay datos para CSV');
+        return [];
     }
     
-    // Obtener headers
+    const anchos = {};
     const headers = Object.keys(datos[0]);
-    console.log('→ Headers:', headers);
     
-    // Crear CSV
-    let csvContent = headers.map(h => `"${h}"`).join(',') + '\r\n';
+    // Ancho mínimo y máximo
+    const ANCHO_MIN = 12;
+    const ANCHO_MAX = 50;
     
-    for (const fila of datos) {
-        const valores = headers.map(header => {
-            const valor = String(fila[header] || '').replace(/"/g, '""');
-            return `"${valor}"`;
-        });
-        csvContent += valores.join(',') + '\r\n';
+    for (let colIdx = 0; colIdx < headers.length; colIdx++) {
+        const header = headers[colIdx];
+        let maxLength = header.length;
+        
+        // Recorrer datos para encontrar longitud máxima
+        for (const row of datos) {
+            const valor = String(row[header] || '');
+            // Contar líneas múltiples
+            const lineas = valor.split('\n').length;
+            const longitudLinaMasLarga = Math.max(
+                ...valor.split('\n').map(l => l.length)
+            );
+            maxLength = Math.max(maxLength, longitudLinaMasLarga);
+        }
+        
+        // Aplicar límites
+        let ancho = Math.min(Math.max(maxLength + 2, ANCHO_MIN), ANCHO_MAX);
+        anchos[colIdx] = { wch: ancho };
     }
     
-    console.log('✓ CSV contenido generado,', csvContent.length, 'bytes');
-    
-    // Crear blob
-    const BOM = '\uFEFF'; // UTF-8 BOM
-    const blob = new Blob([BOM + csvContent], { type: 'text/csv;charset=utf-8;' });
-    console.log('✓ Blob creado:', blob.size, 'bytes');
-    
-    // Crear link de descarga
-    const link = document.createElement('a');
-    const url = URL.createObjectURL(blob);
-    link.setAttribute('href', url);
-    link.setAttribute('download', nombreArchivo);
-    link.style.visibility = 'hidden';
-    
-    console.log('✓ Link de descarga creado');
-    
-    // Descargar
-    document.body.appendChild(link);
-    console.log('✓ Link agregado al DOM');
-    
-    link.click();
-    console.log('✅ CSV DESCARGADO:', nombreArchivo);
-    
-    // Limpiar
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-    console.log('✓ Recursos limpiados');
+    return Object.values(anchos);
 }
 
 // ============================================
@@ -1453,14 +1448,17 @@ window.descargarDatosExcel = descargarDatosExcel;
 window.descargarValidacionExcel = descargarValidacionExcel;
 
 console.log('');
-console.log('╔════════════════════════════════════════════════╗');
-console.log('║ SISTEMA DE EXPORTACIÓN EXCEL INICIALIZADO      ║');
-console.log('║ Funciones globales disponibles:               ║');
-console.log('║ - descargarFichaExcel()                       ║');
-console.log('║ - descargarDatosExcel()                       ║');
-console.log('║ - descargarValidacionExcel()                  ║');
-console.log('║                                                ║');
-console.log('║ XLSX disponible:', (typeof XLSX !== 'undefined' ? 'SÍ ✓' : 'NO ❌'), '                   ║');
-console.log('╚════════════════════════════════════════════════╝');
+console.log('╔═══════════════════════════════════════════════════╗');
+console.log('║   SISTEMA DE EXPORTACIÓN XLSX INICIALIZADO        ║');
+console.log('╠═══════════════════════════════════════════════════╣');
+console.log('║ Funciones disponibles:                            ║');
+console.log('║  • descargarFichaExcel()                          ║');
+console.log('║  • descargarDatosExcel()                          ║');
+console.log('║  • descargarValidacionExcel()                     ║');
+console.log('╠═══════════════════════════════════════════════════╣');
+console.log('║ XLSX disponible:', (typeof XLSX !== 'undefined' ? 'SÍ ✓        ' : 'NO ❌       '), '║');
+console.log('║ XLSX.utils:', (typeof XLSX !== 'undefined' && XLSX.utils ? 'SÍ ✓       ' : 'NO ❌      '), '║');
+console.log('║ XLSX.writeFile:', (typeof XLSX !== 'undefined' && XLSX.writeFile ? 'SÍ ✓' : 'NO ❌'), '║');
+console.log('╚═══════════════════════════════════════════════════╝');
 console.log('');
 
