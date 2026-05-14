@@ -743,10 +743,14 @@ tbody tr:hover {
 
 /* SUBMENÚ REPORTERÍA */
 
-.menu-item.menu-parent {
+.menu-parent {
     cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: relative;
+}
+
+.menu-parent.active .submenu-toggle {
+    transform: rotate(180deg);
 }

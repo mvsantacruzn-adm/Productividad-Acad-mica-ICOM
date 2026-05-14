@@ -14,11 +14,11 @@
             <div class="logo">📊 Productividad<br>UANDES</div>
             <div class="menu-item active" onclick="cambiarPagina('profesores')">👥 Profesores</div>
             
-            <div class="menu-item menu-parent" onclick="toggleSubmenuReporteria(event)">
+            <div class="menu-item menu-parent" id="menu-reporteria" onclick="toggleMenuReporteria(event)">
                 📋 Reportería
                 <span class="submenu-toggle">▼</span>
             </div>
-            <div class="submenu" style="display: none;">
+            <div class="submenu" id="submenu-reporteria" style="display: none;">
                 <div class="submenu-item" onclick="cambiarPagina('reporteria-ficha-cna')">
                     📄 Ficha Académica CNA
                 </div>
@@ -27,11 +27,11 @@
                 </div>
             </div>
             
-            <div class="menu-item menu-parent menu-control" style="display: none;" onclick="toggleSubmenu(event)">
+            <div class="menu-item menu-parent menu-control" id="menu-control" style="display: none;" onclick="toggleMenuControl(event)">
                 🔧 Control
                 <span class="submenu-toggle">▼</span>
             </div>
-            <div class="submenu menu-control" style="display: none;">
+            <div class="submenu menu-control" id="submenu-control" style="display: none;">
                 <div class="submenu-item" onclick="cambiarPagina('control-validacion')">
                     📊 Validación de Headers
                 </div>

@@ -386,6 +386,27 @@ function cambiarPagina(pagina) {
 }
 
 // Cargar datos al iniciar
+// ============================================
+// FUNCIONES DE MENÚ EXPANDIBLE
+// ============================================
+
+function toggleMenuReporteria(event) {
+    event.stopPropagation();
+    const menuReporteria = document.getElementById("menu-reporteria");
+    const submenuReporteria = document.getElementById("submenu-reporteria");
+    
+    submenuReporteria.style.display = submenuReporteria.style.display === "none" ? "block" : "none";
+    menuReporteria.classList.toggle("active");
+}
+
+function toggleMenuControl(event) {
+    event.stopPropagation();
+    const menuControl = document.getElementById("menu-control");
+    const submenuControl = document.getElementById("submenu-control");
+    
+    submenuControl.style.display = submenuControl.style.display === "none" ? "block" : "none";
+    menuControl.classList.toggle("active");
+}
 cargarDatos();
 
 // ============================================
@@ -920,3 +941,57 @@ window.cambiarPagina = function(pagina) {
         generarNormalizacion();
     }
 };
+
+// ============================================
+// ACTUALIZAR FUNCIÓN CAMBIAR PÁGINA
+// ============================================
+
+// Sobrescribir para mejorar manejo de menús
+const cambiarPaginaAnteriorFunc = typeof cambiarPagina !== 'undefined' ? cambiarPagina : function() {};
+
+function cambiarPaginaMejorada(pagina) {
+    // Cerrar TODOS los submenús
+    document.querySelectorAll('.submenu').forEach(menu => {
+        menu.style.display = 'none';
+        const menuPadre = menu.previousElementSibling;
+        if (menuPadre) {
+            menuPadre.classList.remove('active');
+        }
+    });
+    
+    // Cambiar página activa
+    document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+    const pageElement = document.getElementById(`page-${pagina}`);
+    if (pageElement) {
+        pageElement.classList.add('active');
+    }
+    
+    // Actualizar items activos del menú
+    document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.submenu-item').forEach(el => el.classList.remove('active'));
+    
+    // Marcar como activo si es submenu-item
+    if (event && event.target && event.target.classList.contains('submenu-item')) {
+        event.target.classList.add('active');
+    }
+    
+    // Generar contenido dinámico si es necesario
+    if (pagina === 'reporteria-datos-profesores') {
+        if (typeof inicializarFiltrosDatosProfesores === 'function') {
+            inicializarFiltrosDatosProfesores();
+        }
+    } else if (pagina === 'control-validacion') {
+        if (typeof generarValidacion === 'function') {
+            generarValidacion();
+        }
+    } else if (pagina === 'control-normalizacion') {
+        if (typeof generarNormalizacion === 'function') {
+            generarNormalizacion();
+        }
+    }
+}
+
+// Hacer disponible globalmente
+window.cambiarPagina = cambiarPaginaMejorada;
+window.toggleMenuReporteria = toggleMenuReporteria;
+window.toggleMenuControl = toggleMenuControl;
