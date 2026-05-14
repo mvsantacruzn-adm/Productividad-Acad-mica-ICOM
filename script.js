@@ -578,32 +578,6 @@ function generarValidacion() {
     container.innerHTML = html;
 }
 
-function descargarValidacionExcel() {
-    const tablasData = obtenerDatosValidacion();
-    
-    const datos = tablasData.map(tabla => ({
-        'Profesor': tabla.nombre_visual,
-        'Categoría / Tabla': tabla.titulo,
-        'Headers Detectados': tabla.headers,
-        'Cantidad Columnas': tabla.numColumnas,
-        'Cantidad Registros': tabla.numRegistros
-    }));
-    
-    const ws = XLSX.utils.json_to_sheet(datos);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Validación Headers');
-    
-    const colWidths = [
-        { wch: 25 },  // Profesor
-        { wch: 30 },  // Categoría
-        { wch: 50 },  // Headers
-        { wch: 12 },  // Columnas
-        { wch: 12 }   // Registros
-    ];
-    ws['!cols'] = colWidths;
-    
-    XLSX.writeFile(wb, 'Validacion_Headers_UANDES.xlsx');
-}
 
 function generarNormalizacion() {
     const container = document.getElementById('normalizacion-container');
@@ -917,50 +891,6 @@ function construirReporteDatos() {
     };
 }
 
-function descargarDatosExcel() {
-    const reporte = construirReporteDatos();
-    
-    if (reporte.filas.length === 0) {
-        alert('No hay datos para descargar');
-        return;
-    }
-    
-    // Convertir a formato para Excel
-    const datos = reporte.filas.map(fila => {
-        const filaNormalizada = {};
-        
-        // Columnas base
-        reporte.columnasBase.forEach(col => {
-            filaNormalizada[col] = fila[col] || '';
-        });
-        
-        // Tipo de tabla
-        filaNormalizada['Tipo de tabla'] = fila['Tipo de tabla'];
-        
-        // Headers dinámicos
-        reporte.headersUnicos.forEach(header => {
-            filaNormalizada[header] = fila[header] || '';
-        });
-        
-        return filaNormalizada;
-    });
-    
-    // Crear workbook
-    const ws = XLSX.utils.json_to_sheet(datos);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Datos Profesores');
-    
-    // Ajustar ancho de columnas
-    const colWidths = [];
-    for (let i = 0; i < reporte.columnasBase.length + 1 + reporte.headersUnicos.length; i++) {
-        colWidths.push({ wch: 20 });
-    }
-    ws['!cols'] = colWidths;
-    
-    // Descargar
-    const nombreArchivo = `Datos_Profesores_${new Date().toISOString().split('T')[0]}.xlsx`;
-    XLSX.writeFile(wb, nombreArchivo);
-}
 
 // ============================================
 // MENÚ EXPANDIBLE REPORTERÍA
@@ -1064,9 +994,6 @@ function cambiarPaginaMejorada(pagina) {
 }
 
 // Hacer disponible globalmente
-window.cambiarPagina = cambiarPaginaMejorada;
-window.toggleMenuReporteria = toggleMenuReporteria;
-window.toggleMenuControl = toggleMenuControl;
 
 // ============================================
 // TODAS LAS TABLAS - REPORTE PERSONALIZADO
@@ -1087,119 +1014,6 @@ function toggleTodasTablas() {
 // DESCARGAR FICHA CNA EN EXCEL
 // ============================================
 
-function descargarFichaExcel() {
-    if (!profesorActualFicha) {
-        alert('Por favor genera la ficha primero');
-        return;
-    }
-    
-    const base = datosBase[profesorActualFicha];
-    const produccion = datosProduccion[profesorActualFicha];
-    const secciones = produccion?.secciones || {};
-    
-    const datos = [];
-    
-    // Agregar info base
-    datos.push({
-        'Sección': 'Información Personal',
-        'Campo': 'Nombre',
-        'Valor': base.nombre || 'N/D'
-    });
-    
-    datos.push({
-        'Sección': 'Información Personal',
-        'Campo': 'Vínculo',
-        'Valor': base.vinculo || 'N/D'
-    });
-    
-    datos.push({
-        'Sección': 'Información Personal',
-        'Campo': 'Título Profesional',
-        'Valor': base.titulo || 'N/D'
-    });
-    
-    datos.push({
-        'Sección': 'Información Personal',
-        'Campo': 'Grado Académico',
-        'Valor': base.grado || 'N/D'
-    });
-    
-    datos.push({
-        'Sección': 'Información Personal',
-        'Campo': 'Líneas de Investigación',
-        'Valor': base.lineas || 'N/D'
-    });
-    
-    // Agregar datos de tablas
-    const ordenSecciones = [
-        'tesis_magister_guia', 'tesis_magister_coguia',
-        'tesis_doctorado_guia', 'tesis_doctorado_coguia',
-        'publicaciones_indexadas', 'publicaciones_no_indexadas',
-        'libros', 'capitulos', 'patentes', 'proyectos'
-    ];
-    
-    const mapeoTitulos = {
-        'tesis_magister_guia': 'Tesis Magister Guia',
-        'tesis_magister_coguia': 'Tesis Magister Co-guia',
-        'tesis_doctorado_guia': 'Tesis Doctorado Guia',
-        'tesis_doctorado_coguia': 'Tesis Doctorado Co-guia',
-        'publicaciones_indexadas': 'Publicaciones Indexadas',
-        'publicaciones_no_indexadas': 'Publicaciones No Indexadas',
-        'libros': 'Libros',
-        'capitulos': 'Capitulos',
-        'patentes': 'Patentes',
-        'proyectos': 'Proyectos'
-    };
-    
-    for (const tipo of ordenSecciones) {
-        const seccion = secciones[tipo];
-        
-        if (seccion && seccion.filas && seccion.filas.length > 0) {
-            const titulo = mapeoTitulos[tipo];
-            
-            for (let i = 0; i < seccion.filas.length; i++) {
-                const fila = seccion.filas[i];
-                const headers = seccion.headers || [];
-                
-                for (let j = 0; j < headers.length; j++) {
-                    const header = headers[j];
-                    const valor = fila[header] || '';
-                    
-                    datos.push({
-                        'Sección': titulo,
-                        'Registro': `${i + 1}`,
-                        'Campo': header,
-                        'Valor': valor
-                    });
-                }
-            }
-        }
-    }
-    
-    // Crear workbook
-    const ws = XLSX.utils.json_to_sheet(datos);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Ficha CNA');
-    
-    // Ajustar columnas
-    ws['!cols'] = [
-        { wch: 30 },
-        { wch: 20 },
-        { wch: 30 },
-        { wch: 50 }
-    ];
-    
-    // Descargar
-    const nombreArchivo = `Ficha_CNA_${profesorActualFicha.replace(/\s+/g, '_')}.xlsx`;
-    XLSX.writeFile(wb, nombreArchivo);
-}
-
-// ============================================
-// ASEGURAR OVERFLOW EN REPORTE
-// ============================================
-
-// Actualizar función construirReporteDatos para mostrar TODOS los datos
-const construirReporteDatosAnterior = construirReporteDatos;
 
 function construirReporteDatos() {
     // Recopilar todos los headers únicos
@@ -1321,5 +1135,256 @@ function construirReporteDatos() {
 }
 
 // Hacer descargarFichaExcel disponible globalmente
+
+// ============================================
+// FUNCIÓN AUXILIAR: EXPORTAR CSV COMO RESPALDO
+// ============================================
+
+function exportarCSV(datos, nombreArchivo) {
+    if (!datos || datos.length === 0) {
+        alert('No hay datos para exportar');
+        return;
+    }
+    
+    try {
+        // Obtener headers del primer objeto
+        const headers = Object.keys(datos[0]);
+        
+        // Crear contenido CSV
+        let csvContent = headers.map(h => `"${h}"`).join(',') + '\n';
+        
+        datos.forEach(fila => {
+            const valores = headers.map(header => {
+                const valor = fila[header] || '';
+                // Escapar comillas y envolver en comillas
+                return `"${String(valor).replace(/"/g, '""')}"`;
+            });
+            csvContent += valores.join(',') + '\n';
+        });
+        
+        // Crear blob y descargar
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        
+        link.setAttribute('href', url);
+        link.setAttribute('download', nombreArchivo);
+        link.style.visibility = 'hidden';
+        
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } catch (error) {
+        console.error('Error al exportar CSV:', error);
+        alert('Error al exportar CSV: ' + error.message);
+    }
+}
+
+
+// ============================================
+// DESCARGA EXCEL - VERSIÓN SIMPLIFICADA
+// ============================================
+
+function descargarFichaExcel() {
+    if (!profesorActualFicha) {
+        alert('Por favor genera la ficha primero');
+        console.error('descargarFichaExcel: No hay profesor seleccionado');
+        return;
+    }
+    
+    try {
+        console.log('Iniciando descarga: descargarFichaExcel');
+        
+        const base = datosBase[profesorActualFicha];
+        const produccion = datosProduccion[profesorActualFicha];
+        
+        if (!base || !produccion) {
+            alert('Error: No se encontraron datos del profesor');
+            return;
+        }
+        
+        const secciones = produccion.secciones || {};
+        const filas = [];
+        
+        // Agregar datos personales
+        filas.push({
+            'Tipo': 'Información',
+            'Campo': 'Nombre',
+            'Valor': base.nombre || ''
+        });
+        filas.push({
+            'Tipo': 'Información',
+            'Campo': 'Vínculo',
+            'Valor': base.vinculo || ''
+        });
+        filas.push({
+            'Tipo': 'Información',
+            'Campo': 'Título',
+            'Valor': base.titulo || ''
+        });
+        filas.push({
+            'Tipo': 'Información',
+            'Campo': 'Grado',
+            'Valor': base.grado || ''
+        });
+        
+        // Agregar datos de secciones
+        for (const seccion_tipo in secciones) {
+            const seccion = secciones[seccion_tipo];
+            if (!seccion || !seccion.filas) continue;
+            
+            for (const fila_data of seccion.filas) {
+                for (const header in fila_data) {
+                    filas.push({
+                        'Tipo': seccion_tipo,
+                        'Campo': header,
+                        'Valor': fila_data[header] || ''
+                    });
+                }
+            }
+        }
+        
+        // Generar archivo
+        generarExcel(filas, 'ReporteVSC_FichaCNA.xlsx');
+        console.log('✅ Descarga iniciada: ReporteVSC_FichaCNA.xlsx');
+        
+    } catch (error) {
+        console.error('Error en descargarFichaExcel:', error);
+        alert('Error: ' + error.message);
+    }
+}
+
+function descargarDatosExcel() {
+    try {
+        console.log('Iniciando descarga: descargarDatosExcel');
+        
+        const reporte = construirReporteDatos();
+        
+        if (!reporte || !reporte.filas || reporte.filas.length === 0) {
+            alert('No hay datos para descargar. Selecciona profesores y tablas.');
+            return;
+        }
+        
+        generarExcel(reporte.filas, 'ReporteVSC.xlsx');
+        console.log('✅ Descarga iniciada: ReporteVSC.xlsx');
+        
+    } catch (error) {
+        console.error('Error en descargarDatosExcel:', error);
+        alert('Error: ' + error.message);
+    }
+}
+
+function descargarValidacionExcel() {
+    try {
+        console.log('Iniciando descarga: descargarValidacionExcel');
+        
+        const tablasData = obtenerDatosValidacion();
+        
+        if (!tablasData || tablasData.length === 0) {
+            alert('No hay datos para descargar');
+            return;
+        }
+        
+        const filas = tablasData.map(tabla => ({
+            'Profesor': tabla.nombre_visual,
+            'Tabla': tabla.titulo,
+            'Headers': tabla.headers,
+            'Columnas': tabla.numColumnas,
+            'Registros': tabla.numRegistros
+        }));
+        
+        generarExcel(filas, 'ReporteVSC_ControlEstructura.xlsx');
+        console.log('✅ Descarga iniciada: ReporteVSC_ControlEstructura.xlsx');
+        
+    } catch (error) {
+        console.error('Error en descargarValidacionExcel:', error);
+        alert('Error: ' + error.message);
+    }
+}
+
+function generarExcel(datos, nombreArchivo) {
+    if (!datos || datos.length === 0) {
+        throw new Error('No hay datos para exportar');
+    }
+    
+    // Intentar con XLSX si está disponible
+    if (typeof XLSX !== 'undefined') {
+        try {
+            console.log('Usando XLSX para generar:', nombreArchivo);
+            
+            const ws = XLSX.utils.json_to_sheet(datos);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Datos');
+            
+            // Ajustar ancho de columnas
+            const colWidths = [];
+            if (datos.length > 0) {
+                const keys = Object.keys(datos[0]);
+                for (let i = 0; i < keys.length; i++) {
+                    colWidths.push({ wch: 25 });
+                }
+            }
+            ws['!cols'] = colWidths;
+            
+            XLSX.writeFile(wb, nombreArchivo);
+            console.log('✅ Archivo generado con XLSX:', nombreArchivo);
+            return;
+        } catch (e) {
+            console.error('Error con XLSX, intentando CSV:', e);
+        }
+    }
+    
+    // Respaldo: CSV
+    console.log('Usando CSV como respaldo para:', nombreArchivo);
+    generarCSV(datos, nombreArchivo.replace('.xlsx', '.csv'));
+}
+
+function generarCSV(datos, nombreArchivo) {
+    if (!datos || datos.length === 0) {
+        throw new Error('No hay datos para CSV');
+    }
+    
+    try {
+        console.log('Generando CSV:', nombreArchivo);
+        
+        // Obtener headers del primer objeto
+        const headers = Object.keys(datos[0]);
+        
+        // Crear CSV
+        let csv = headers.map(h => `"${h}"`).join(',') + '\n';
+        
+        for (const fila of datos) {
+            const valores = headers.map(header => {
+                const valor = String(fila[header] || '').replace(/"/g, '""');
+                return `"${valor}"`;
+            });
+            csv += valores.join(',') + '\n';
+        }
+        
+        // Descargar
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        
+        link.href = url;
+        link.download = nombreArchivo;
+        
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        
+        console.log('✅ CSV descargado:', nombreArchivo);
+        
+    } catch (error) {
+        console.error('Error al generar CSV:', error);
+        throw error;
+    }
+}
+
+// Hacer funciones disponibles globalmente
 window.descargarFichaExcel = descargarFichaExcel;
-window.toggleTodasTablas = toggleTodasTablas;
+window.descargarDatosExcel = descargarDatosExcel;
+window.descargarValidacionExcel = descargarValidacionExcel;
+
+console.log('✅ Funciones de descarga disponibles globalmente');
