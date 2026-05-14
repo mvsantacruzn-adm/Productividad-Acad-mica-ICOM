@@ -13,7 +13,19 @@
         <div class="sidebar">
             <div class="logo">📊 Productividad<br>UANDES</div>
             <div class="menu-item active" onclick="cambiarPagina('profesores')">👥 Profesores</div>
-            <div class="menu-item" onclick="cambiarPagina('reporteria')">📋 Reportería</div>
+            
+            <div class="menu-item menu-parent" onclick="toggleSubmenuReporteria(event)">
+                📋 Reportería
+                <span class="submenu-toggle">▼</span>
+            </div>
+            <div class="submenu" style="display: none;">
+                <div class="submenu-item" onclick="cambiarPagina('reporteria-ficha-cna')">
+                    📄 Ficha Académica CNA
+                </div>
+                <div class="submenu-item" onclick="cambiarPagina('reporteria-datos-profesores')">
+                    📊 Datos profesores
+                </div>
+            </div>
             
             <div class="menu-item menu-parent menu-control" style="display: none;" onclick="toggleSubmenu(event)">
                 🔧 Control
@@ -38,7 +50,7 @@
                 <div id="profesor-list" class="profesor-list"></div>
             </div>
 
-            <div id="page-reporteria" class="page">
+            <div id="page-reporteria-ficha-cna" class="page">
                 <div class="header">
                     <h1>Reportería</h1>
                     <p>Generación de reportes académicos</p>
@@ -69,6 +81,55 @@
                             <div id="ficha-cna-preview" class="preview-content">
                                 <div class="preview-placeholder">
                                     <p>Selecciona un profesor y haz clic en "Generar Ficha CNA"</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="page-reporteria-datos-profesores" class="page">
+                <div class="header">
+                    <h1>Datos profesores</h1>
+                    <p>Reporte flexible de datos académicos</p>
+                </div>
+                
+                <div class="reporteria-grid">
+                    <div class="reporteria-card">
+                        <div class="card-header">
+                            <h2 class="card-title">🔍 Selecciona profesores y tablas</h2>
+                            <p class="card-subtitle">Configura el reporte según tus necesidades</p>
+                        </div>
+                        
+                        <div class="card-body">
+                            <div class="filtro-grupo">
+                                <h3 class="filtro-titulo">👥 Profesores</h3>
+                                <div class="filtro-contenido">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="checkbox-todos-profesores" onchange="toggleTodosProfesores()">
+                                        Todos los profesores
+                                    </label>
+                                    <div id="lista-profesores" class="checkbox-lista"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="filtro-grupo">
+                                <h3 class="filtro-titulo">📚 Tablas académicas</h3>
+                                <div class="filtro-contenido">
+                                    <div id="lista-tablas" class="checkbox-lista"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button class="btn-primary" onclick="generarReporteDatosProfesores()">Generar Reporte</button>
+                                <button class="btn-secondary" id="btn-descargar-datos-excel" onclick="descargarDatosExcel()" style="display: none;">📥 Descargar Excel</button>
+                            </div>
+                        </div>
+                        
+                        <div class="card-preview">
+                            <div id="datos-reporte-preview" class="preview-content">
+                                <div class="preview-placeholder">
+                                    <p>Selecciona profesores y tablas, luego haz clic en "Generar Reporte"</p>
                                 </div>
                             </div>
                         </div>

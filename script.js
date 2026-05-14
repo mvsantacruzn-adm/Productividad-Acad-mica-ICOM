@@ -621,3 +621,302 @@ const inicializarOriginal = inicializar;
 window.inicializar = function() {
     inicializarMejorado();
 };
+
+// ============================================
+// DATOS PROFESORES - REPORTE FLEXIBLE
+// ============================================
+
+let filtrosSeleccionados = {
+    profesores: [],
+    tablas: []
+};
+
+const mapeoTablas = {
+    'publicaciones_indexadas': 'Publicaciones Indexadas',
+    'publicaciones_no_indexadas': 'Publicaciones No Indexadas',
+    'libros': 'Libros',
+    'capitulos': 'Capítulos de Libro',
+    'proyectos': 'Proyectos de Investigación',
+    'tesis_magister_guia': 'Tesis Magíster (Profesor Guía)',
+    'tesis_magister_coguia': 'Tesis Magíster (Profesor Co-Guía)',
+    'tesis_doctorado_guia': 'Tesis Doctorado (Profesor Guía)',
+    'tesis_doctorado_coguia': 'Tesis Doctorado (Profesor Co-Guía)',
+    'patentes': 'Patentes'
+};
+
+function inicializarFiltrosDatosProfesores() {
+    // Generar checkboxes de profesores
+    const listaProfesores = document.getElementById('lista-profesores');
+    const profesoresOrdenados = Object.keys(datosBase).sort();
+    
+    listaProfesores.innerHTML = profesoresOrdenados.map(nombre => {
+        const base = datosBase[nombre];
+        const nombreVisual = base.nombre_visual || nombre;
+        return `
+            <label class="checkbox-label">
+                <input type="checkbox" data-profesor="${nombre}" onchange="actualizarFiltros()">
+                ${nombreVisual}
+            </label>
+        `;
+    }).join('');
+    
+    // Generar checkboxes de tablas
+    const listaTablas = document.getElementById('lista-tablas');
+    listaTablas.innerHTML = Object.entries(mapeoTablas).map(([clave, nombre]) => `
+        <label class="checkbox-label">
+            <input type="checkbox" data-tabla="${clave}" onchange="actualizarFiltros()">
+            ${nombre}
+        </label>
+    `).join('');
+}
+
+function toggleTodosProfesores() {
+    const checkboxTodos = document.getElementById('checkbox-todos-profesores');
+    const checkboxesProfesores = document.querySelectorAll('#lista-profesores input[type="checkbox"]');
+    
+    checkboxesProfesores.forEach(cb => {
+        cb.checked = checkboxTodos.checked;
+    });
+    
+    actualizarFiltros();
+}
+
+function actualizarFiltros() {
+    // Recopilar profesores seleccionados
+    const checkboxesProfesores = document.querySelectorAll('#lista-profesores input[type="checkbox"]:checked');
+    filtrosSeleccionados.profesores = Array.from(checkboxesProfesores).map(cb => cb.getAttribute('data-profesor'));
+    
+    // Recopilar tablas seleccionadas
+    const checkboxesTablas = document.querySelectorAll('#lista-tablas input[type="checkbox"]:checked');
+    filtrosSeleccionados.tablas = Array.from(checkboxesTablas).map(cb => cb.getAttribute('data-tabla'));
+    
+    // Actualizar estado del checkbox "Todos"
+    const checkboxTodos = document.getElementById('checkbox-todos-profesores');
+    const totalProfesores = Object.keys(datosBase).length;
+    checkboxTodos.checked = filtrosSeleccionados.profesores.length === totalProfesores;
+}
+
+function generarReporteDatosProfesores() {
+    const preview = document.getElementById('datos-reporte-preview');
+    const btnDescargar = document.getElementById('btn-descargar-datos-excel');
+    
+    if (filtrosSeleccionados.profesores.length === 0 || filtrosSeleccionados.tablas.length === 0) {
+        preview.innerHTML = `
+            <div class="preview-placeholder">
+                <p>Selecciona al menos un profesor y una tabla para generar el reporte</p>
+            </div>
+        `;
+        btnDescargar.style.display = 'none';
+        return;
+    }
+    
+    const reporte = construirReporteDatos();
+    preview.innerHTML = reporte.html;
+    btnDescargar.style.display = 'inline-block';
+}
+
+function construirReporteDatos() {
+    // Recopilar todos los headers únicos
+    const headersUnicos = new Set();
+    const headersPorTabla = {};
+    
+    // Fase 1: Identificar todos los headers
+    for (const nombreProfesor of filtrosSeleccionados.profesores) {
+        const produccion = datosProduccion[nombreProfesor];
+        if (!produccion || !produccion.secciones) continue;
+        
+        for (const tipoTabla of filtrosSeleccionados.tablas) {
+            if (produccion.secciones[tipoTabla]) {
+                const headers = produccion.secciones[tipoTabla].headers || [];
+                if (!headersPorTabla[tipoTabla]) {
+                    headersPorTabla[tipoTabla] = new Set();
+                }
+                headers.forEach(h => {
+                    headersPorTabla[tipoTabla].add(h);
+                    headersUnicos.add(h);
+                });
+            }
+        }
+    }
+    
+    // Fase 2: Construir filas del reporte
+    const filasReporte = [];
+    const columnasBase = ['RUT', 'Apellido paterno', 'Apellido materno', 'Nombres', 'Nombre visual', 'Vínculo'];
+    
+    for (const nombreProfesor of filtrosSeleccionados.profesores) {
+        const base = datosBase[nombreProfesor];
+        const produccion = datosProduccion[nombreProfesor];
+        
+        if (!base || !produccion || !produccion.secciones) continue;
+        
+        for (const tipoTabla of filtrosSeleccionados.tablas) {
+            if (!produccion.secciones[tipoTabla]) continue;
+            
+            const seccion = produccion.secciones[tipoTabla];
+            const headers = seccion.headers || [];
+            const filas = seccion.filas || [];
+            
+            for (const fila of filas) {
+                const filaReporte = {
+                    'RUT': base.rut || 'N/D',
+                    'Apellido paterno': base.apellido_paterno || 'N/D',
+                    'Apellido materno': base.apellido_materno || 'N/D',
+                    'Nombres': base.nombres || 'N/D',
+                    'Nombre visual': base.nombre_visual || nombreProfesor,
+                    'Vínculo': base.vinculo || 'N/D',
+                    'Tipo de tabla': mapeoTablas[tipoTabla] || tipoTabla
+                };
+                
+                // Agregar datos de la tabla
+                for (const header of headersUnicos) {
+                    if (headers.includes(header)) {
+                        filaReporte[header] = fila[header] || '';
+                    }
+                }
+                
+                filasReporte.push(filaReporte);
+            }
+        }
+    }
+    
+    // Fase 3: Construir HTML de la tabla
+    let html = `<div class="reporte-tabla-container">`;
+    
+    if (filasReporte.length === 0) {
+        html += `<div class="reporte-tabla-resumida">No se encontraron registros con los filtros seleccionados</div>`;
+    } else {
+        html += `<table class="reporte-tabla">`;
+        
+        // Headers
+        html += `<thead><tr>`;
+        columnasBase.forEach(col => {
+            html += `<th>${col}</th>`;
+        });
+        html += `<th class="reporte-tabla-columna-tipo">Tipo de tabla</th>`;
+        
+        // Headers dinámicos
+        Array.from(headersUnicos).sort().forEach(header => {
+            html += `<th>${header}</th>`;
+        });
+        
+        html += `</tr></thead>`;
+        
+        // Datos
+        html += `<tbody>`;
+        filasReporte.forEach(fila => {
+            html += `<tr>`;
+            columnasBase.forEach(col => {
+                html += `<td>${fila[col] || ''}</td>`;
+            });
+            html += `<td class="reporte-tabla-columna-tipo">${fila['Tipo de tabla']}</td>`;
+            
+            Array.from(headersUnicos).sort().forEach(header => {
+                html += `<td>${fila[header] || ''}</td>`;
+            });
+            html += `</tr>`;
+        });
+        html += `</tbody>`;
+        
+        html += `</table>`;
+    }
+    
+    html += `</div>`;
+    
+    return {
+        html: html,
+        filas: filasReporte,
+        columnasBase: columnasBase,
+        headersUnicos: Array.from(headersUnicos).sort()
+    };
+}
+
+function descargarDatosExcel() {
+    const reporte = construirReporteDatos();
+    
+    if (reporte.filas.length === 0) {
+        alert('No hay datos para descargar');
+        return;
+    }
+    
+    // Convertir a formato para Excel
+    const datos = reporte.filas.map(fila => {
+        const filaNormalizada = {};
+        
+        // Columnas base
+        reporte.columnasBase.forEach(col => {
+            filaNormalizada[col] = fila[col] || '';
+        });
+        
+        // Tipo de tabla
+        filaNormalizada['Tipo de tabla'] = fila['Tipo de tabla'];
+        
+        // Headers dinámicos
+        reporte.headersUnicos.forEach(header => {
+            filaNormalizada[header] = fila[header] || '';
+        });
+        
+        return filaNormalizada;
+    });
+    
+    // Crear workbook
+    const ws = XLSX.utils.json_to_sheet(datos);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Datos Profesores');
+    
+    // Ajustar ancho de columnas
+    const colWidths = [];
+    for (let i = 0; i < reporte.columnasBase.length + 1 + reporte.headersUnicos.length; i++) {
+        colWidths.push({ wch: 20 });
+    }
+    ws['!cols'] = colWidths;
+    
+    // Descargar
+    const nombreArchivo = `Datos_Profesores_${new Date().toISOString().split('T')[0]}.xlsx`;
+    XLSX.writeFile(wb, nombreArchivo);
+}
+
+// ============================================
+// MENÚ EXPANDIBLE REPORTERÍA
+// ============================================
+
+function toggleSubmenuReporteria(event) {
+    const parent = event.currentTarget;
+    const submenu = parent.nextElementSibling;
+    
+    if (submenu && submenu.classList.contains('submenu')) {
+        submenu.style.display = submenu.style.display === 'none' ? 'block' : 'none';
+        parent.classList.toggle('active');
+    }
+}
+
+// ============================================
+// SOBRESCRIBIR CAMBIAR PÁGINA
+// ============================================
+
+const cambiarPaginaAnterior = cambiarPagina;
+
+window.cambiarPagina = function(pagina) {
+    // Cerrar submenús
+    document.querySelectorAll('.submenu').forEach(menu => {
+        menu.style.display = 'none';
+        const parent = menu.previousElementSibling;
+        if (parent) parent.classList.remove('active');
+    });
+    
+    // Cambiar página
+    document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.submenu-item').forEach(el => el.classList.remove('active'));
+    
+    document.getElementById(`page-${pagina}`).classList.add('active');
+    event.target.classList.add('active');
+    
+    // Inicializar sección si es necesario
+    if (pagina === 'reporteria-datos-profesores') {
+        inicializarFiltrosDatosProfesores();
+    } else if (pagina === 'control-validacion') {
+        generarValidacion();
+    } else if (pagina === 'control-normalizacion') {
+        generarNormalizacion();
+    }
+};
