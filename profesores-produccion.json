@@ -1762,7 +1762,7 @@
             "Nombre revista": "Management Science",
             "Estado": "Publicado",
             "ISSN": "0025-1909",
-            "Factor de impacto": "4,8*",
+            "Factor de impacto": "7,5 JIF",
             "Link de verificación electrónica": "https://pubsonline.informs.org/journal/mnsc"
           },
           {
@@ -1773,7 +1773,7 @@
             "Nombre revista": "Nature Communications",
             "Estado": "Publicado",
             "ISSN": "2041-1723",
-            "Factor de impacto": "1900-01-14 16:48:00",
+            "Factor de impacto": "16,6 JIF",
             "Link de verificación electrónica": "https://journals.sagepub.com/home/joc"
           },
           {
@@ -1784,7 +1784,7 @@
             "Nombre revista": "International Business Review",
             "Estado": "Publicado",
             "ISSN": "0969-5931",
-            "Factor de impacto": "1900-01-08 04:48:00",
+            "Factor de impacto": "8,1 JIF",
             "Link de verificación electrónica": "https://www.journals.elsevier.com/international-business-review"
           },
           {
@@ -1795,7 +1795,7 @@
             "Nombre revista": "Journal of World Business",
             "Estado": "Publicado",
             "ISSN": "1090-9516",
-            "Factor de impacto": "5.7",
+            "Factor de impacto": "5,7 JIF",
             "Link de verificación electrónica": "https://www.sciencedirect.com/journal/journal-of-world-business"
           },
           {
@@ -1806,7 +1806,7 @@
             "Nombre revista": "Journal of International Business Studies",
             "Estado": "Publicado",
             "ISSN": "0047-2506",
-            "Factor de impacto": "7.7",
+            "Factor de impacto": "7,7 JIF",
             "Link de verificación electrónica": "https://link.springer.com/journal/41267"
           }
         ]
@@ -1876,7 +1876,8 @@
             "Autor": "Richard Abraham Ortúzar Neira",
             "Título de la tesis": "N/D",
             "Nombre del programa": "Magíster en Empresa y Tecnología (MEET)",
-            "Institución": "Universidad Diego Portales"
+            "Institución": "Universidad Diego Portales",
+            "Título de la Tesis": "Bienestar Subjetivo: Un Enfoque de la Economía en torno al Modelo Residencial del Servicio Nacional de Menores de Chile."
           },
           {
             "N°": "2",
@@ -1884,7 +1885,8 @@
             "Autor": "Patricio Salas",
             "Título de la tesis": "N/D",
             "Nombre del programa": "Ingeniero Comercial y Magíster de continuidad en Negocios Digitales",
-            "Institución": "Universidad Diego Portales"
+            "Institución": "Universidad Diego Portales",
+            "Título de la Tesis": "Colaboración interna: lidiar con la ausencia de un integrante en una organización"
           },
           {
             "N°": "3",
@@ -1892,7 +1894,8 @@
             "Autor": "Catalina Campos Hernández",
             "Título de la tesis": "N/D",
             "Nombre del programa": "Magíster en Empresa y Tecnología (MEET)",
-            "Institución": "Universidad Diego Portales"
+            "Institución": "Universidad Diego Portales",
+            "Título de la Tesis": "Novelty as the Main Characteristic in Venture Capital Firm Investments"
           },
           {
             "N°": "4",
@@ -1900,7 +1903,8 @@
             "Autor": "José Ignacio Malbrán Bastías",
             "Título de la tesis": "N/D",
             "Nombre del programa": "Magíster en Políticas Públicas (MPP)",
-            "Institución": "Universidad Diego Portales"
+            "Institución": "Universidad Diego Portales",
+            "Título de la Tesis": "Violencia en los estadios"
           },
           {
             "N°": "5",
@@ -1908,7 +1912,8 @@
             "Autor": "Hugo Vallejos Silva",
             "Título de la tesis": "N/D",
             "Nombre del programa": "Magíster en Políticas Públicas (MPP)",
-            "Institución": "Universidad Diego Portales"
+            "Institución": "Universidad Diego Portales",
+            "Título de la Tesis": "Ley de Financiamiento Urbano Compartido: análisis y propuesta de modificaciones en el contexto comunal de Estación Central"
           }
         ]
       },
@@ -1930,7 +1935,8 @@
             "Año": "2025",
             "Título": "Plataforma Informativa sobre el Impacto de la IA en el Mercado Laboral Chileno",
             "Nombre del programa": "Magíster en Marketing & Data Analytics",
-            "Institución": "Universidad de los Andes"
+            "Institución": "Universidad de los Andes",
+            "Título de la Tesis": "Plataforma Informativa sobre el Impacto de la IA en el Mercado Laboral Chileno"
           },
           {
             "N°": "2",
@@ -1939,7 +1945,8 @@
             "Año": "2025",
             "Título": "Plataforma Informativa sobre el Impacto de la IA en el Mercado Laboral Chileno",
             "Nombre del programa": "Magíster en Marketing & Data Analytics",
-            "Institución": "Universidad de los Andes"
+            "Institución": "Universidad de los Andes",
+            "Título de la Tesis": "Plataforma Informativa sobre el Impacto de la IA en el Mercado Laboral Chileno"
           },
           {
             "N°": "3",
@@ -1948,7 +1955,8 @@
             "Año": "2021",
             "Título": "Top Management Team Diversity and Investments' Distance",
             "Nombre del programa": "Magíster en Management",
-            "Institución": "Universidad Adolfo Ibáñez"
+            "Institución": "Universidad Adolfo Ibáñez",
+            "Título de la Tesis": "Top Management Team Diversity and Investments' Distance"
           }
         ]
       }
