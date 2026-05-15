@@ -2194,17 +2194,17 @@ function inicializarDocumentos() {
 function previsualizarDocumento(filename) {
     console.log('');
     console.log('→ PREVISUALIZAR DOCUMENTO');
-    console.log(`  Filename: ${filename}`);
+    console.log(`  Filename usado: ${filename}`);
     
-    // Construir ruta relativa
-    const url = `./documentos/${filename}`;
-    console.log(`  Ruta: ${url}`);
+    // Construir URL en raíz del proyecto
+    const url = './' + encodeURIComponent(filename);
+    console.log(`  URL generada: ${url}`);
     
-    // Obtener URL absoluta si es necesario
+    // Obtener URL absoluta para debug
     const absoluteUrl = new URL(url, window.location.href).href;
     console.log(`  URL absoluta: ${absoluteUrl}`);
     
-    console.log(`→ Abriendo en nueva pestaña...`);
+    console.log(`→ Abriendo PDF en nueva pestaña...`);
     
     // Abrir en nueva pestaña
     const ventana = window.open(url, '_blank');
@@ -2219,13 +2219,13 @@ function previsualizarDocumento(filename) {
 function descargarDocumento(filename) {
     console.log('');
     console.log('→ DESCARGAR DOCUMENTO');
-    console.log(`  Filename: ${filename}`);
+    console.log(`  Filename usado: ${filename}`);
     
-    // Construir ruta relativa
-    const url = `./documentos/${filename}`;
-    console.log(`  Ruta: ${url}`);
+    // Construir URL en raíz del proyecto
+    const url = './' + encodeURIComponent(filename);
+    console.log(`  URL generada: ${url}`);
     
-    // Obtener URL absoluta si es necesario
+    // Obtener URL absoluta para debug
     const absoluteUrl = new URL(url, window.location.href).href;
     console.log(`  URL absoluta: ${absoluteUrl}`);
     
@@ -2236,8 +2236,8 @@ function descargarDocumento(filename) {
     link.style.display = 'none';
     
     console.log(`→ Creando link de descarga...`);
-    console.log(`  href: ${link.href}`);
-    console.log(`  download: ${link.download}`);
+    console.log(`  href atributo: ${link.href}`);
+    console.log(`  download atributo: ${link.download}`);
     
     // Agregar al DOM
     document.body.appendChild(link);
