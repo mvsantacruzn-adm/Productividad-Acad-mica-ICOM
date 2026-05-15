@@ -439,10 +439,55 @@ window.onclick = function(event) {
 }
 
 function cambiarPagina(pagina) {
-    document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
-    document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
-    document.getElementById(`page-${pagina}`).classList.add('active');
-    event.target.classList.add('active');
+    console.log('');
+    console.log('🔵 CLICK MENÚ:', pagina);
+    
+    // Construir ID de página
+    const pageId = pagina.startsWith('page-') ? pagina : `page-${pagina}`;
+    console.log('→ ID de página:', pageId);
+    
+    // Obtener elemento
+    const pageElement = document.getElementById(pageId);
+    if (!pageElement) {
+        console.error('❌ No encontrado elemento:', pageId);
+        return;
+    }
+    console.log('✓ Elemento encontrado');
+    
+    // Ocultar todas las páginas
+    console.log('→ Ocultando otras páginas...');
+    document.querySelectorAll('.page').forEach(el => {
+        el.classList.remove('active');
+        el.style.display = 'none';
+    });
+    console.log('✓ Páginas ocultadas');
+    
+    // Desactivar items de menú
+    console.log('→ Desactivando items de menú...');
+    document.querySelectorAll('.menu-item').forEach(el => {
+        el.classList.remove('active');
+    });
+    console.log('✓ Items de menú desactivados');
+    
+    // Mostrar página activa
+    console.log('→ Mostrando página activa...');
+    pageElement.classList.add('active');
+    pageElement.style.display = 'block';
+    console.log('✓ Página mostrada:');
+    console.log('  - Clase active agregada:', pageElement.classList.contains('active'));
+    console.log('  - Display:', window.getComputedStyle(pageElement).display);
+    
+    // Activar item de menú
+    if (event && event.target) {
+        event.target.classList.add('active');
+        console.log('✓ Item de menú activado');
+    }
+    
+    console.log('');
+    console.log('╔════════════════════════════════════════════════════╗');
+    console.log(`║ ✅ PÁGINA CARGADA: ${pageId.padEnd(42)}║`);
+    console.log('╚════════════════════════════════════════════════════╝');
+    console.log('');
 }
 
 // Cargar datos al iniciar
@@ -2096,16 +2141,23 @@ const documentos = [
 ];
 
 function inicializarDocumentos() {
-    console.log('→ Inicializando tabla de documentos...');
+    console.log('');
+    console.log('╔════════════════════════════════════════════════════╗');
+    console.log('║ INICIALIZANDO TABLA DE DOCUMENTOS                  ║');
+    console.log('╚════════════════════════════════════════════════════╝');
     
     const tbody = document.getElementById('documentos-tbody');
+    console.log('→ Buscando elemento documentos-tbody...');
     if (!tbody) {
-        console.warn('⚠ No encontrado elemento documentos-tbody');
+        console.error('❌ No encontrado elemento documentos-tbody');
         return;
     }
+    console.log('✓ Elemento documentos-tbody encontrado');
     
+    console.log(`→ Documentos disponibles: ${documentos.length}`);
     tbody.innerHTML = '';
     
+    let filas_creadas = 0;
     for (const doc of documentos) {
         const fila = document.createElement('tr');
         fila.style.borderBottom = '1px solid #ddd';
@@ -2128,9 +2180,15 @@ function inicializarDocumentos() {
         `;
         
         tbody.appendChild(fila);
+        filas_creadas++;
+        console.log(`  ✓ Fila ${doc.numero}: ${doc.nombreVisible}`);
     }
     
-    console.log(`✓ Tabla de documentos inicializada: ${documentos.length} documentos`);
+    console.log('');
+    console.log('╔════════════════════════════════════════════════════╗');
+    console.log(`║ ✅ TABLA INICIALIZADA: ${filas_creadas} DOCUMENTOS      ${' '.repeat(20)}║`);
+    console.log('╚════════════════════════════════════════════════════╝');
+    console.log('');
 }
 
 function previsualizarDocumento(filename) {
