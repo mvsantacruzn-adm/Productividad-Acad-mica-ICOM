@@ -2071,35 +2071,35 @@ const documentos = [
     {
         numero: 1,
         nombreVisible: 'Reglamento del Alumno de Postgrados y Postítulos',
-        filename: '20160901_Reglamento_Alumno_Postgrados_Postitulos_Direccion_Postgrados_Postitulos.pdf',
+        filename: '20160901_Reglamento_Alumno_Postgrados_Postitulos.pdf',
         ano: 2016,
         elaboradoPor: 'Dirección de Postgrados y Postítulos'
     },
     {
         numero: 2,
         nombreVisible: 'Política de Aseguramiento de la Calidad de Pregrado y Postgrado',
-        filename: '20191101_Politica_Aseguramiento_Calidad_Pregrado_Postgrado_Vicerrectoria_Academica.pdf',
+        filename: '20191101_Politica_Aseguramiento_Calidad_Pregrado_Postgrado.pdf',
         ano: 2019,
         elaboradoPor: 'Vicerrectoría Académica'
     },
     {
         numero: 3,
         nombreVisible: 'Reglamento de Matrícula y Aranceles Postgrados',
-        filename: '20191101_Reglamento_Matricula_Aranceles_Postgrados_Vicerrectoria_Economica.pdf',
+        filename: '20191101_Reglamento_Matricula_Aranceles_Postgrados.pdf',
         ano: 2019,
         elaboradoPor: 'Vicerrectoría Económica'
     },
     {
         numero: 4,
         nombreVisible: 'Reglamento de Becas de Pregrado',
-        filename: '20191201_Reglamento_Becas_Pregrado_Vicerrectoria_Economica.pdf',
+        filename: '20191201_Reglamento_Becas_Pregrado.pdf',
         ano: 2019,
         elaboradoPor: 'Vicerrectoría Económica'
     },
     {
         numero: 5,
         nombreVisible: 'Política Vinculación con el Medio',
-        filename: '20210101_Politica_Vinculacion_Medio_Universidad_Los_Andes.pdf',
+        filename: '20210101_Politica_Vinculacion_Medio.pdf',
         ano: 2021,
         elaboradoPor: 'Universidad de los Andes'
     },
@@ -2120,25 +2120,25 @@ const documentos = [
     {
         numero: 8,
         nombreVisible: 'Protocolo Encuesta y Evaluación Docente Postgrado Actualizado',
-        filename: '20240301_Protocolo_Encuesta_Evaluacion_Docente_Postgrado_Actualizado_Direccion_Desarrollo_Academico.pdf',
+        filename: '20240301_Protocolo_Encuesta_Evaluacion_Docente_Postgrado_Actualizado.pdf',
         ano: 2024,
         elaboradoPor: 'Dirección de Desarrollo Académico'
     },
     {
         numero: 9,
         nombreVisible: 'Guía de Expertos Uandes Facultad Ciencias Económicas Empresariales',
-        filename: '20240901_Guia_Expertos_Uandes_Facultad_Ciencias_Economicas_Empresariales.pdf',
+        filename: '20240901_Guia_Expertos_Uandes_Facultad_Ciencias_Economicas.pdf',
         ano: 2024,
         elaboradoPor: 'Facultad Ciencias Ecónomicas Empresariales'
     },
     {
         numero: 10,
         nombreVisible: 'Reglamento de Responsabilidad Académica y Disciplinaria de los Integrantes de la Comunidad Universitaria',
-        filename: '20260401_Reglamento_Responsabilidad_Academica_Disciplinaria_Comunidad_Universitaria.pdf',
+        filename: '20260401_Reglamento_Responsabilidad_Academica_Disciplinaria.pdf',
         ano: 2026,
         elaboradoPor: 'Universidad de los Andes'
     }
-];
+]
 
 function inicializarDocumentos() {
     console.log('');
@@ -2192,30 +2192,65 @@ function inicializarDocumentos() {
 }
 
 function previsualizarDocumento(filename) {
-    console.log(`→ Previsualizar: ${filename}`);
+    console.log('');
+    console.log('→ PREVISUALIZAR DOCUMENTO');
+    console.log(`  Filename: ${filename}`);
     
+    // Construir ruta relativa
     const url = `./documentos/${filename}`;
-    console.log(`→ URL: ${url}`);
+    console.log(`  Ruta: ${url}`);
     
-    window.open(url, '_blank');
+    // Obtener URL absoluta si es necesario
+    const absoluteUrl = new URL(url, window.location.href).href;
+    console.log(`  URL absoluta: ${absoluteUrl}`);
+    
+    console.log(`→ Abriendo en nueva pestaña...`);
+    
+    // Abrir en nueva pestaña
+    const ventana = window.open(url, '_blank');
+    
+    if (!ventana) {
+        console.warn('⚠️  Ventana emergente bloqueada');
+    } else {
+        console.log('✓ Pestaña abierta');
+    }
 }
 
 function descargarDocumento(filename) {
-    console.log(`→ Descargar: ${filename}`);
+    console.log('');
+    console.log('→ DESCARGAR DOCUMENTO');
+    console.log(`  Filename: ${filename}`);
     
+    // Construir ruta relativa
     const url = `./documentos/${filename}`;
-    console.log(`→ URL: ${url}`);
+    console.log(`  Ruta: ${url}`);
     
+    // Obtener URL absoluta si es necesario
+    const absoluteUrl = new URL(url, window.location.href).href;
+    console.log(`  URL absoluta: ${absoluteUrl}`);
+    
+    // Crear elemento de descarga
     const link = document.createElement('a');
     link.href = url;
     link.download = filename;
     link.style.display = 'none';
     
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    console.log(`→ Creando link de descarga...`);
+    console.log(`  href: ${link.href}`);
+    console.log(`  download: ${link.download}`);
     
-    console.log(`✓ Descarga iniciada: ${filename}`);
+    // Agregar al DOM
+    document.body.appendChild(link);
+    console.log('→ Link agregado al DOM');
+    
+    // Hacer click
+    link.click();
+    console.log('✓ Click simulado');
+    
+    // Limpiar
+    document.body.removeChild(link);
+    console.log('✓ Link removido del DOM');
+    console.log('✓ Descarga iniciada: ' + filename);
 }
 
 // Hacer funciones disponibles globalmente
