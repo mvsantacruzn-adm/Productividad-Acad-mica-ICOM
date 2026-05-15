@@ -688,6 +688,7 @@ window.cambiarPagina = function(pagina) {
 const inicializarOriginal = inicializar;
 window.inicializar = function() {
     inicializarMejorado();
+    inicializarDocumentos();
 };
 
 // ============================================
@@ -2015,4 +2016,154 @@ window.generarReporteProyectosVigentes = generarReporteProyectosVigentes;
 window.descargarProyectosVigentesExcel = descargarProyectosVigentesExcel;
 
 console.log('✓ Funciones Proyectos vigentes disponibles globalmente');
+
+
+// ============================================
+// POLÍTICAS, REGLAMENTOS Y PROTOCOLOS
+// ============================================
+
+const documentos = [
+    {
+        numero: 1,
+        nombreVisible: 'Reglamento del Alumno de Postgrados y Postítulos',
+        filename: '20160901_Reglamento_Alumno_Postgrados_Postitulos_Direccion_Postgrados_Postitulos.pdf',
+        ano: 2016,
+        elaboradoPor: 'Dirección de Postgrados y Postítulos'
+    },
+    {
+        numero: 2,
+        nombreVisible: 'Política de Aseguramiento de la Calidad de Pregrado y Postgrado',
+        filename: '20191101_Politica_Aseguramiento_Calidad_Pregrado_Postgrado_Vicerrectoria_Academica.pdf',
+        ano: 2019,
+        elaboradoPor: 'Vicerrectoría Académica'
+    },
+    {
+        numero: 3,
+        nombreVisible: 'Reglamento de Matrícula y Aranceles Postgrados',
+        filename: '20191101_Reglamento_Matricula_Aranceles_Postgrados_Vicerrectoria_Economica.pdf',
+        ano: 2019,
+        elaboradoPor: 'Vicerrectoría Económica'
+    },
+    {
+        numero: 4,
+        nombreVisible: 'Reglamento de Becas de Pregrado',
+        filename: '20191201_Reglamento_Becas_Pregrado_Vicerrectoria_Economica.pdf',
+        ano: 2019,
+        elaboradoPor: 'Vicerrectoría Económica'
+    },
+    {
+        numero: 5,
+        nombreVisible: 'Política Vinculación con el Medio',
+        filename: '20210101_Politica_Vinculacion_Medio_Universidad_Los_Andes.pdf',
+        ano: 2021,
+        elaboradoPor: 'Universidad de los Andes'
+    },
+    {
+        numero: 6,
+        nombreVisible: 'Reglamento Postgrado Especialidades Educación Continua',
+        filename: '20220701_Reglamento_Postgrado_Especialidades_Educacion_Continua.pdf',
+        ano: 2022,
+        elaboradoPor: 'Dirección de Postgrados'
+    },
+    {
+        numero: 7,
+        nombreVisible: 'Protocolo de Inclusión Universitario 2024',
+        filename: '20240101_Protocolo_Inclusion_Universitario_2024.pdf',
+        ano: 2024,
+        elaboradoPor: 'Universidad de los Andes'
+    },
+    {
+        numero: 8,
+        nombreVisible: 'Protocolo Encuesta y Evaluación Docente Postgrado Actualizado',
+        filename: '20240301_Protocolo_Encuesta_Evaluacion_Docente_Postgrado_Actualizado_Direccion_Desarrollo_Academico.pdf',
+        ano: 2024,
+        elaboradoPor: 'Dirección de Desarrollo Académico'
+    },
+    {
+        numero: 9,
+        nombreVisible: 'Guía de Expertos Uandes Facultad Ciencias Económicas Empresariales',
+        filename: '20240901_Guia_Expertos_Uandes_Facultad_Ciencias_Economicas_Empresariales.pdf',
+        ano: 2024,
+        elaboradoPor: 'Facultad Ciencias Ecónomicas Empresariales'
+    },
+    {
+        numero: 10,
+        nombreVisible: 'Reglamento de Responsabilidad Académica y Disciplinaria de los Integrantes de la Comunidad Universitaria',
+        filename: '20260401_Reglamento_Responsabilidad_Academica_Disciplinaria_Comunidad_Universitaria.pdf',
+        ano: 2026,
+        elaboradoPor: 'Universidad de los Andes'
+    }
+];
+
+function inicializarDocumentos() {
+    console.log('→ Inicializando tabla de documentos...');
+    
+    const tbody = document.getElementById('documentos-tbody');
+    if (!tbody) {
+        console.warn('⚠ No encontrado elemento documentos-tbody');
+        return;
+    }
+    
+    tbody.innerHTML = '';
+    
+    for (const doc of documentos) {
+        const fila = document.createElement('tr');
+        fila.style.borderBottom = '1px solid #ddd';
+        
+        fila.innerHTML = `
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">${doc.numero}</td>
+            <td style="padding: 10px; text-align: left; border: 1px solid #ddd;">${doc.nombreVisible}</td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">${doc.ano}</td>
+            <td style="padding: 10px; text-align: left; border: 1px solid #ddd;">${doc.elaboradoPor}</td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">
+                <button class="btn-secondary" onclick="previsualizarDocumento('${doc.filename}')" style="padding: 5px 10px; font-size: 11px;">
+                    👁️ Ver
+                </button>
+            </td>
+            <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">
+                <button class="btn-secondary" onclick="descargarDocumento('${doc.filename}')" style="padding: 5px 10px; font-size: 11px;">
+                    📥 Descargar
+                </button>
+            </td>
+        `;
+        
+        tbody.appendChild(fila);
+    }
+    
+    console.log(`✓ Tabla de documentos inicializada: ${documentos.length} documentos`);
+}
+
+function previsualizarDocumento(filename) {
+    console.log(`→ Previsualizar: ${filename}`);
+    
+    const url = `./documentos/${filename}`;
+    console.log(`→ URL: ${url}`);
+    
+    window.open(url, '_blank');
+}
+
+function descargarDocumento(filename) {
+    console.log(`→ Descargar: ${filename}`);
+    
+    const url = `./documentos/${filename}`;
+    console.log(`→ URL: ${url}`);
+    
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.style.display = 'none';
+    
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    console.log(`✓ Descarga iniciada: ${filename}`);
+}
+
+// Hacer funciones disponibles globalmente
+window.previsualizarDocumento = previsualizarDocumento;
+window.descargarDocumento = descargarDocumento;
+
+// Inicializar cuando se carga la página
+console.log('✓ Funciones de documentos disponibles globalmente');
 
